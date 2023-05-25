@@ -93,10 +93,10 @@ double Amplitude::intensity(const cx_vec& betas, const double& s, const double& 
   cx_mat ikc_inv_f2 = kmat_f2.IKC_inv(s);
   cx_mat ikc_inv_a0 = kmat_a0.IKC_inv(s);
   cx_mat ikc_inv_a2 = kmat_a2.IKC_inv(s); // these should all be cached and not calculated the second time...in theory
-  complex<double> f_f0 = kmat_f0.F(s, betas.subvec(0, 4), ikc_inv_f0, 2);
-  complex<double> f_f2 = kmat_f2.F(s, betas.subvec(5, 8), ikc_inv_f2, 2);
-  complex<double> f_a0 = kmat_a0.F(s, betas.subvec(9, 10), ikc_inv_a0, 1);
-  complex<double> f_a2 = kmat_a2.F(s, betas.subvec(11, 12), ikc_inv_a2, 1);
+  complex<double> f_f0 = kmat_f0.F(s, betas.subvec(0, 4), 0.0091125, 1.0, 2);
+  complex<double> f_f2 = kmat_f2.F(s, betas.subvec(5, 8), 2);
+  complex<double> f_a0 = kmat_a0.F(s, betas.subvec(9, 10), 1);
+  complex<double> f_a2 = kmat_a2.F(s, betas.subvec(11, 12), 1);
   complex<double> S0 = Amplitude::S0_wave(theta, phi);
   complex<double> D2 = Amplitude::D2_wave(theta, phi);
   return pow(abs(S0 * (f_f0 + f_a0) + D2 * (f_f2 + f_a2)), 2);
