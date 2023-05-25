@@ -9,28 +9,30 @@ using namespace arma;
 class Amplitude {
   public:
     Amplitude();
-    double intensity(const double& s, const cx_vec& betas);
+    double intensity(const cx_vec& betas, const double& s, const double& theta, const double& phi);
+    complex<double> S0_wave(const double& theta, const double& phi);
+    complex<double> D2_wave(const double& theta, const double& phi);
 
   private:
-    KMatrix kmat_f0;
+    KMatrix kmat_f0 = KMatrix(5, 5);
     mat f0_mchannels;
     mat f0_malphas;
     mat f0_galphas;
     mat f0_cbkg;
 
-    KMatrix kmat_f2;
+    KMatrix kmat_f2 = KMatrix(4, 4);
     mat f2_mchannels;
     mat f2_malphas;
     mat f2_galphas;
     mat f2_cbkg;
 
-    KMatrix kmat_a0;
+    KMatrix kmat_a0 = KMatrix(2, 2);
     mat a0_mchannels;
     mat a0_malphas;
     mat a0_galphas;
     mat a0_cbkg;
 
-    KMatrix kmat_a2;
+    KMatrix kmat_a2 = KMatrix(3, 2);
     mat a2_mchannels;
     mat a2_malphas;
     mat a2_galphas;

@@ -2,8 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++11 -O2 $(shell root-config --cflags)
 
 TARGET = run_mcmc
-SOURCES = main.cpp KMatrix.cpp
-HEADERS = KMatrix.h
+SOURCES = $(wildcard *.cpp)
+HEADERS = $(wildcard *.h)
 LDFLAGS = -larmadillo $(shell root-config --glibs)
 OBJECTS = $(SOURCES:.cpp=.o)
 

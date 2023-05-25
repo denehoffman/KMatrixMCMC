@@ -2,7 +2,6 @@
 #include "KMatrix.h"
 
 Amplitude::Amplitude() {
-  kmat_f0 = KMatrix(5, 5);
   f0_mchannels = {
     {0.13498, 0.13498},
     {0.26995, 0.26995},
@@ -27,7 +26,6 @@ Amplitude::Amplitude() {
   };
   kmat_f0.initialize(f0_malphas, f0_mchannels, f0_galphas.t(), f0_cbkg, 0);
 
-  kmat_f2 = KMatrix(4, 4);
   f2_mchannels = {
     {0.13498, 0.13498},
     {0.26995, 0.26995},
@@ -49,7 +47,6 @@ Amplitude::Amplitude() {
   };
   kmat_f2.initialize(f2_malphas, f2_mchannels, f2_galphas.t(), f2_cbkg, 2);
 
-  kmat_a0 = KMatrix(2, 2);
   a0_mchannels = {
     {0.13498, 0.54786},
     {0.49368, 0.49761}
@@ -65,7 +62,6 @@ Amplitude::Amplitude() {
   };
   kmat_a0.initialize(a0_malphas, a0_mchannels, a0_galphas.t(), a0_cbkg, 0);
 
-  kmat_a2 = KMatrix(3, 2);
   a2_mchannels = {
     {0.13498, 0.54786},
     {0.49368, 0.49761},
@@ -84,6 +80,24 @@ Amplitude::Amplitude() {
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg, 2);
 }
 
-double Amplitude::intensity(const double& s, const cx_vec& betas) {
+complex<double> Amplitude::S0_wave(const double& theta, const double& phi) {
+  return complex<double>(sqrt(1.0 / arma::datum::pi) / 2.0, 0.0);
+}
 
+complex<double> Amplitude::D2_wave(const double& theta, const double& phi) {
+  return pow(sin(theta), 2) * exp(complex<double>(0.0, 2.0 * phi)) * sqrt(15.0 / arma::datum::pi / 2.0) / 4.0;
+}
+
+double Amplitude::intensity(const cx_vec& betas, const double& s, const double& theta, const double& phi) {
+  cx_mat ikc_inv_f0 = kmat_f0.IKC_inv(s, 0.0091125, 1.0);
+  cx_mat ikc_inv_f2 = kmat_f2.IKC_inv(s);
+  cx_mat ikc_inv_a0 = kmat_a0.IKC_inv(s);
+  cx_mat ikc_inv_a2 = kmat_a2.IKC_inv(s); // these should all be cached and not calculated the second time...in theory
+  complex<double> f_f0 = kmat_f0.F(s, betas.subvec(0, 4), ikc_inv_f0, 2);
+  complex<double> f_f2 = kmat_f2.F(s, betas.subvec(5, 8), ikc_inv_f2, 2);
+  complex<double> f_a0 = kmat_a0.F(s, betas.subvec(9, 10), ikc_inv_a0, 1);
+  complex<double> f_a2 = kmat_a2.F(s, betas.subvec(11, 12), ikc_inv_a2, 1);
+  complex<double> S0 = Amplitude::S0_wave(theta, phi);
+  complex<double> D2 = Amplitude::D2_wave(theta, phi);
+  return pow(abs(S0 * (f_f0 + f_a0) + D2 * (f_f2 + f_a2)), 2);
 }
