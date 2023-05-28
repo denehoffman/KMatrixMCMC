@@ -16,18 +16,15 @@ public:
 
   void read();
 
-  vector<double> get_s_vec() const;
-  vector<double> get_theta_vec() const;
-  vector<double> get_phi_vec() const;
-
-  int getTotalEvents() const;
+  int nEvents;
+  vector<float> masses;
+  vector<float> weights;
+  vector<float> thetas;
+  vector<float> phis;
 
 private:
   TFile* file;
   TTree* tree;
-  vector<double> sValues;
-  vector<double> thetaValues;
-  vector<double> phiValues;
 };
 
 #endif

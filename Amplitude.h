@@ -9,9 +9,17 @@ using namespace arma;
 class Amplitude {
   public:
     Amplitude();
-    double intensity(const cx_vec& betas, const double& s, const double& theta, const double& phi);
+    double intensity(const cx_vec& betas, const double& s, const double& theta, const double& phi,
+        const cx_mat& ikc_inv_f0,
+        const cx_mat& ikc_inv_f2,
+        const cx_mat& ikc_inv_a0,
+        const cx_mat& ikc_inv_a2);
     complex<double> S0_wave(const double& theta, const double& phi);
     complex<double> D2_wave(const double& theta, const double& phi);
+    cx_vec ikc_inv_vec_f0(const double& s);
+    cx_vec ikc_inv_vec_f2(const double& s);
+    cx_vec ikc_inv_vec_a0(const double& s);
+    cx_vec ikc_inv_vec_a2(const double& s);
 
   private:
     KMatrix kmat_f0 = KMatrix(5, 5);

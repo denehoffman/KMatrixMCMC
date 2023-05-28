@@ -47,10 +47,6 @@ void KMatrix::print() const {
   cout << "cBkg matrix:\n" << cBkg << endl;
 }
 
-void KMatrix::clearCache() {
-  cache.clear();
-}
-
 // Calculate chi+
 arma::cx_vec KMatrix::chi_p(const double& s) const {
   arma::cx_vec result(numChannels);
@@ -80,10 +76,10 @@ arma::cx_vec KMatrix::q(const double& s) const {
 arma::cx_vec KMatrix::blatt_weisskopf(const double& s) const {
   arma::cx_vec result = arma::ones<arma::cx_vec>(numChannels) * (J == 0);
   arma::cx_vec z = arma::square(KMatrix::q(s)) / (0.1973 * 0.1973);
-  result += arma::sqrt(z / (z + 1.0)) * (J == 1);
+  // result += arma::sqrt(z / (z + 1.0)) * (J == 1);
   result += arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z)) * (J == 2);
-  result += arma::sqrt(277.0 * arma::pow(z, 3) / (z % arma::square(z - 15.0) + 9.0 * arma::square(2.0 * z - 5.0))) * (J == 3);
-  result += arma::sqrt(12746.0 * arma::pow(z, 4) / (arma::square(arma::square(z) - 45.0 * z + 105.0) + 25.0 * z % arma::square(2.0 * z - 21.0))) * (J == 4);
+  // result += arma::sqrt(277.0 * arma::pow(z, 3) / (z % arma::square(z - 15.0) + 9.0 * arma::square(2.0 * z - 5.0))) * (J == 3);
+  // result += arma::sqrt(12746.0 * arma::pow(z, 4) / (arma::square(arma::square(z) - 45.0 * z + 105.0) + 25.0 * z % arma::square(2.0 * z - 21.0))) * (J == 4);
   return result;
 }
 
@@ -148,24 +144,18 @@ arma::cx_mat KMatrix::C(const double& s) const {
 }
 
 arma::cx_mat KMatrix::IKC_inv(const double& s) {
-  auto it = cache.find(s);
-  if (it != cache.end()) { return it-> second; }
   arma::cx_mat kmat = KMatrix::K(s);
   arma::cx_mat cmat = KMatrix::C(s);
   arma::cx_mat IKC = arma::eye(numChannels, numChannels) + kmat * cmat;
   arma::cx_mat result = arma::inv(IKC, arma::inv_opts::allow_approx);
-  cache[s] = result;
   return result;
 }
 
 arma::cx_mat KMatrix::IKC_inv(const double& s, const double& s_0, const double& s_norm) {
-  auto it = cache.find(s);
-  if (it != cache.end()) { return it-> second; }
   arma::cx_mat kmat = KMatrix::K(s, s_0, s_norm);
   arma::cx_mat cmat = KMatrix::C(s);
   arma::cx_mat IKC = arma::eye(numChannels, numChannels) + kmat * cmat;
   arma::cx_mat result = arma::inv(IKC, arma::inv_opts::allow_approx);
-  cache[s] = result;
   return result;
 }
 
@@ -181,14 +171,7 @@ arma::cx_vec KMatrix::P(const double& s, const arma::cx_vec& betas) const {
   return result;
 }
 
-complex<double> KMatrix::F(const double& s, const arma::cx_vec& betas, const int& channel) {
-  arma::cx_mat ikc_inv = KMatrix::IKC_inv(s);
+complex<double> KMatrix::F(const double& s, const arma::cx_vec& betas, const arma::cx_vec& ikc_inv_vec) {
   arma::cx_vec p_vec = KMatrix::P(s, betas);
-  return arma::dot(ikc_inv.row(channel), p_vec);
-}
-
-complex<double> KMatrix::F(const double& s, const arma::cx_vec& betas, const double& s_0, const double& s_norm, const int& channel) {
-  arma::cx_mat ikc_inv = KMatrix::IKC_inv(s, s_0, s_norm);
-  arma::cx_vec p_vec = KMatrix::P(s, betas);
-  return arma::dot(ikc_inv.row(channel), p_vec);
+  return arma::dot(ikc_inv_vec, p_vec);
 }

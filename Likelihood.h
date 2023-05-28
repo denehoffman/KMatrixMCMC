@@ -4,6 +4,7 @@
 #include "Amplitude.h"
 #include "DataReader.h"
 #include <string>
+#include <armadillo>
 
 using namespace std;
 
@@ -21,13 +22,24 @@ public:
   void setup();
 
   // Calculate log likelihood
-  double getExtendedLogLikelihood();
+  double getExtendedLogLikelihood(const vector<double>& params);
 
 private:
-  Amplitude amplitude_;
-  DataReader data_reader_;
-  DataReader acc_reader_;
-  DataReader gen_reader_;
+  Amplitude amplitude;
+  DataReader data;
+  DataReader acc;
+  DataReader gen;
+  int nGenerated;
+  void printLoadingBar (const int& progress, const int& total, const int& barWidth = 50) const;
+  vector<arma::cx_vec> ikc_inv_vec_f0;
+  vector<arma::cx_vec> ikc_inv_vec_f2;
+  vector<arma::cx_vec> ikc_inv_vec_a0;
+  vector<arma::cx_vec> ikc_inv_vec_a2;
+
+  vector<arma::cx_vec> ikc_inv_vec_f0_mc;
+  vector<arma::cx_vec> ikc_inv_vec_f2_mc;
+  vector<arma::cx_vec> ikc_inv_vec_a0_mc;
+  vector<arma::cx_vec> ikc_inv_vec_a2_mc;
 };
 
 #endif  // LIKELIHOOD_H

@@ -35,3 +35,7 @@ run_mcmc
 compile_commands.json
 
 .cache/clangd/index/
+
+sandbox/
+
+*.png
