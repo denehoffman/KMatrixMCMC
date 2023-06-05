@@ -5,7 +5,7 @@
 //!
 //! @param[in] numChannels The number of channels in the K-matrix
 //! @param[in] numAlphas The number of resonances in the K-matrix
-//! @param[in] j The total anglular momentum of all resonances in the K-matrix
+//! @param[in] J The total anglular momentum of all resonances in the K-matrix
 //!
 KMatrix::KMatrix(int numChannels, int numAlphas, int J) : numAlphas(numAlphas), numChannels(numChannels),
   mAlphas(1, numAlphas), mChannels(numChannels, 2),
@@ -71,14 +71,14 @@ void KMatrix::print() const {
 }
 
 //!
-//! @brief Calculate \(\Chi^+\) function
+//! @brief Calculate \f(\chi^+\f) function
 //!
-//! \[
-//! \Chi^+(s) = 1 - \frac{(m_1 + m_2)^2}{s}
-//! \]
+//! \f[
+//! \chi^+(s) = 1 - \frac{(m_1 + m_2)^2}{s}
+//! \f]
 //!
 //! @param[in] s Input mass squared
-//! @param[out] result Vector containing result of this operation for each channel
+//! \return Vector containing result of this operation for each channel
 //!
 arma::cx_vec KMatrix::chi_p(const double& s) const {
   arma::cx_vec result(numChannels);
@@ -87,14 +87,14 @@ arma::cx_vec KMatrix::chi_p(const double& s) const {
 }
 
 //!
-//! @brief Calculate \(\Chi^-\) function
+//! @brief Calculate \f(\chi^-\f) function
 //!
-//! \[
-//! \Chi^-(s) = 1 - \frac{(m_1 - m_2)^2}{s}
-//! \]
+//! \f[
+//! \chi^-(s) = 1 - \frac{(m_1 - m_2)^2}{s}
+//! \f]
 //!
 //! @param[in] s Input mass squared
-//! @param[out] result Vector containing result of this operation for each channel
+//! \return Vector containing result of this operation for each channel
 //!
 arma::cx_vec KMatrix::chi_m(const double& s) const {
   arma::cx_vec result(numChannels);
@@ -103,14 +103,14 @@ arma::cx_vec KMatrix::chi_m(const double& s) const {
 }
 
 //!
-//! @brief Calculate \(\rho\) function
+//! @brief Calculate \f(\rho\f) function
 //!
-//! \[
-//! \rho = \sqrt{\Chi^+(s)\Chi^-(s)}
-//! \]
+//! \f[
+//! \rho = \sqrt{\chi^+(s)\chi^-(s)}
+//! \f]
 //!
 //! @param[in] s Input mass squared
-//! @param[out] result Vector containing result of this operation for each channel
+//! \return Vector containing result of this operation for each channel
 //!
 arma::cx_vec KMatrix::rho(const double& s) const {
   arma::cx_vec result(numChannels);
@@ -118,37 +118,77 @@ arma::cx_vec KMatrix::rho(const double& s) const {
   return result;
 }
 
+//!
+//! @brief Calculate breakup momentum \f(q\f)
+//!
+//! \f[
+//! q = \rho(s) \frac{\sqrt{s}}{2}
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! \return Vector containing result of this operation for each channel
+//!
 arma::cx_vec KMatrix::q(const double& s) const {
   arma::cx_vec result(numChannels);
   result = sqrt(s) * KMatrix::rho(s) / 2.0;
   return result;
 }
 
-// arma::cx_vec KMatrix::blatt_weisskopf(const double& s) const {
-//   arma::cx_vec result = arma::ones<arma::cx_vec>(numChannels) * (J == 0);
-//   arma::cx_vec z = arma::square(KMatrix::q(s)) / (0.1973 * 0.1973);
-//   // result += arma::sqrt(z / (z + 1.0)) * (J == 1);
-//   result += arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z)) * (J == 2);
-//   // result += arma::sqrt(277.0 * arma::pow(z, 3) / (z % arma::square(z - 15.0) + 9.0 * arma::square(2.0 * z - 5.0))) * (J == 3);
-//   // result += arma::sqrt(12746.0 * arma::pow(z, 4) / (arma::square(arma::square(z) - 45.0 * z + 105.0) + 25.0 * z % arma::square(2.0 * z - 21.0))) * (J == 4);
-//   return result;
-// }
-
+//!
+//! @brief Calculate Blatt-Weisskopf centrifugal barrier factor for \f(J=0\f)
+//!
+//! \f[
+//! bw_0(s) = 1
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! \return Vector containing result of this operation for each channel
+//!
 arma::cx_vec KMatrix::blatt_weisskopf0(const double& s) {
-  arma::cx_vec result = arma::ones<arma::cx_vec>(numChannels) * (J == 0);
+  arma::cx_vec result = arma::ones<arma::cx_vec>(numChannels);
   return result;
 }
 
+//!
+//! @brief Calculate Blatt-Weisskopf centrifugal barrier factor for \f(J=2\f)
+//!
+//! \f[
+//! bw_2(s) = \sqrt{\frac{13z^2}{(z-3)^2 + 9z}}\quad z = \frac{q(s)^2}{0.1973^2}
+//! \f]
+//!
+//! Note: 0.1973 is in GeV and q has units of GeV, so z is dimensionless
+//!
+//! @param[in] s Input mass squared
+//! \return Vector containing result of this operation for each channel
+//!
 arma::cx_vec KMatrix::blatt_weisskopf2(const double& s) {
   arma::cx_vec z = arma::square(KMatrix::q(s)) / (0.1973 * 0.1973);
-  arma::cx_vec result = arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z)) * (J == 2);
+  arma::cx_vec result = arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z));
   return result;
 }
 
+//!
+//! @brief Calculate Blatt-Weisskopf centrifugal barrier factor according to \f(J\f) value
+//!
+//! Uses a function pointer assigned at initialization to choose between \f(J=0\f) or \f(J=2\f)
+//!
+//! @param[in] s Input mass squared
+//! \return Vector containing result of this operation for each channel
+//!
 arma::cx_vec KMatrix::blatt_weisskopf(const double& s) const {
   return blattWeisskopfPtr(s);
 }
 
+//!
+//! @brief Calculates ratio of Blatt-Weisskopf centrifugal barrier factors for each channel and resonance
+//!
+//! \f[
+//! B^J_i(s, m_\alpha) = \frac{bw^J_i(s)}{bw^J(m_\alpha^2)}
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! \return Matrix containing result of this operation with dimension (numChannels, numAlphas)
+//!
 arma::cx_mat KMatrix::B(const double& s) const {
   arma::cx_mat result(numChannels, numAlphas);
   result.each_col() = KMatrix::blatt_weisskopf(s);
@@ -158,6 +198,16 @@ arma::cx_mat KMatrix::B(const double& s) const {
   return result;
 }
 
+//!
+//! @brief Calculates ratio of Blatt-Weisskopf centrifugal barrier factors for each channel and resonance
+//!
+//! \f[
+//! B2_{ij}^J(s, m_\alpha) = \frac{bw_i^J(s)bw_j^J(s)}{(bw^J(m_\alpha^2))^2}
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! \return Cube containing result of this operation with dimension (numChannels, numChannels, numAlphas)
+//!
 arma::cx_cube KMatrix::B2(const double& s) const {
   arma::cx_cube result(numChannels, numChannels, numAlphas);
   arma::cx_vec numerator = KMatrix::blatt_weisskopf(s);
@@ -168,6 +218,16 @@ arma::cx_cube KMatrix::B2(const double& s) const {
   return result;
 }
 
+//!
+//! @brief Calculates K-Matrix for a given input mass
+//!
+//! \f[
+//! K_{ij}(s) = \sum_\alpha \left(\frac{g_{i,\alpha}g_{j,\alpha}}{m_\alpha^2 - s} + cBkg_{ij}\right) B2_{ij}^J(s, m_\alpha)
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! \return Matrix containing result of this operation with dimension (numChannels, numChannels)
+//!
 arma::cx_mat KMatrix::K(const double& s) const {
   arma::cx_mat result(numChannels, numChannels);
   arma::cx_cube gigj = arma::zeros<arma::cx_cube>(numChannels, numChannels, numAlphas);
@@ -181,6 +241,18 @@ arma::cx_mat KMatrix::K(const double& s) const {
   return result;
 }
 
+//!
+//! @brief Calculates K-Matrix for a given input mass with Adler zero term
+//!
+//! \f[
+//! K_{ij}(s) = \frac{s - s_0}{s_{\text{norm}}}\sum_\alpha \left(\frac{g_{i,\alpha}g_{j,\alpha}}{m_\alpha^2 - s} + cBkg_{ij}\right) B2_{ij}^J(s, m_\alpha)
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! @param[in] s_0 Location of Adler zero
+//! @param[in] s_norm Normalization factor for Adler zero term
+//! \return Matrix containing result of this operation with dimension (numChannels, numChannels)
+//!
 arma::cx_mat KMatrix::K(const double& s, const double& s_0, const double& s_norm) const {
   arma::cx_mat result(numChannels, numChannels);
   arma::cx_cube gigj = arma::zeros<arma::cx_cube>(numChannels, numChannels, numAlphas);
@@ -194,6 +266,16 @@ arma::cx_mat KMatrix::K(const double& s, const double& s_0, const double& s_norm
   return result * (s - s_0) / s_norm;
 }
 
+//!
+//! @brief Calculates Chew-Mandelstam matrix
+//!
+//! \f[
+//! C(s) = \frac{\rho(s)}{\pi}\ln\left(\frac{\chi^+(s) + \rho(s)}{\chi^+(s) - \rho(s)}\right) - \frac{\chi^+(s)}{\pi}\left(\frac{m_2 - m_1}{m_1 + m_2}\right)\ln\left(\frac{m_2}{m_1}\right)
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! \return Diagonal matrix where each diagonal element is the result of this function for the corresponding channel
+//!
 arma::cx_mat KMatrix::C(const double& s) const {
   arma::cx_mat result(numChannels, numChannels);
   arma::cx_vec diagonal(numChannels);
@@ -209,6 +291,16 @@ arma::cx_mat KMatrix::C(const double& s) const {
   return result;
 }
 
+//!
+//! @brief Calculates the inverse of the "IKC" matrix
+//!
+//! \f[
+//! \to (I - K(s)C(s))^{-1}
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! \return Matrix containing the result of this calculation with dimensions of (numChannels, numChannels)
+//!
 arma::cx_mat KMatrix::IKC_inv(const double& s) {
   arma::cx_mat kmat = KMatrix::K(s);
   arma::cx_mat cmat = KMatrix::C(s);
@@ -217,6 +309,18 @@ arma::cx_mat KMatrix::IKC_inv(const double& s) {
   return result;
 }
 
+//!
+//! @brief Calculates the inverse of the "IKC" matrix with Adler zero term in K-Matrix
+//!
+//! \f[
+//! \to (I - K(s)C(s))^{-1}
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! @param[in] s_0 Location of Adler zero
+//! @param[in] s_norm Normalization factor for Adler zero term
+//! \return Matrix containing the result of this calculation with dimensions of (numChannels, numChannels)
+//!
 arma::cx_mat KMatrix::IKC_inv(const double& s, const double& s_0, const double& s_norm) {
   arma::cx_mat kmat = KMatrix::K(s, s_0, s_norm);
   arma::cx_mat cmat = KMatrix::C(s);
@@ -225,6 +329,17 @@ arma::cx_mat KMatrix::IKC_inv(const double& s, const double& s_0, const double& 
   return result;
 }
 
+//!
+//! @brief Calculates P-vector for a given input mass and vector of couplings
+//!
+//! \f[
+//! P_{j}(s,\beta) = \sum_\alpha \left(\frac{\beta_\alpha g_{j,\alpha}}{m_\alpha^2 - s}\right) B_{j}^J(s, m_\alpha)
+//! \f]
+//!
+//! @param[in] s Input mass squared
+//! @param[in] betas Vector containing complex couplings for each resonance
+//! \return Vector containing result of this operation
+//!
 arma::cx_vec KMatrix::P(const double& s, const arma::cx_vec& betas) const {
   arma::cx_vec result(numChannels);
   arma::cx_mat betag(numChannels, numAlphas);
@@ -237,6 +352,19 @@ arma::cx_vec KMatrix::P(const double& s, const arma::cx_vec& betas) const {
   return result;
 }
 
+//!
+//! @brief Calculates complex amplitude for a given K-Matrix parameterization
+//!
+//! \f[
+//! F(s, \beta) = (I - K(s)C(s))^{-1}\cdot P(s, \beta)
+//! \f]
+//!
+//! Note, the actual calculation just uses one row of \f((I - KC)^{-1}\f) since we don't need to store info for the channels we don't use
+//!
+//! @param[in] s Input mass squared
+//! @param[in] betas Vector containing complex couplings for each resonance
+//! @param[in] ikc_inv_vec Vector containing a row of the inverse of the "IKC" matrix for the channel specified at initialization
+//!
 complex<double> KMatrix::F(const double& s, const arma::cx_vec& betas, const arma::cx_vec& ikc_inv_vec) {
   arma::cx_vec p_vec = KMatrix::P(s, betas);
   return arma::dot(ikc_inv_vec, p_vec);

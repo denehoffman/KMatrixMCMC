@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['chi_5fm_0',['chi_m',['../classKMatrix.html#a4231225ce368de751d182ef4912c8d67',1,'KMatrix']]],
-  ['chi_5fp_1',['chi_p',['../classKMatrix.html#af15c5b00f7b92ee4b14839778441b7d7',1,'KMatrix']]]
+  ['b_0',['B',['../classKMatrix.html#aa794e44b4ca0a4d44a9a7df6af1c1d22',1,'KMatrix']]],
+  ['b2_1',['B2',['../classKMatrix.html#acc1780abfded675c8b3bb33f4d6d0ada',1,'KMatrix']]],
+  ['blatt_5fweisskopf_2',['blatt_weisskopf',['../classKMatrix.html#a31d6667ea4f4314e1aa6e1d44c8275e8',1,'KMatrix']]]
 ];

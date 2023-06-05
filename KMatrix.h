@@ -9,6 +9,9 @@
 
 using namespace std;
 
+/**
+ * @brief The K-Matrix class
+ */
 class KMatrix {
 public:
     int numAlphas;

@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -O2 $(shell root-config --cflags)
+CXXFLAGS = -O2 $(shell root-config --cflags)
 
 TARGET = run_mcmc
 SOURCES = $(wildcard *.cpp)
@@ -12,6 +12,9 @@ $(TARGET): $(OBJECTS)
 
 %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@ 
+
+profile: CXXFLAGS := $(filter-out -O2,$(CXXFLAGS)) -O0 -pg
+profile: $(TARGET)
 
 clean:
 	rm -f $(OBJECTS) $(TARGET)
