@@ -1,0 +1,193 @@
+\doxysection{KMatrix Class Reference}
+\hypertarget{classKMatrix}{}\label{classKMatrix}\index{KMatrix@{KMatrix}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classKMatrix_a11a4817a0bd8b876681f460fe04e2b62}{KMatrix}} (int num\+Channels, int num\+Alphas, int J)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classKMatrix}{KMatrix} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classKMatrix_a69001cf50b0e838b1603577a47b7de46}{initialize}} (const arma\+::mat \&m\+\_\+alphas, const arma\+::mat \&m\+\_\+channels, const arma\+::mat \&g\+\_\+alphas, const arma\+::mat \&c\+\_\+bkg)
+\begin{DoxyCompactList}\small\item\em Initialize components of K-\/matrix. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classKMatrix_ab90eba91df1df0c302c889b7b512a438}{print}} () const
+\begin{DoxyCompactList}\small\item\em Prints the data contained in the K-\/matrix. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+vec \mbox{\hyperlink{classKMatrix_af15c5b00f7b92ee4b14839778441b7d7}{chi\+\_\+p}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculate (\textbackslash{}\+Chi\texorpdfstring{$^\wedge$}{\string^}+) function. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+vec \mbox{\hyperlink{classKMatrix_a4231225ce368de751d182ef4912c8d67}{chi\+\_\+m}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculate (\textbackslash{}\+Chi\texorpdfstring{$^\wedge$}{\string^}-\/) function. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+vec \mbox{\hyperlink{classKMatrix_a0facd2c798f631e1214edc6434e6eed4}{rho}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculate (\textbackslash{}rho) function. \end{DoxyCompactList}\item 
+\Hypertarget{classKMatrix_aa7e6502e37d525caae0e8b7e1382a4b0}\label{classKMatrix_aa7e6502e37d525caae0e8b7e1382a4b0} 
+arma\+::cx\+\_\+vec {\bfseries q} (const double \&s) const
+\item 
+\Hypertarget{classKMatrix_a31d6667ea4f4314e1aa6e1d44c8275e8}\label{classKMatrix_a31d6667ea4f4314e1aa6e1d44c8275e8} 
+arma\+::cx\+\_\+vec {\bfseries blatt\+\_\+weisskopf} (const double \&s) const
+\item 
+\Hypertarget{classKMatrix_aa794e44b4ca0a4d44a9a7df6af1c1d22}\label{classKMatrix_aa794e44b4ca0a4d44a9a7df6af1c1d22} 
+arma\+::cx\+\_\+mat {\bfseries B} (const double \&s) const
+\item 
+\Hypertarget{classKMatrix_acc1780abfded675c8b3bb33f4d6d0ada}\label{classKMatrix_acc1780abfded675c8b3bb33f4d6d0ada} 
+arma\+::cx\+\_\+cube {\bfseries B2} (const double \&s) const
+\item 
+\Hypertarget{classKMatrix_a58d8f64dff12a5813398e1a7ca287fa1}\label{classKMatrix_a58d8f64dff12a5813398e1a7ca287fa1} 
+arma\+::cx\+\_\+mat {\bfseries K} (const double \&s) const
+\item 
+\Hypertarget{classKMatrix_a083a769ae6b35666efe187114db3cf34}\label{classKMatrix_a083a769ae6b35666efe187114db3cf34} 
+arma\+::cx\+\_\+mat {\bfseries K} (const double \&s, const double \&s\+\_\+0, const double \&s\+\_\+norm) const
+\item 
+\Hypertarget{classKMatrix_ab0a3d29922f9f7afb63bd2b35a8c4239}\label{classKMatrix_ab0a3d29922f9f7afb63bd2b35a8c4239} 
+arma\+::cx\+\_\+mat {\bfseries C} (const double \&s) const
+\item 
+\Hypertarget{classKMatrix_ad16a0f5d95a9b39a069ad65e1b7e1817}\label{classKMatrix_ad16a0f5d95a9b39a069ad65e1b7e1817} 
+arma\+::cx\+\_\+mat {\bfseries IKC\+\_\+inv} (const double \&s)
+\item 
+\Hypertarget{classKMatrix_ad8025a87f467fced2dec299401deca50}\label{classKMatrix_ad8025a87f467fced2dec299401deca50} 
+arma\+::cx\+\_\+mat {\bfseries IKC\+\_\+inv} (const double \&s, const double \&s\+\_\+0, const double \&s\+\_\+norm)
+\item 
+\Hypertarget{classKMatrix_a39642afbda745207fa8f4838402a82cc}\label{classKMatrix_a39642afbda745207fa8f4838402a82cc} 
+arma\+::cx\+\_\+vec {\bfseries P} (const double \&s, const arma\+::cx\+\_\+vec \&betas) const
+\item 
+\Hypertarget{classKMatrix_ac7205d2a350bcb8407abfa653eb1949a}\label{classKMatrix_ac7205d2a350bcb8407abfa653eb1949a} 
+complex$<$ double $>$ {\bfseries F} (const double \&s, const arma\+::cx\+\_\+vec \&betas, const arma\+::cx\+\_\+vec \&ikc\+\_\+inv\+\_\+vec)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classKMatrix_a7ef6df276a6ddca85fdf5de2abab5d32}\label{classKMatrix_a7ef6df276a6ddca85fdf5de2abab5d32} 
+int {\bfseries num\+Alphas}
+\item 
+\Hypertarget{classKMatrix_acde0c9dd6e3187a939962b7df553e9ca}\label{classKMatrix_acde0c9dd6e3187a939962b7df553e9ca} 
+int {\bfseries num\+Channels}
+\item 
+\Hypertarget{classKMatrix_a861af99c8ffaf3ef5ccb2e5d305388c2}\label{classKMatrix_a861af99c8ffaf3ef5ccb2e5d305388c2} 
+int {\bfseries J}
+\item 
+\Hypertarget{classKMatrix_a51a7b8b2e5d35afa6ee29164b52eb171}\label{classKMatrix_a51a7b8b2e5d35afa6ee29164b52eb171} 
+arma\+::cx\+\_\+mat {\bfseries m\+Alphas}
+\item 
+\Hypertarget{classKMatrix_aa7d0b8eed75a3f9609c326960853d197}\label{classKMatrix_aa7d0b8eed75a3f9609c326960853d197} 
+arma\+::cx\+\_\+mat {\bfseries m\+Channels}
+\item 
+\Hypertarget{classKMatrix_a7d889d7b999e3eef44d3711a5d9dad3b}\label{classKMatrix_a7d889d7b999e3eef44d3711a5d9dad3b} 
+arma\+::cx\+\_\+mat {\bfseries g\+Alphas}
+\item 
+\Hypertarget{classKMatrix_a4e5adaee5aa7afe4daa84e00e2266f0b}\label{classKMatrix_a4e5adaee5aa7afe4daa84e00e2266f0b} 
+arma\+::cx\+\_\+mat {\bfseries c\+Bkg}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classKMatrix_a11a4817a0bd8b876681f460fe04e2b62}\label{classKMatrix_a11a4817a0bd8b876681f460fe04e2b62} 
+\index{KMatrix@{KMatrix}!KMatrix@{KMatrix}}
+\index{KMatrix@{KMatrix}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{KMatrix()}{KMatrix()}}
+{\footnotesize\ttfamily KMatrix\+::\+KMatrix (\begin{DoxyParamCaption}\item[{int}]{num\+Channels,  }\item[{int}]{num\+Alphas,  }\item[{int}]{J }\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classKMatrix}{KMatrix} class. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em num\+Channels} & The number of channels in the K-\/matrix \\
+\hline
+\mbox{\texttt{ in}}  & {\em num\+Alphas} & The number of resonances in the K-\/matrix \\
+\hline
+\mbox{\texttt{ in}}  & {\em j} & The total anglular momentum of all resonances in the K-\/matrix \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classKMatrix_a4231225ce368de751d182ef4912c8d67}\label{classKMatrix_a4231225ce368de751d182ef4912c8d67} 
+\index{KMatrix@{KMatrix}!chi\_m@{chi\_m}}
+\index{chi\_m@{chi\_m}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{chi\_m()}{chi\_m()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+vec KMatrix\+::chi\+\_\+m (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculate (\textbackslash{}\+Chi\texorpdfstring{$^\wedge$}{\string^}-\/) function. 
+
+\mbox{[} \textbackslash{}\+Chi\texorpdfstring{$^\wedge$}{\string^}-\/(s) = 1 -\/ \textbackslash{}frac\{(m\+\_\+1 -\/ m\+\_\+2)\texorpdfstring{$^\wedge$}{\string^}2\}\{s\} \mbox{]}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\mbox{\texttt{ out}}  & {\em result} & Vector containing result of this operation for each channel \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classKMatrix_af15c5b00f7b92ee4b14839778441b7d7}\label{classKMatrix_af15c5b00f7b92ee4b14839778441b7d7} 
+\index{KMatrix@{KMatrix}!chi\_p@{chi\_p}}
+\index{chi\_p@{chi\_p}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{chi\_p()}{chi\_p()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+vec KMatrix\+::chi\+\_\+p (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculate (\textbackslash{}\+Chi\texorpdfstring{$^\wedge$}{\string^}+) function. 
+
+\mbox{[} \textbackslash{}\+Chi\texorpdfstring{$^\wedge$}{\string^}+(s) = 1 -\/ \textbackslash{}frac\{(m\+\_\+1 + m\+\_\+2)\texorpdfstring{$^\wedge$}{\string^}2\}\{s\} \mbox{]}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\mbox{\texttt{ out}}  & {\em result} & Vector containing result of this operation for each channel \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classKMatrix_a69001cf50b0e838b1603577a47b7de46}\label{classKMatrix_a69001cf50b0e838b1603577a47b7de46} 
+\index{KMatrix@{KMatrix}!initialize@{initialize}}
+\index{initialize@{initialize}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void KMatrix\+::initialize (\begin{DoxyParamCaption}\item[{const arma\+::mat \&}]{m\+\_\+alphas,  }\item[{const arma\+::mat \&}]{m\+\_\+channels,  }\item[{const arma\+::mat \&}]{g\+\_\+alphas,  }\item[{const arma\+::mat \&}]{c\+\_\+bkg }\end{DoxyParamCaption})}
+
+
+
+Initialize components of K-\/matrix. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em m\+\_\+alphas} & Array containing masses of each resonance (1 x n\+Alphas) \\
+\hline
+\mbox{\texttt{ in}}  & {\em m\+\_\+channels} & Array containing pairs of daughter masses (num\+Channels x 2) \\
+\hline
+\mbox{\texttt{ in}}  & {\em g\+\_\+alphas} & Array containing channel coupings \"{}g\"{} (num\+Channels x num\+Alphas) \\
+\hline
+\mbox{\texttt{ in}}  & {\em c\+\_\+bkg} & Array of K-\/matrix background terms (num\+Channels x num\+Channels) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classKMatrix_ab90eba91df1df0c302c889b7b512a438}\label{classKMatrix_ab90eba91df1df0c302c889b7b512a438} 
+\index{KMatrix@{KMatrix}!print@{print}}
+\index{print@{print}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void KMatrix\+::print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Prints the data contained in the K-\/matrix. 
+
+\Hypertarget{classKMatrix_a0facd2c798f631e1214edc6434e6eed4}\label{classKMatrix_a0facd2c798f631e1214edc6434e6eed4} 
+\index{KMatrix@{KMatrix}!rho@{rho}}
+\index{rho@{rho}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{rho()}{rho()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+vec KMatrix\+::rho (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculate (\textbackslash{}rho) function. 
+
+\mbox{[} \textbackslash{}rho = \textbackslash{}sqrt\{\textbackslash{}\+Chi\texorpdfstring{$^\wedge$}{\string^}+(s)\textbackslash{}\+Chi\texorpdfstring{$^\wedge$}{\string^}-\/(s)\} \mbox{]}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\mbox{\texttt{ out}}  & {\em result} & Vector containing result of this operation for each channel \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+KMatrix.\+h\item 
+KMatrix.\+cpp\end{DoxyCompactItemize}

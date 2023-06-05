@@ -1,0 +1,55 @@
+\doxysection{Amplitude.\+h}
+\hypertarget{Amplitude_8h_source}{}\label{Amplitude_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ AMPLITUDE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ AMPLITUDE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <armadillo>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}KMatrix.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{using\ namespace\ }arma;}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classAmplitude}{Amplitude}}\ \{}
+\DoxyCodeLine{00010\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{classAmplitude}{Amplitude}}();}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{double}\ intensity(\textcolor{keyword}{const}\ cx\_vec\&\ betas,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ theta,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ phi,}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cx\_mat\&\ ikc\_inv\_f0,}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cx\_mat\&\ ikc\_inv\_f2,}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cx\_mat\&\ ikc\_inv\_a0,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cx\_mat\&\ ikc\_inv\_a2);}
+\DoxyCodeLine{00017\ \ \ \ \ complex<double>\ S0\_wave(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ theta,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ phi);}
+\DoxyCodeLine{00018\ \ \ \ \ complex<double>\ D2\_wave(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ theta,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ phi);}
+\DoxyCodeLine{00019\ \ \ \ \ cx\_vec\ ikc\_inv\_vec\_f0(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s);}
+\DoxyCodeLine{00020\ \ \ \ \ cx\_vec\ ikc\_inv\_vec\_f2(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s);}
+\DoxyCodeLine{00021\ \ \ \ \ cx\_vec\ ikc\_inv\_vec\_a0(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s);}
+\DoxyCodeLine{00022\ \ \ \ \ cx\_vec\ ikc\_inv\_vec\_a2(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{classKMatrix}{KMatrix}}\ kmat\_f0\ =\ \mbox{\hyperlink{classKMatrix}{KMatrix}}(5,\ 5,\ 0);}
+\DoxyCodeLine{00026\ \ \ \ \ mat\ f0\_mchannels;}
+\DoxyCodeLine{00027\ \ \ \ \ mat\ f0\_malphas;}
+\DoxyCodeLine{00028\ \ \ \ \ mat\ f0\_galphas;}
+\DoxyCodeLine{00029\ \ \ \ \ mat\ f0\_cbkg;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classKMatrix}{KMatrix}}\ kmat\_f2\ =\ \mbox{\hyperlink{classKMatrix}{KMatrix}}(4,\ 4,\ 2);}
+\DoxyCodeLine{00032\ \ \ \ \ mat\ f2\_mchannels;}
+\DoxyCodeLine{00033\ \ \ \ \ mat\ f2\_malphas;}
+\DoxyCodeLine{00034\ \ \ \ \ mat\ f2\_galphas;}
+\DoxyCodeLine{00035\ \ \ \ \ mat\ f2\_cbkg;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{classKMatrix}{KMatrix}}\ kmat\_a0\ =\ \mbox{\hyperlink{classKMatrix}{KMatrix}}(2,\ 2,\ 0);}
+\DoxyCodeLine{00038\ \ \ \ \ mat\ a0\_mchannels;}
+\DoxyCodeLine{00039\ \ \ \ \ mat\ a0\_malphas;}
+\DoxyCodeLine{00040\ \ \ \ \ mat\ a0\_galphas;}
+\DoxyCodeLine{00041\ \ \ \ \ mat\ a0\_cbkg;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{classKMatrix}{KMatrix}}\ kmat\_a2\ =\ \mbox{\hyperlink{classKMatrix}{KMatrix}}(3,\ 2,\ 2);}
+\DoxyCodeLine{00044\ \ \ \ \ mat\ a2\_mchannels;}
+\DoxyCodeLine{00045\ \ \ \ \ mat\ a2\_malphas;}
+\DoxyCodeLine{00046\ \ \ \ \ mat\ a2\_galphas;}
+\DoxyCodeLine{00047\ \ \ \ \ mat\ a2\_cbkg;}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

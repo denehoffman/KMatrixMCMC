@@ -20,15 +20,14 @@ public:
     arma::cx_mat cBkg;
 
     // Constructor
-    KMatrix(int numChannels, int numAlphas);
+    KMatrix(int numChannels, int numAlphas, int J);
 
     // Initialize the matrices and vectors
     void initialize(
         const arma::mat& m_alphas,
         const arma::mat& m_channels,
         const arma::mat& g_alphas,
-        const arma::mat& c_bkg,
-        const int& j);
+        const arma::mat& c_bkg);
 
     // Print the matrices and vectors
     void print() const;
@@ -47,6 +46,11 @@ public:
     arma::cx_mat IKC_inv(const double& s, const double& s_0, const double& s_norm);
     arma::cx_vec P(const double& s, const arma::cx_vec& betas) const;
     complex<double> F(const double& s, const arma::cx_vec& betas, const arma::cx_vec& ikc_inv_vec);
+  
+  private:
+    function<arma::cx_vec(const double&)> blattWeisskopfPtr;
+    arma::cx_vec blatt_weisskopf0(const double& s);
+    arma::cx_vec blatt_weisskopf2(const double& s);
 };
 
 #endif  // KMATRIX_H

@@ -1,0 +1,50 @@
+\doxysection{Likelihood.\+h}
+\hypertarget{Likelihood_8h_source}{}\label{Likelihood_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ LIKELIHOOD\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ LIKELIHOOD\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Amplitude.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}DataReader.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <armadillo>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classLikelihood}{Likelihood}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{00014\ \ \ \mbox{\hyperlink{classLikelihood}{Likelihood}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ data\_path,}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ acc\_path,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ gen\_path,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ data\_tree\ =\ \textcolor{stringliteral}{"{}kin"{}},}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ acc\_tree\ =\ \textcolor{stringliteral}{"{}kin"{}},}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ gen\_tree\ =\ \textcolor{stringliteral}{"{}kin"{}});}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \textcolor{comment}{//\ Setup\ function}}
+\DoxyCodeLine{00022\ \ \ \textcolor{keywordtype}{void}\ setup();}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{comment}{//\ Calculate\ log\ likelihood}}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{double}\ getExtendedLogLikelihood(\textcolor{keyword}{const}\ vector<double>\&\ params);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ \mbox{\hyperlink{classAmplitude}{Amplitude}}\ amplitude;}
+\DoxyCodeLine{00029\ \ \ \mbox{\hyperlink{classDataReader}{DataReader}}\ data;}
+\DoxyCodeLine{00030\ \ \ \mbox{\hyperlink{classDataReader}{DataReader}}\ acc;}
+\DoxyCodeLine{00031\ \ \ \mbox{\hyperlink{classDataReader}{DataReader}}\ gen;}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{int}\ nGenerated;}
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordtype}{void}\ printLoadingBar\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ progress,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ total,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ barWidth\ =\ 50)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ \ \ vector<arma::cx\_vec>\ ikc\_inv\_vec\_f0;}
+\DoxyCodeLine{00035\ \ \ vector<arma::cx\_vec>\ ikc\_inv\_vec\_f2;}
+\DoxyCodeLine{00036\ \ \ vector<arma::cx\_vec>\ ikc\_inv\_vec\_a0;}
+\DoxyCodeLine{00037\ \ \ vector<arma::cx\_vec>\ ikc\_inv\_vec\_a2;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ vector<arma::cx\_vec>\ ikc\_inv\_vec\_f0\_mc;}
+\DoxyCodeLine{00040\ \ \ vector<arma::cx\_vec>\ ikc\_inv\_vec\_f2\_mc;}
+\DoxyCodeLine{00041\ \ \ vector<arma::cx\_vec>\ ikc\_inv\_vec\_a0\_mc;}
+\DoxyCodeLine{00042\ \ \ vector<arma::cx\_vec>\ ikc\_inv\_vec\_a2\_mc;}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ LIKELIHOOD\_H}}
+
+\end{DoxyCode}

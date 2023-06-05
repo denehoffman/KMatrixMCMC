@@ -1,0 +1,61 @@
+\doxysection{KMatrix.\+h}
+\hypertarget{KMatrix_8h_source}{}\label{KMatrix_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ KMATRIX\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ KMATRIX\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <armadillo>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <complex>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classKMatrix}{KMatrix}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{int}\ numAlphas;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}\ numChannels;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{int}\ J;}
+\DoxyCodeLine{00017\ \ \ \ \ arma::cx\_mat\ mAlphas;}
+\DoxyCodeLine{00018\ \ \ \ \ arma::cx\_mat\ mChannels;}
+\DoxyCodeLine{00019\ \ \ \ \ arma::cx\_mat\ gAlphas;}
+\DoxyCodeLine{00020\ \ \ \ \ arma::cx\_mat\ cBkg;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classKMatrix}{KMatrix}}(\textcolor{keywordtype}{int}\ numChannels,\ \textcolor{keywordtype}{int}\ numAlphas,\ \textcolor{keywordtype}{int}\ J);}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Initialize\ the\ matrices\ and\ vectors}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classKMatrix_a69001cf50b0e838b1603577a47b7de46}{initialize}}(}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ arma::mat\&\ m\_alphas,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ arma::mat\&\ m\_channels,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ arma::mat\&\ g\_alphas,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ arma::mat\&\ c\_bkg);}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Print\ the\ matrices\ and\ vectors}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classKMatrix_ab90eba91df1df0c302c889b7b512a438}{print}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ arma::cx\_vec\ \mbox{\hyperlink{classKMatrix_af15c5b00f7b92ee4b14839778441b7d7}{chi\_p}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00036\ \ \ \ \ arma::cx\_vec\ \mbox{\hyperlink{classKMatrix_a4231225ce368de751d182ef4912c8d67}{chi\_m}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00037\ \ \ \ \ arma::cx\_vec\ \mbox{\hyperlink{classKMatrix_a0facd2c798f631e1214edc6434e6eed4}{rho}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ \ \ \ \ arma::cx\_vec\ q(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ \ \ \ \ arma::cx\_vec\ blatt\_weisskopf(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ \ \ \ \ arma::cx\_mat\ B(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00041\ \ \ \ \ arma::cx\_cube\ B2(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00042\ \ \ \ \ arma::cx\_mat\ K(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00043\ \ \ \ \ arma::cx\_mat\ K(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s\_0,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s\_norm)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00044\ \ \ \ \ arma::cx\_mat\ C(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ arma::cx\_mat\ IKC\_inv(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s);}
+\DoxyCodeLine{00046\ \ \ \ \ arma::cx\_mat\ IKC\_inv(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s\_0,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s\_norm);}
+\DoxyCodeLine{00047\ \ \ \ \ arma::cx\_vec\ P(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s,\ \textcolor{keyword}{const}\ arma::cx\_vec\&\ betas)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ \ \ \ \ complex<double>\ F(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s,\ \textcolor{keyword}{const}\ arma::cx\_vec\&\ betas,\ \textcolor{keyword}{const}\ arma::cx\_vec\&\ ikc\_inv\_vec);}
+\DoxyCodeLine{00049\ \ \ }
+\DoxyCodeLine{00050\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00051\ \ \ \ \ function<arma::cx\_vec(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&)>\ blattWeisskopfPtr;}
+\DoxyCodeLine{00052\ \ \ \ \ arma::cx\_vec\ blatt\_weisskopf0(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s);}
+\DoxyCodeLine{00053\ \ \ \ \ arma::cx\_vec\ blatt\_weisskopf2(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ s);}
+\DoxyCodeLine{00054\ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ KMATRIX\_H}}
+
+\end{DoxyCode}

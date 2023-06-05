@@ -1,17 +1,38 @@
 #include "KMatrix.h"
 
-// Constructor
-KMatrix::KMatrix(int numChannels, int numAlphas) : numAlphas(numAlphas), numChannels(numChannels),
+//!
+//! @brief Constructor for KMatrix class
+//!
+//! @param[in] numChannels The number of channels in the K-matrix
+//! @param[in] numAlphas The number of resonances in the K-matrix
+//! @param[in] j The total anglular momentum of all resonances in the K-matrix
+//!
+KMatrix::KMatrix(int numChannels, int numAlphas, int J) : numAlphas(numAlphas), numChannels(numChannels),
   mAlphas(1, numAlphas), mChannels(numChannels, 2),
-  gAlphas(numChannels, numAlphas), cBkg(numChannels, numChannels) {}
+  gAlphas(numChannels, numAlphas), cBkg(numChannels, numChannels), J(J) {
+    if (J == 0) {
+      blattWeisskopfPtr = bind(&KMatrix::blatt_weisskopf0, this, placeholders::_1);
+    } else if (J == 2) {
+      blattWeisskopfPtr = bind(&KMatrix::blatt_weisskopf2, this, placeholders::_1);
+    } else {
+      cout << "Error: J = " << J << " is not supported!" << endl;
+      return;
+    }
+  }
 
-// Initialize the matrices and vectors
+//!
+//! @brief Initialize components of K-matrix
+//!
+//! @param[in] m_alphas Array containing masses of each resonance (1 x nAlphas)
+//! @param[in] m_channels Array containing pairs of daughter masses (numChannels x 2)
+//! @param[in] g_alphas Array containing channel coupings "g" (numChannels x numAlphas)
+//! @param[in] c_bkg Array of K-matrix background terms (numChannels x numChannels)
+//!
 void KMatrix::initialize(
     const arma::mat& m_alphas,
     const arma::mat& m_channels,
     const arma::mat& g_alphas,
-    const arma::mat& c_bkg,
-    const int& j) {
+    const arma::mat& c_bkg) {
   if (m_alphas.n_rows != 1 || m_alphas.n_cols != numAlphas) {
     cout << "Error: Invalid dimensions for nAlphas matrix: " << arma::size(m_alphas) << endl;
     return;
@@ -36,10 +57,12 @@ void KMatrix::initialize(
   mChannels = arma::conv_to<arma::cx_mat>::from(m_channels);
   gAlphas = arma::conv_to<arma::cx_mat>::from(g_alphas);
   cBkg = arma::conv_to<arma::cx_mat>::from(c_bkg);
-  J = j;
 }
 
-// Print the matrices and vectors
+//!
+//! @brief Prints the data contained in the K-matrix
+//!
+//!
 void KMatrix::print() const {
   cout << "mAlphas matrix:\n" << mAlphas << endl;
   cout << "mChannels matrix:\n" << mChannels << endl;
@@ -47,20 +70,48 @@ void KMatrix::print() const {
   cout << "cBkg matrix:\n" << cBkg << endl;
 }
 
-// Calculate chi+
+//!
+//! @brief Calculate \(\Chi^+\) function
+//!
+//! \[
+//! \Chi^+(s) = 1 - \frac{(m_1 + m_2)^2}{s}
+//! \]
+//!
+//! @param[in] s Input mass squared
+//! @param[out] result Vector containing result of this operation for each channel
+//!
 arma::cx_vec KMatrix::chi_p(const double& s) const {
   arma::cx_vec result(numChannels);
   result = 1 - arma::square(mChannels.col(0) + mChannels.col(1)) / s;
   return result;
 }
 
-// Calculate chi-
+//!
+//! @brief Calculate \(\Chi^-\) function
+//!
+//! \[
+//! \Chi^-(s) = 1 - \frac{(m_1 - m_2)^2}{s}
+//! \]
+//!
+//! @param[in] s Input mass squared
+//! @param[out] result Vector containing result of this operation for each channel
+//!
 arma::cx_vec KMatrix::chi_m(const double& s) const {
   arma::cx_vec result(numChannels);
   result = 1 - arma::square(mChannels.col(0) - mChannels.col(1)) / s;
   return result;
 }
 
+//!
+//! @brief Calculate \(\rho\) function
+//!
+//! \[
+//! \rho = \sqrt{\Chi^+(s)\Chi^-(s)}
+//! \]
+//!
+//! @param[in] s Input mass squared
+//! @param[out] result Vector containing result of this operation for each channel
+//!
 arma::cx_vec KMatrix::rho(const double& s) const {
   arma::cx_vec result(numChannels);
   result = arma::sqrt(KMatrix::chi_p(s) % KMatrix::chi_m(s));
@@ -73,14 +124,29 @@ arma::cx_vec KMatrix::q(const double& s) const {
   return result;
 }
 
-arma::cx_vec KMatrix::blatt_weisskopf(const double& s) const {
+// arma::cx_vec KMatrix::blatt_weisskopf(const double& s) const {
+//   arma::cx_vec result = arma::ones<arma::cx_vec>(numChannels) * (J == 0);
+//   arma::cx_vec z = arma::square(KMatrix::q(s)) / (0.1973 * 0.1973);
+//   // result += arma::sqrt(z / (z + 1.0)) * (J == 1);
+//   result += arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z)) * (J == 2);
+//   // result += arma::sqrt(277.0 * arma::pow(z, 3) / (z % arma::square(z - 15.0) + 9.0 * arma::square(2.0 * z - 5.0))) * (J == 3);
+//   // result += arma::sqrt(12746.0 * arma::pow(z, 4) / (arma::square(arma::square(z) - 45.0 * z + 105.0) + 25.0 * z % arma::square(2.0 * z - 21.0))) * (J == 4);
+//   return result;
+// }
+
+arma::cx_vec KMatrix::blatt_weisskopf0(const double& s) {
   arma::cx_vec result = arma::ones<arma::cx_vec>(numChannels) * (J == 0);
-  arma::cx_vec z = arma::square(KMatrix::q(s)) / (0.1973 * 0.1973);
-  // result += arma::sqrt(z / (z + 1.0)) * (J == 1);
-  result += arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z)) * (J == 2);
-  // result += arma::sqrt(277.0 * arma::pow(z, 3) / (z % arma::square(z - 15.0) + 9.0 * arma::square(2.0 * z - 5.0))) * (J == 3);
-  // result += arma::sqrt(12746.0 * arma::pow(z, 4) / (arma::square(arma::square(z) - 45.0 * z + 105.0) + 25.0 * z % arma::square(2.0 * z - 21.0))) * (J == 4);
   return result;
+}
+
+arma::cx_vec KMatrix::blatt_weisskopf2(const double& s) {
+  arma::cx_vec z = arma::square(KMatrix::q(s)) / (0.1973 * 0.1973);
+  arma::cx_vec result = arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z)) * (J == 2);
+  return result;
+}
+
+arma::cx_vec KMatrix::blatt_weisskopf(const double& s) const {
+  return blattWeisskopfPtr(s);
 }
 
 arma::cx_mat KMatrix::B(const double& s) const {

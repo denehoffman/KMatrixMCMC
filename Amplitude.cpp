@@ -24,7 +24,7 @@ Amplitude::Amplitude() {
     {-0.02203, +0.00000, +0.03101, -0.13769, -0.06722},
     {+0.01397, +0.00000, -0.04003, -0.06722, -0.28401}
   };
-  kmat_f0.initialize(f0_malphas, f0_mchannels, f0_galphas.t(), f0_cbkg, 0);
+  kmat_f0.initialize(f0_malphas, f0_mchannels, f0_galphas.t(), f0_cbkg);
 
   f2_mchannels = {
     {0.13498, 0.13498},
@@ -45,7 +45,7 @@ Amplitude::Amplitude() {
     {+0.00984, +0.00000, -0.07344, +0.05533},
     {+0.01028, +0.00000, +0.05533, -0.05183}
   };
-  kmat_f2.initialize(f2_malphas, f2_mchannels, f2_galphas.t(), f2_cbkg, 2);
+  kmat_f2.initialize(f2_malphas, f2_mchannels, f2_galphas.t(), f2_cbkg);
 
   a0_mchannels = {
     {0.13498, 0.54786},
@@ -60,7 +60,7 @@ Amplitude::Amplitude() {
     {+0.00000, +0.00000},
     {+0.00000, +0.00000},
   };
-  kmat_a0.initialize(a0_malphas, a0_mchannels, a0_galphas.t(), a0_cbkg, 0);
+  kmat_a0.initialize(a0_malphas, a0_mchannels, a0_galphas.t(), a0_cbkg);
 
   a2_mchannels = {
     {0.13498, 0.54786},
@@ -77,7 +77,7 @@ Amplitude::Amplitude() {
     {+0.00033, -0.21416, -0.06193},
     {-0.08707, -0.06193, -0.17435}
   };
-  kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg, 2);
+  kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
 }
 
 cx_vec Amplitude::ikc_inv_vec_f0(const double& s) {
