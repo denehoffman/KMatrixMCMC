@@ -332,7 +332,12 @@ arma::cx_fmat KMatrix::IKC_inv(const float& s) {
   arma::cx_fmat kmat = KMatrix::K(s);
   arma::cx_fmat cmat = KMatrix::C(s);
   arma::cx_fmat IKC = arma::eye<arma::fmat>(numChannels, numChannels) + kmat * cmat;
-  arma::cx_fmat result = arma::inv(IKC, arma::inv_opts::allow_approx);
+  arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
+  try {
+    result = arma::inv(IKC, arma::inv_opts::allow_approx);
+  } catch (...) {
+    cout << "PROBLEM" << endl;
+  }
   return result;
 }
 
@@ -352,7 +357,12 @@ arma::cx_fmat KMatrix::IKC_inv(const float& s, const float& s_0, const float& s_
   arma::cx_fmat kmat = KMatrix::K(s, s_0, s_norm);
   arma::cx_fmat cmat = KMatrix::C(s);
   arma::cx_fmat IKC = arma::eye<arma::fmat>(numChannels, numChannels) + kmat * cmat;
-  arma::cx_fmat result = arma::inv(IKC, arma::inv_opts::allow_approx);
+  arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
+  try {
+    result = arma::inv(IKC, arma::inv_opts::allow_approx);
+  } catch (...) {
+    cout << "PROBLEM" << endl;
+  }
   return result;
 }
 
@@ -379,6 +389,18 @@ arma::cx_fvec KMatrix::P(const float& s, const arma::cx_fvec& betas) const {
   return result;
 }
 
+arma::cx_fvec KMatrix::P(const float& s, const arma::cx_fvec& betas, const arma::cx_fmat& B) const {
+  arma::cx_fvec result(numChannels, arma::fill::zeros);
+  arma::cx_fmat betag(numChannels, numAlphas);
+  betag = gAlphas.each_row() % betas.st();
+  for (size_t j = 0; j < numAlphas; j++) {
+    betag.col(j) /= (s - mAlphas(j) * mAlphas(j));
+  }
+  betag %= B;
+  result += arma::sum(betag, 1);
+  return result;
+}
+
 //!
 //! @brief Calculates complex amplitude for a given K-Matrix parameterization
 //!
@@ -394,5 +416,10 @@ arma::cx_fvec KMatrix::P(const float& s, const arma::cx_fvec& betas) const {
 //!
 complex<float> KMatrix::F(const float& s, const arma::cx_fvec& betas, const arma::cx_fvec& ikc_inv_vec) {
   arma::cx_fvec p_vec = KMatrix::P(s, betas);
+  return arma::dot(ikc_inv_vec, p_vec);
+}
+
+complex<float> KMatrix::F(const float& s, const arma::cx_fvec& betas, const arma::cx_fmat& B, const arma::cx_fvec& ikc_inv_vec) {
+  arma::cx_fvec p_vec = KMatrix::P(s, betas, B);
   return arma::dot(ikc_inv_vec, p_vec);
 }

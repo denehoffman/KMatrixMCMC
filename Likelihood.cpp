@@ -28,6 +28,8 @@ void Likelihood::setup() {
     ikc_inv_vec_f2.push_back(amplitude.ikc_inv_vec_f2(pow(data.masses[i], 2)));
     ikc_inv_vec_a0.push_back(amplitude.ikc_inv_vec_a0(pow(data.masses[i], 2)));
     ikc_inv_vec_a2.push_back(amplitude.ikc_inv_vec_a2(pow(data.masses[i], 2)));
+    bw_f2.push_back(amplitude.bw_f2(pow(data.masses[i], 2)));
+    bw_a2.push_back(amplitude.bw_a2(pow(data.masses[i], 2)));
   }
   cout << "Monte Carlo" << endl;
   for (size_t i = 0; i < acc.nEvents; i++) {
@@ -36,6 +38,8 @@ void Likelihood::setup() {
     ikc_inv_vec_f2_mc.push_back(amplitude.ikc_inv_vec_f2(pow(acc.masses[i], 2)));
     ikc_inv_vec_a0_mc.push_back(amplitude.ikc_inv_vec_a0(pow(acc.masses[i], 2)));
     ikc_inv_vec_a2_mc.push_back(amplitude.ikc_inv_vec_a2(pow(acc.masses[i], 2)));
+    bw_f2_mc.push_back(amplitude.bw_f2(pow(acc.masses[i], 2)));
+    bw_a2_mc.push_back(amplitude.bw_a2(pow(acc.masses[i], 2)));
   }
 }
 
@@ -57,37 +61,55 @@ float Likelihood::getExtendedLogLikelihood(const vector<float>& params) {
     polar<float>(params[19], params[20]),  // a2(1320)
     polar<float>(params[21], params[22]),  // a2(1700)
   };
+  arma::cx_fmat bw_f0 = arma::cx_fmat(5, 5, arma::fill::ones);
+  arma::cx_fmat bw_a0 = arma::cx_fmat(2, 2, arma::fill::ones);
   float log_likelihood = 0.0;
   cout << "Calculating data (" << data.nEvents << " events)" << endl;
   for (size_t i = 0; i < data.nEvents; i++) {
     printLoadingBar(i, data.nEvents);
-    log_likelihood += data.weights[i]
-      * log(
-          amplitude.intensity(
-            betas,
-            pow(data.masses[i], 2),
-            data.thetas[i],
-            data.phis[i],
-            ikc_inv_vec_f0[i],
-            ikc_inv_vec_f2[i],
-            ikc_inv_vec_a0[i],
-            ikc_inv_vec_a2[i]
-            )
-          );
+    try {
+      log_likelihood += data.weights[i]
+        * log(
+            amplitude.intensity(
+              betas,
+              pow(data.masses[i], 2),
+              data.thetas[i],
+              data.phis[i],
+              bw_f0,
+              bw_f2[i],
+              bw_a0,
+              bw_a2[i],
+              ikc_inv_vec_f0[i],
+              ikc_inv_vec_f2[i],
+              ikc_inv_vec_a0[i],
+              ikc_inv_vec_a2[i]
+              )
+            );
+    } catch (...) {
+      cout << "Singular matrix (event " << i <<") -> skipping..." << endl << endl;
+    }
   }
   cout << "Calculating MC (" << acc.nEvents << " events)" << endl;
   for (size_t i = 0; i < acc.nEvents; i++) {
     printLoadingBar(i, acc.nEvents);
-    log_likelihood -= acc.weights[i] * amplitude.intensity(
-        betas,
-        pow(acc.masses[i], 2),
-        acc.thetas[i],
-        acc.phis[i],
-        ikc_inv_vec_f0_mc[i],
-        ikc_inv_vec_f2_mc[i],
-        ikc_inv_vec_a0_mc[i],
-        ikc_inv_vec_a2_mc[i]
-        ) / nGenerated;
+    try {
+      log_likelihood -= acc.weights[i] * amplitude.intensity(
+          betas,
+          pow(acc.masses[i], 2),
+          acc.thetas[i],
+          acc.phis[i],
+          bw_f0,
+          bw_f2_mc[i],
+          bw_a0,
+          bw_a2_mc[i],
+          ikc_inv_vec_f0_mc[i],
+          ikc_inv_vec_f2_mc[i],
+          ikc_inv_vec_a0_mc[i],
+          ikc_inv_vec_a2_mc[i]
+          ) / nGenerated;
+    } catch (...) {
+      cout << "Singular matrix (event " << i <<") -> skipping..." << endl << endl;
+    }
   }
   return log_likelihood;
 }

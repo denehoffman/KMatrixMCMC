@@ -53,7 +53,9 @@ public:
     arma::cx_fmat IKC_inv(const float& s);
     arma::cx_fmat IKC_inv(const float& s, const float& s_0, const float& s_norm);
     arma::cx_fvec P(const float& s, const arma::cx_fvec& betas) const;
+    arma::cx_fvec P(const float& s, const arma::cx_fvec& betas, const arma::cx_fmat& B) const;
     complex<float> F(const float& s, const arma::cx_fvec& betas, const arma::cx_fvec& ikc_inv_vec);
+    complex<float> F(const float& s, const arma::cx_fvec& betas, const arma::cx_fmat& B, const arma::cx_fvec& ikc_inv_vec);
   
   private:
     function<arma::cx_fvec(const float&)> blattWeisskopfPtr;

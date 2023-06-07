@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
   };
   cout << "Starting Calculation" << endl;
   auto startTime = chrono::high_resolution_clock::now();
-  Likelihood lh("sandbox/data_short.root", "sandbox/accmc_short.root", "sandbox/accmc_short.root");
+  Likelihood lh("sandbox/data.root", "sandbox/accmc.root", "sandbox/accmc.root");
   auto endTime = chrono::high_resolution_clock::now();
   auto duration = chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
   cout << "Files loaded in " << duration << "ms" << endl;

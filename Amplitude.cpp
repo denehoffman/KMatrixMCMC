@@ -97,6 +97,23 @@ cx_fvec Amplitude::ikc_inv_vec_a2(const float& s) {
   return res;
 }
 
+cx_fmat Amplitude::bw_f0(const float& s) {
+  cx_fmat res = kmat_f0.B(s);
+  return res;
+}
+cx_fmat Amplitude::bw_f2(const float& s) {
+  cx_fmat res = kmat_f2.B(s);
+  return res;
+}
+cx_fmat Amplitude::bw_a0(const float& s) {
+  cx_fmat res = kmat_a0.B(s);
+  return res;
+}
+cx_fmat Amplitude::bw_a2(const float& s) {
+  cx_fmat res = kmat_a2.B(s);
+  return res;
+}
+
 complex<float> Amplitude::S0_wave(const float& theta, const float& phi) {
   return complex<float>(sqrt(1.0 / datum::pi) / 2.0, 0.0);
 }
@@ -118,6 +135,28 @@ float Amplitude::intensity(
   complex<float> f_f2 = kmat_f2.F(s, betas.subvec(5, 8), ikc_inv_vec_f2);
   complex<float> f_a0 = kmat_a0.F(s, betas.subvec(9, 10), ikc_inv_vec_a0);
   complex<float> f_a2 = kmat_a2.F(s, betas.subvec(11, 12), ikc_inv_vec_a2);
+  complex<float> S0 = Amplitude::S0_wave(theta, phi);
+  complex<float> D2 = Amplitude::D2_wave(theta, phi);
+  return pow(abs(S0 * (f_f0 + f_a0) + D2 * (f_f2 + f_a2)), 2);
+}
+
+float Amplitude::intensity(
+    const cx_fvec& betas,
+    const float& s,
+    const float& theta,
+    const float& phi,
+    const cx_fmat& bw_f0,
+    const cx_fmat& bw_f2,
+    const cx_fmat& bw_a0,
+    const cx_fmat& bw_a2,
+    const cx_fvec& ikc_inv_vec_f0,
+    const cx_fvec& ikc_inv_vec_f2,
+    const cx_fvec& ikc_inv_vec_a0,
+    const cx_fvec& ikc_inv_vec_a2) {
+  complex<float> f_f0 = kmat_f0.F(s, betas.subvec(0, 4), bw_f0, ikc_inv_vec_f0);
+  complex<float> f_f2 = kmat_f2.F(s, betas.subvec(5, 8), bw_f2, ikc_inv_vec_f2);
+  complex<float> f_a0 = kmat_a0.F(s, betas.subvec(9, 10), bw_a0, ikc_inv_vec_a0);
+  complex<float> f_a2 = kmat_a2.F(s, betas.subvec(11, 12), bw_a2, ikc_inv_vec_a2);
   complex<float> S0 = Amplitude::S0_wave(theta, phi);
   complex<float> D2 = Amplitude::D2_wave(theta, phi);
   return pow(abs(S0 * (f_f0 + f_a0) + D2 * (f_f2 + f_a2)), 2);
