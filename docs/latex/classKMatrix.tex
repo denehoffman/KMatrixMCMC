@@ -1,0 +1,444 @@
+\doxysection{KMatrix Class Reference}
+\hypertarget{classKMatrix}{}\label{classKMatrix}\index{KMatrix@{KMatrix}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classKMatrix_a11a4817a0bd8b876681f460fe04e2b62}{KMatrix}} (int num\+Channels, int num\+Alphas, int J)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classKMatrix}{KMatrix} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classKMatrix_a69001cf50b0e838b1603577a47b7de46}{initialize}} (const arma\+::mat \&m\+\_\+alphas, const arma\+::mat \&m\+\_\+channels, const arma\+::mat \&g\+\_\+alphas, const arma\+::mat \&c\+\_\+bkg)
+\begin{DoxyCompactList}\small\item\em Initialize components of K-\/matrix. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classKMatrix_ab90eba91df1df0c302c889b7b512a438}{print}} () const
+\begin{DoxyCompactList}\small\item\em Prints the data contained in the K-\/matrix. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+vec \mbox{\hyperlink{classKMatrix_af15c5b00f7b92ee4b14839778441b7d7}{chi\+\_\+p}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculate \chi^+ function. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+vec \mbox{\hyperlink{classKMatrix_a4231225ce368de751d182ef4912c8d67}{chi\+\_\+m}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculate \chi^- function. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+vec \mbox{\hyperlink{classKMatrix_a0facd2c798f631e1214edc6434e6eed4}{rho}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculate \rho function. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+vec \mbox{\hyperlink{classKMatrix_aa7e6502e37d525caae0e8b7e1382a4b0}{q}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculate breakup momentum q. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+vec \mbox{\hyperlink{classKMatrix_a31d6667ea4f4314e1aa6e1d44c8275e8}{blatt\+\_\+weisskopf}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculate Blatt-\/\+Weisskopf centrifugal barrier factor according to J value. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+mat \mbox{\hyperlink{classKMatrix_aa794e44b4ca0a4d44a9a7df6af1c1d22}{B}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculates ratio of Blatt-\/\+Weisskopf centrifugal barrier factors for each channel and resonance. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+cube \mbox{\hyperlink{classKMatrix_acc1780abfded675c8b3bb33f4d6d0ada}{B2}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculates ratio of Blatt-\/\+Weisskopf centrifugal barrier factors for each channel and resonance. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+mat \mbox{\hyperlink{classKMatrix_a58d8f64dff12a5813398e1a7ca287fa1}{K}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculates K-\/\+Matrix for a given input mass. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+mat \mbox{\hyperlink{classKMatrix_a083a769ae6b35666efe187114db3cf34}{K}} (const double \&s, const double \&s\+\_\+0, const double \&s\+\_\+norm) const
+\begin{DoxyCompactList}\small\item\em Calculates K-\/\+Matrix for a given input mass with Adler zero term. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+mat \mbox{\hyperlink{classKMatrix_ab0a3d29922f9f7afb63bd2b35a8c4239}{C}} (const double \&s) const
+\begin{DoxyCompactList}\small\item\em Calculates Chew-\/\+Mandelstam matrix. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+mat \mbox{\hyperlink{classKMatrix_ad16a0f5d95a9b39a069ad65e1b7e1817}{IKC\+\_\+inv}} (const double \&s)
+\begin{DoxyCompactList}\small\item\em Calculates the inverse of the \"{}\+IKC\"{} matrix. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+mat \mbox{\hyperlink{classKMatrix_ad8025a87f467fced2dec299401deca50}{IKC\+\_\+inv}} (const double \&s, const double \&s\+\_\+0, const double \&s\+\_\+norm)
+\begin{DoxyCompactList}\small\item\em Calculates the inverse of the \"{}\+IKC\"{} matrix with Adler zero term in K-\/\+Matrix. \end{DoxyCompactList}\item 
+arma\+::cx\+\_\+vec \mbox{\hyperlink{classKMatrix_a39642afbda745207fa8f4838402a82cc}{P}} (const double \&s, const arma\+::cx\+\_\+vec \&betas) const
+\begin{DoxyCompactList}\small\item\em Calculates P-\/vector for a given input mass and vector of couplings. \end{DoxyCompactList}\item 
+complex$<$ double $>$ \mbox{\hyperlink{classKMatrix_ac7205d2a350bcb8407abfa653eb1949a}{F}} (const double \&s, const arma\+::cx\+\_\+vec \&betas, const arma\+::cx\+\_\+vec \&ikc\+\_\+inv\+\_\+vec)
+\begin{DoxyCompactList}\small\item\em Calculates complex amplitude for a given K-\/\+Matrix parameterization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classKMatrix_a7ef6df276a6ddca85fdf5de2abab5d32}\label{classKMatrix_a7ef6df276a6ddca85fdf5de2abab5d32} 
+int {\bfseries num\+Alphas}
+\item 
+\Hypertarget{classKMatrix_acde0c9dd6e3187a939962b7df553e9ca}\label{classKMatrix_acde0c9dd6e3187a939962b7df553e9ca} 
+int {\bfseries num\+Channels}
+\item 
+\Hypertarget{classKMatrix_a861af99c8ffaf3ef5ccb2e5d305388c2}\label{classKMatrix_a861af99c8ffaf3ef5ccb2e5d305388c2} 
+int {\bfseries J}
+\item 
+\Hypertarget{classKMatrix_a51a7b8b2e5d35afa6ee29164b52eb171}\label{classKMatrix_a51a7b8b2e5d35afa6ee29164b52eb171} 
+arma\+::cx\+\_\+mat {\bfseries m\+Alphas}
+\item 
+\Hypertarget{classKMatrix_aa7d0b8eed75a3f9609c326960853d197}\label{classKMatrix_aa7d0b8eed75a3f9609c326960853d197} 
+arma\+::cx\+\_\+mat {\bfseries m\+Channels}
+\item 
+\Hypertarget{classKMatrix_a7d889d7b999e3eef44d3711a5d9dad3b}\label{classKMatrix_a7d889d7b999e3eef44d3711a5d9dad3b} 
+arma\+::cx\+\_\+mat {\bfseries g\+Alphas}
+\item 
+\Hypertarget{classKMatrix_a4e5adaee5aa7afe4daa84e00e2266f0b}\label{classKMatrix_a4e5adaee5aa7afe4daa84e00e2266f0b} 
+arma\+::cx\+\_\+mat {\bfseries c\+Bkg}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classKMatrix_a11a4817a0bd8b876681f460fe04e2b62}\label{classKMatrix_a11a4817a0bd8b876681f460fe04e2b62} 
+\index{KMatrix@{KMatrix}!KMatrix@{KMatrix}}
+\index{KMatrix@{KMatrix}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{KMatrix()}{KMatrix()}}
+{\footnotesize\ttfamily KMatrix\+::\+KMatrix (\begin{DoxyParamCaption}\item[{int}]{num\+Channels,  }\item[{int}]{num\+Alphas,  }\item[{int}]{J }\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classKMatrix}{KMatrix} class. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em num\+Channels} & The number of channels in the K-\/matrix \\
+\hline
+\mbox{\texttt{ in}}  & {\em num\+Alphas} & The number of resonances in the K-\/matrix \\
+\hline
+\mbox{\texttt{ in}}  & {\em J} & The total anglular momentum of all resonances in the K-\/matrix \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classKMatrix_aa794e44b4ca0a4d44a9a7df6af1c1d22}\label{classKMatrix_aa794e44b4ca0a4d44a9a7df6af1c1d22} 
+\index{KMatrix@{KMatrix}!B@{B}}
+\index{B@{B}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{B()}{B()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+mat KMatrix\+::B (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculates ratio of Blatt-\/\+Weisskopf centrifugal barrier factors for each channel and resonance. 
+
+\[
+B^J_i(s, m_\alpha) = \frac{bw^J_i(s)}{bw^J(m_\alpha^2)}
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix containing result of this operation with dimension (num\+Channels, num\+Alphas) 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_acc1780abfded675c8b3bb33f4d6d0ada}\label{classKMatrix_acc1780abfded675c8b3bb33f4d6d0ada} 
+\index{KMatrix@{KMatrix}!B2@{B2}}
+\index{B2@{B2}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{B2()}{B2()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+cube KMatrix\+::\+B2 (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculates ratio of Blatt-\/\+Weisskopf centrifugal barrier factors for each channel and resonance. 
+
+\[
+B2_{ij}^J(s, m_\alpha) = \frac{bw_i^J(s)bw_j^J(s)}{(bw^J(m_\alpha^2))^2}
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Cube containing result of this operation with dimension (num\+Channels, num\+Channels, num\+Alphas) 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_a31d6667ea4f4314e1aa6e1d44c8275e8}\label{classKMatrix_a31d6667ea4f4314e1aa6e1d44c8275e8} 
+\index{KMatrix@{KMatrix}!blatt\_weisskopf@{blatt\_weisskopf}}
+\index{blatt\_weisskopf@{blatt\_weisskopf}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{blatt\_weisskopf()}{blatt\_weisskopf()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+vec KMatrix\+::blatt\+\_\+weisskopf (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculate Blatt-\/\+Weisskopf centrifugal barrier factor according to J value. 
+
+Uses a function pointer assigned at initialization to choose between J=0 or J=2
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector containing result of this operation for each channel 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_ab0a3d29922f9f7afb63bd2b35a8c4239}\label{classKMatrix_ab0a3d29922f9f7afb63bd2b35a8c4239} 
+\index{KMatrix@{KMatrix}!C@{C}}
+\index{C@{C}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{C()}{C()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+mat KMatrix\+::C (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculates Chew-\/\+Mandelstam matrix. 
+
+\[
+C(s) = \frac{\rho(s)}{\pi}\ln\left(\frac{\chi^+(s) + \rho(s)}{\chi^+(s) - \rho(s)}\right) - \frac{\chi^+(s)}{\pi}\left(\frac{m_2 - m_1}{m_1 + m_2}\right)\ln\left(\frac{m_2}{m_1}\right)
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Diagonal matrix where each diagonal element is the result of this function for the corresponding channel 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_a4231225ce368de751d182ef4912c8d67}\label{classKMatrix_a4231225ce368de751d182ef4912c8d67} 
+\index{KMatrix@{KMatrix}!chi\_m@{chi\_m}}
+\index{chi\_m@{chi\_m}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{chi\_m()}{chi\_m()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+vec KMatrix\+::chi\+\_\+m (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculate \chi^- function. 
+
+\[
+\chi^-(s) = 1 - \frac{(m_1 - m_2)^2}{s}
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector containing result of this operation for each channel 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_af15c5b00f7b92ee4b14839778441b7d7}\label{classKMatrix_af15c5b00f7b92ee4b14839778441b7d7} 
+\index{KMatrix@{KMatrix}!chi\_p@{chi\_p}}
+\index{chi\_p@{chi\_p}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{chi\_p()}{chi\_p()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+vec KMatrix\+::chi\+\_\+p (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculate \chi^+ function. 
+
+\[
+\chi^+(s) = 1 - \frac{(m_1 + m_2)^2}{s}
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector containing result of this operation for each channel 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_ac7205d2a350bcb8407abfa653eb1949a}\label{classKMatrix_ac7205d2a350bcb8407abfa653eb1949a} 
+\index{KMatrix@{KMatrix}!F@{F}}
+\index{F@{F}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{F()}{F()}}
+{\footnotesize\ttfamily complex$<$ double $>$ KMatrix\+::F (\begin{DoxyParamCaption}\item[{const double \&}]{s,  }\item[{const arma\+::cx\+\_\+vec \&}]{betas,  }\item[{const arma\+::cx\+\_\+vec \&}]{ikc\+\_\+inv\+\_\+vec }\end{DoxyParamCaption})}
+
+
+
+Calculates complex amplitude for a given K-\/\+Matrix parameterization. 
+
+\[
+F(s, \beta) = (I - K(s)C(s))^{-1}\cdot P(s, \beta)
+\]
+
+Note, the actual calculation just uses one row of (I - KC)^{-1} since we don\textquotesingle{}t need to store info for the channels we don\textquotesingle{}t use
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\mbox{\texttt{ in}}  & {\em betas} & Vector containing complex couplings for each resonance \\
+\hline
+\mbox{\texttt{ in}}  & {\em ikc\+\_\+inv\+\_\+vec} & Vector containing a row of the inverse of the \"{}\+IKC\"{} matrix for the channel specified at initialization \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classKMatrix_ad16a0f5d95a9b39a069ad65e1b7e1817}\label{classKMatrix_ad16a0f5d95a9b39a069ad65e1b7e1817} 
+\index{KMatrix@{KMatrix}!IKC\_inv@{IKC\_inv}}
+\index{IKC\_inv@{IKC\_inv}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{IKC\_inv()}{IKC\_inv()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+mat KMatrix\+::\+IKC\+\_\+inv (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption})}
+
+
+
+Calculates the inverse of the \"{}\+IKC\"{} matrix. 
+
+\[
+\to (I - K(s)C(s))^{-1}
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix containing the result of this calculation with dimensions of (num\+Channels, num\+Channels) 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_ad8025a87f467fced2dec299401deca50}\label{classKMatrix_ad8025a87f467fced2dec299401deca50} 
+\index{KMatrix@{KMatrix}!IKC\_inv@{IKC\_inv}}
+\index{IKC\_inv@{IKC\_inv}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{IKC\_inv()}{IKC\_inv()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+mat KMatrix\+::\+IKC\+\_\+inv (\begin{DoxyParamCaption}\item[{const double \&}]{s,  }\item[{const double \&}]{s\+\_\+0,  }\item[{const double \&}]{s\+\_\+norm }\end{DoxyParamCaption})}
+
+
+
+Calculates the inverse of the \"{}\+IKC\"{} matrix with Adler zero term in K-\/\+Matrix. 
+
+\[
+\to (I - K(s)C(s))^{-1}
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\mbox{\texttt{ in}}  & {\em s\+\_\+0} & Location of Adler zero \\
+\hline
+\mbox{\texttt{ in}}  & {\em s\+\_\+norm} & Normalization factor for Adler zero term \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix containing the result of this calculation with dimensions of (num\+Channels, num\+Channels) 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_a69001cf50b0e838b1603577a47b7de46}\label{classKMatrix_a69001cf50b0e838b1603577a47b7de46} 
+\index{KMatrix@{KMatrix}!initialize@{initialize}}
+\index{initialize@{initialize}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void KMatrix\+::initialize (\begin{DoxyParamCaption}\item[{const arma\+::mat \&}]{m\+\_\+alphas,  }\item[{const arma\+::mat \&}]{m\+\_\+channels,  }\item[{const arma\+::mat \&}]{g\+\_\+alphas,  }\item[{const arma\+::mat \&}]{c\+\_\+bkg }\end{DoxyParamCaption})}
+
+
+
+Initialize components of K-\/matrix. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em m\+\_\+alphas} & Array containing masses of each resonance (1 x n\+Alphas) \\
+\hline
+\mbox{\texttt{ in}}  & {\em m\+\_\+channels} & Array containing pairs of daughter masses (num\+Channels x 2) \\
+\hline
+\mbox{\texttt{ in}}  & {\em g\+\_\+alphas} & Array containing channel coupings \"{}g\"{} (num\+Channels x num\+Alphas) \\
+\hline
+\mbox{\texttt{ in}}  & {\em c\+\_\+bkg} & Array of K-\/matrix background terms (num\+Channels x num\+Channels) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classKMatrix_a58d8f64dff12a5813398e1a7ca287fa1}\label{classKMatrix_a58d8f64dff12a5813398e1a7ca287fa1} 
+\index{KMatrix@{KMatrix}!K@{K}}
+\index{K@{K}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{K()}{K()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+mat KMatrix\+::K (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculates K-\/\+Matrix for a given input mass. 
+
+\[
+K_{ij}(s) = \sum_\alpha \left(\frac{g_{i,\alpha}g_{j,\alpha}}{m_\alpha^2 - s} + cBkg_{ij}\right) B2_{ij}^J(s, m_\alpha)
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix containing result of this operation with dimension (num\+Channels, num\+Channels) 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_a083a769ae6b35666efe187114db3cf34}\label{classKMatrix_a083a769ae6b35666efe187114db3cf34} 
+\index{KMatrix@{KMatrix}!K@{K}}
+\index{K@{K}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{K()}{K()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+mat KMatrix\+::K (\begin{DoxyParamCaption}\item[{const double \&}]{s,  }\item[{const double \&}]{s\+\_\+0,  }\item[{const double \&}]{s\+\_\+norm }\end{DoxyParamCaption}) const}
+
+
+
+Calculates K-\/\+Matrix for a given input mass with Adler zero term. 
+
+\[
+K_{ij}(s) = \frac{s - s_0}{s_{\text{norm}}}\sum_\alpha \left(\frac{g_{i,\alpha}g_{j,\alpha}}{m_\alpha^2 - s} + cBkg_{ij}\right) B2_{ij}^J(s, m_\alpha)
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\mbox{\texttt{ in}}  & {\em s\+\_\+0} & Location of Adler zero \\
+\hline
+\mbox{\texttt{ in}}  & {\em s\+\_\+norm} & Normalization factor for Adler zero term \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix containing result of this operation with dimension (num\+Channels, num\+Channels) 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_a39642afbda745207fa8f4838402a82cc}\label{classKMatrix_a39642afbda745207fa8f4838402a82cc} 
+\index{KMatrix@{KMatrix}!P@{P}}
+\index{P@{P}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{P()}{P()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+vec KMatrix\+::P (\begin{DoxyParamCaption}\item[{const double \&}]{s,  }\item[{const arma\+::cx\+\_\+vec \&}]{betas }\end{DoxyParamCaption}) const}
+
+
+
+Calculates P-\/vector for a given input mass and vector of couplings. 
+
+\[
+P_{j}(s,\beta) = \sum_\alpha \left(\frac{\beta_\alpha g_{j,\alpha}}{m_\alpha^2 - s}\right) B_{j}^J(s, m_\alpha)
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\mbox{\texttt{ in}}  & {\em betas} & Vector containing complex couplings for each resonance \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector containing result of this operation 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_ab90eba91df1df0c302c889b7b512a438}\label{classKMatrix_ab90eba91df1df0c302c889b7b512a438} 
+\index{KMatrix@{KMatrix}!print@{print}}
+\index{print@{print}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void KMatrix\+::print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Prints the data contained in the K-\/matrix. 
+
+\Hypertarget{classKMatrix_aa7e6502e37d525caae0e8b7e1382a4b0}\label{classKMatrix_aa7e6502e37d525caae0e8b7e1382a4b0} 
+\index{KMatrix@{KMatrix}!q@{q}}
+\index{q@{q}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{q()}{q()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+vec KMatrix\+::q (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculate breakup momentum q. 
+
+\[
+q = \rho(s) \frac{\sqrt{s}}{2}
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector containing result of this operation for each channel 
+\end{DoxyReturn}
+\Hypertarget{classKMatrix_a0facd2c798f631e1214edc6434e6eed4}\label{classKMatrix_a0facd2c798f631e1214edc6434e6eed4} 
+\index{KMatrix@{KMatrix}!rho@{rho}}
+\index{rho@{rho}!KMatrix@{KMatrix}}
+\doxysubsubsection{\texorpdfstring{rho()}{rho()}}
+{\footnotesize\ttfamily arma\+::cx\+\_\+vec KMatrix\+::rho (\begin{DoxyParamCaption}\item[{const double \&}]{s }\end{DoxyParamCaption}) const}
+
+
+
+Calculate \rho function. 
+
+\[
+\rho = \sqrt{\chi^+(s)\chi^-(s)}
+\]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Input mass squared \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector containing result of this operation for each channel 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+KMatrix.\+h\item 
+KMatrix.\+cpp\end{DoxyCompactItemize}
