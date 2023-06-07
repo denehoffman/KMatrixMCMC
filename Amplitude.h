@@ -1,6 +1,6 @@
 #ifndef AMPLITUDE_H
 #define AMPLITUDE_H
-
+#define ARMA_NO_DEBUG
 #include <armadillo>
 #include "KMatrix.h"
 
@@ -10,10 +10,10 @@ class Amplitude {
   public:
     Amplitude();
     double intensity(const cx_vec& betas, const double& s, const double& theta, const double& phi,
-        const cx_mat& ikc_inv_f0,
-        const cx_mat& ikc_inv_f2,
-        const cx_mat& ikc_inv_a0,
-        const cx_mat& ikc_inv_a2);
+        const cx_vec& ikc_inv_f0,
+        const cx_vec& ikc_inv_f2,
+        const cx_vec& ikc_inv_a0,
+        const cx_vec& ikc_inv_a2);
     complex<double> S0_wave(const double& theta, const double& phi);
     complex<double> D2_wave(const double& theta, const double& phi);
     cx_vec ikc_inv_vec_f0(const double& s);

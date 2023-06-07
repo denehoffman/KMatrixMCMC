@@ -1,5 +1,6 @@
 #ifndef LIKELIHOOD_H
 #define LIKELIHOOD_H
+#define ARMA_NO_DEBUG
 
 #include "Amplitude.h"
 #include "DataReader.h"

@@ -110,10 +110,10 @@ double Amplitude::intensity(
     const double& s,
     const double& theta,
     const double& phi,
-    const cx_mat& ikc_inv_vec_f0,
-    const cx_mat& ikc_inv_vec_f2,
-    const cx_mat& ikc_inv_vec_a0,
-    const cx_mat& ikc_inv_vec_a2) {
+    const cx_vec& ikc_inv_vec_f0,
+    const cx_vec& ikc_inv_vec_f2,
+    const cx_vec& ikc_inv_vec_a0,
+    const cx_vec& ikc_inv_vec_a2) {
   complex<double> f_f0 = kmat_f0.F(s, betas.subvec(0, 4), ikc_inv_vec_f0);
   complex<double> f_f2 = kmat_f2.F(s, betas.subvec(5, 8), ikc_inv_vec_f2);
   complex<double> f_a0 = kmat_a0.F(s, betas.subvec(9, 10), ikc_inv_vec_a0);

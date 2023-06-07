@@ -58,6 +58,7 @@ double Likelihood::getExtendedLogLikelihood(const vector<double>& params) {
     polar<double>(params[21], params[22]),  // a2(1700)
   };
   double log_likelihood = 0.0;
+  cout << "Calculating data (" << data.nEvents << " events)" << endl;
   for (size_t i = 0; i < data.nEvents; i++) {
     printLoadingBar(i, data.nEvents);
     log_likelihood += data.weights[i]
@@ -74,6 +75,7 @@ double Likelihood::getExtendedLogLikelihood(const vector<double>& params) {
             )
           );
   }
+  cout << "Calculating MC (" << acc.nEvents << " events)" << endl;
   for (size_t i = 0; i < acc.nEvents; i++) {
     printLoadingBar(i, acc.nEvents);
     log_likelihood -= acc.weights[i] * amplitude.intensity(

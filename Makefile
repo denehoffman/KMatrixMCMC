@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -O2 $(shell root-config --cflags)
+CXXFLAGS = -O2 $(shell root-config --cflags) -DNDEBUG
 
 TARGET = run_mcmc
 SOURCES = $(wildcard *.cpp)
@@ -13,7 +13,7 @@ $(TARGET): $(OBJECTS)
 %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@ 
 
-profile: CXXFLAGS := $(filter-out -O2,$(CXXFLAGS)) -O0 -pg
+profile: CXXFLAGS += -pg -fno-inline-functions -fno-inline-functions-called-once -fno-optimize-sibling-calls
 profile: $(TARGET)
 
 clean:

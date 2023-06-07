@@ -52,11 +52,30 @@ void KMatrix::initialize(
     cout << "Error: Invalid dimensions for cBkg matrix: " << arma::size(c_bkg) << endl;
     return;
   }
-
   mAlphas = arma::conv_to<arma::cx_mat>::from(m_alphas);
   mChannels = arma::conv_to<arma::cx_mat>::from(m_channels);
+  m1s = mChannels.col(0);
+  m2s = mChannels.col(1);
   gAlphas = arma::conv_to<arma::cx_mat>::from(g_alphas);
   cBkg = arma::conv_to<arma::cx_mat>::from(c_bkg);
+  if (J == 0) {
+    bwAlphaMat = arma::cx_mat(numChannels, numAlphas, arma::fill::ones);
+    bwAlphaCube = arma::cx_cube(numChannels, numChannels, numAlphas, arma::fill::ones);
+  } else if (J == 2) {
+    arma::cx_mat qAlphas = arma::cx_mat(numChannels, numAlphas, arma::fill::zeros);
+    arma::cx_mat sAlphas = arma::square(mAlphas);
+    arma::cx_mat m1sRep = arma::repmat(m1s, 1, numAlphas);
+    arma::cx_mat m2sRep = arma::repmat(m2s, 1, numAlphas);
+    arma::cx_mat sAlphasRep = arma::repmat(sAlphas, numChannels, 1);
+    qAlphas += arma::sqrt((arma::square(m1sRep + m2sRep) - sAlphasRep) % (arma::square(m1sRep - m2sRep) - sAlphasRep) / (4.0 * sAlphasRep));
+    arma::cx_mat z = arma::square(qAlphas) / (0.1973 * 0.1973);
+    bwAlphaMat = arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z));
+    bwAlphaCube = arma::cx_cube(numChannels, numChannels, numAlphas, arma::fill::zeros);
+    for (size_t k = 0; k < numAlphas; k++) {
+      arma::cx_mat qAlphasCol = qAlphas.col(k);
+      bwAlphaCube.slice(k) = qAlphasCol * qAlphasCol.st();
+    }
+  }
 }
 
 //!
@@ -81,8 +100,8 @@ void KMatrix::print() const {
 //! \return Vector containing result of this operation for each channel
 //!
 arma::cx_vec KMatrix::chi_p(const double& s) const {
-  arma::cx_vec result(numChannels);
-  result = 1 - arma::square(mChannels.col(0) + mChannels.col(1)) / s;
+  arma::cx_vec result(numChannels, arma::fill::ones);
+  result -= arma::square(m1s + m2s) / s;
   return result;
 }
 
@@ -97,8 +116,8 @@ arma::cx_vec KMatrix::chi_p(const double& s) const {
 //! \return Vector containing result of this operation for each channel
 //!
 arma::cx_vec KMatrix::chi_m(const double& s) const {
-  arma::cx_vec result(numChannels);
-  result = 1 - arma::square(mChannels.col(0) - mChannels.col(1)) / s;
+  arma::cx_vec result(numChannels, arma::fill::ones);
+  result -= arma::square(m1s - m2s) / s;
   return result;
 }
 
@@ -113,8 +132,8 @@ arma::cx_vec KMatrix::chi_m(const double& s) const {
 //! \return Vector containing result of this operation for each channel
 //!
 arma::cx_vec KMatrix::rho(const double& s) const {
-  arma::cx_vec result(numChannels);
-  result = arma::sqrt(KMatrix::chi_p(s) % KMatrix::chi_m(s));
+  arma::cx_vec result(numChannels, arma::fill::zeros);
+  result += arma::sqrt((arma::square(m1s + m2s) - s) % (arma::square(m1s - m2s) - s) / (s * s)); // TODO: check this
   return result;
 }
 
@@ -129,8 +148,8 @@ arma::cx_vec KMatrix::rho(const double& s) const {
 //! \return Vector containing result of this operation for each channel
 //!
 arma::cx_vec KMatrix::q(const double& s) const {
-  arma::cx_vec result(numChannels);
-  result = sqrt(s) * KMatrix::rho(s) / 2.0;
+  arma::cx_vec result(numChannels, arma::fill::zeros);
+  result += arma::sqrt((arma::square(m1s + m2s) - s) % (arma::square(m1s - m2s) - s) / (4.0 * s)); // TODO: check this
   return result;
 }
 
@@ -145,8 +164,7 @@ arma::cx_vec KMatrix::q(const double& s) const {
 //! \return Vector containing result of this operation for each channel
 //!
 arma::cx_vec KMatrix::blatt_weisskopf0(const double& s) {
-  arma::cx_vec result = arma::ones<arma::cx_vec>(numChannels);
-  return result;
+  return arma::cx_vec(numChannels, arma::fill::ones);
 }
 
 //!
@@ -190,11 +208,12 @@ arma::cx_vec KMatrix::blatt_weisskopf(const double& s) const {
 //! \return Matrix containing result of this operation with dimension (numChannels, numAlphas)
 //!
 arma::cx_mat KMatrix::B(const double& s) const {
-  arma::cx_mat result(numChannels, numAlphas);
-  result.each_col() = KMatrix::blatt_weisskopf(s);
-  for (size_t j = 0; j < numAlphas; j++) {
-    result.col(j) /= KMatrix::blatt_weisskopf((mAlphas(j) * mAlphas(j)).real());
-  }
+  arma::cx_mat result(numChannels, numAlphas, arma::fill::zeros);
+  result.each_col() += KMatrix::blatt_weisskopf(s);
+  result /= bwAlphaMat;
+  // for (size_t j = 0; j < numAlphas; j++) {
+  //   result.col(j) /= KMatrix::blatt_weisskopf((mAlphas(j) * mAlphas(j)).real());
+  // }
   return result;
 }
 
@@ -209,12 +228,13 @@ arma::cx_mat KMatrix::B(const double& s) const {
 //! \return Cube containing result of this operation with dimension (numChannels, numChannels, numAlphas)
 //!
 arma::cx_cube KMatrix::B2(const double& s) const {
-  arma::cx_cube result(numChannels, numChannels, numAlphas);
+  arma::cx_cube result(numChannels, numChannels, numAlphas, arma::fill::zeros);
   arma::cx_vec numerator = KMatrix::blatt_weisskopf(s);
-  result.each_slice() = numerator * numerator.t();
-  for (size_t k = 0; k < numAlphas; k++) {
-    result.slice(k) /= KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()) * KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()).t();
-  }
+  result.each_slice() += numerator * numerator.st();
+  result /= bwAlphaCube;
+  // for (size_t k = 0; k < numAlphas; k++) {
+  //   result.slice(k) /= KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()) * KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()).t();
+  // }
   return result;
 }
 
@@ -229,15 +249,15 @@ arma::cx_cube KMatrix::B2(const double& s) const {
 //! \return Matrix containing result of this operation with dimension (numChannels, numChannels)
 //!
 arma::cx_mat KMatrix::K(const double& s) const {
-  arma::cx_mat result(numChannels, numChannels);
+  arma::cx_mat result(numChannels, numChannels, arma::fill::zeros);
   arma::cx_cube gigj = arma::zeros<arma::cx_cube>(numChannels, numChannels, numAlphas);
   for (size_t k = 0; k < numAlphas; k++) {
-    gigj.slice(k) += gAlphas.col(k) * gAlphas.col(k).t();
+    gigj.slice(k) += gAlphas.col(k) * gAlphas.col(k).st();
     gigj.slice(k) /= (s - mAlphas(k) * mAlphas(k));
     gigj.slice(k) = gigj.slice(k) + cBkg;
   }
   gigj %= B2(s);
-  result = arma::sum(gigj, 2);
+  result += arma::sum(gigj, 2);
   return result;
 }
 
@@ -254,15 +274,15 @@ arma::cx_mat KMatrix::K(const double& s) const {
 //! \return Matrix containing result of this operation with dimension (numChannels, numChannels)
 //!
 arma::cx_mat KMatrix::K(const double& s, const double& s_0, const double& s_norm) const {
-  arma::cx_mat result(numChannels, numChannels);
+  arma::cx_mat result(numChannels, numChannels, arma::fill::zeros);
   arma::cx_cube gigj = arma::zeros<arma::cx_cube>(numChannels, numChannels, numAlphas);
   for (size_t k = 0; k < numAlphas; k++) {
-    gigj.slice(k) = gAlphas.col(k) * gAlphas.col(k).t();
+    gigj.slice(k) = gAlphas.col(k) * gAlphas.col(k).st();
     gigj.slice(k) /= (s - mAlphas(k) * mAlphas(k));
     gigj.slice(k) = gigj.slice(k) + cBkg;
   }
   gigj %= B2(s);
-  result = arma::sum(gigj, 2);
+  result += arma::sum(gigj, 2);
   return result * (s - s_0) / s_norm;
 }
 
@@ -277,17 +297,24 @@ arma::cx_mat KMatrix::K(const double& s, const double& s_0, const double& s_norm
 //! \return Diagonal matrix where each diagonal element is the result of this function for the corresponding channel
 //!
 arma::cx_mat KMatrix::C(const double& s) const {
-  arma::cx_mat result(numChannels, numChannels);
-  arma::cx_vec diagonal(numChannels);
-  diagonal += KMatrix::rho(s)
-    % arma::log((KMatrix::chi_p(s) + KMatrix::rho(s)) / (KMatrix::chi_p(s) - KMatrix::rho(s)) 
-        + complex<double>(0, +0.0) // this stupid code ensures we have +0i rather than -0i
-        );
-  diagonal -= KMatrix::chi_p(s)
-    % ((mChannels.col(1) - mChannels.col(0)) / (mChannels.col(0) + mChannels.col(1)))
-    % arma::log(mChannels.col(1) / mChannels.col(0));
+  arma::cx_mat result(numChannels, numChannels, arma::fill::zeros);
+  arma::cx_vec diagonal(numChannels, arma::fill::zeros);
+  // diagonal += KMatrix::rho(s)
+  //   % arma::log((KMatrix::chi_p(s) + KMatrix::rho(s)) / (KMatrix::chi_p(s) - KMatrix::rho(s)) 
+  //       + complex<double>(0, +0.0) // this stupid code ensures we have +0i rather than -0i
+  //       );
+  // diagonal -= KMatrix::chi_p(s)
+  //   % ((mChannels.col(1) - mChannels.col(0)) / (mChannels.col(0) + mChannels.col(1)))
+  //   % arma::log(mChannels.col(1) / mChannels.col(0));
+  // diagonal /= arma::datum::pi;
+  const arma::cx_vec& m1 = mChannels.col(0);
+  const arma::cx_vec& m2 = mChannels.col(0);
+  arma::cx_vec chi_p = KMatrix::chi_p(s);
+  arma::cx_vec rho = KMatrix::rho(s);
+  diagonal += rho % arma::log((chi_p + rho) / (chi_p - rho)) + complex<double>(0, +0.0);
+  diagonal -= chi_p % ((m2 - m1) / (m1 + m2)) % arma::log(m2 / m1);
   diagonal /= arma::datum::pi;
-  result = arma::diagmat(diagonal);
+  result += arma::diagmat(diagonal); // TODO maybe optimize
   return result;
 }
 
@@ -341,14 +368,14 @@ arma::cx_mat KMatrix::IKC_inv(const double& s, const double& s_0, const double& 
 //! \return Vector containing result of this operation
 //!
 arma::cx_vec KMatrix::P(const double& s, const arma::cx_vec& betas) const {
-  arma::cx_vec result(numChannels);
+  arma::cx_vec result(numChannels, arma::fill::zeros);
   arma::cx_mat betag(numChannels, numAlphas);
-  betag = gAlphas.each_row() % betas.t();
+  betag = gAlphas.each_row() % betas.st();
   for (size_t j = 0; j < numAlphas; j++) {
     betag.col(j) /= (s - mAlphas(j) * mAlphas(j));
   }
   betag %= KMatrix::B(s);
-  result = arma::sum(betag, 1);
+  result += arma::sum(betag, 1);
   return result;
 }
 

@@ -1,5 +1,6 @@
 #ifndef KMATRIX_H
 #define KMATRIX_H
+#define ARMA_NO_DEBUG
 
 #include <unordered_map>
 #include <vector>
@@ -19,8 +20,12 @@ public:
     int J;
     arma::cx_mat mAlphas;
     arma::cx_mat mChannels;
+    arma::cx_vec m1s;
+    arma::cx_vec m2s;
     arma::cx_mat gAlphas;
     arma::cx_mat cBkg;
+    arma::cx_mat bwAlphaMat;
+    arma::cx_cube bwAlphaCube;
 
     // Constructor
     KMatrix(int numChannels, int numAlphas, int J);
