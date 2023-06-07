@@ -23,7 +23,7 @@ void Likelihood::setup() {
   cout << "Precalculating inverse of (I - KC)" << endl;
   cout << "Data" << endl;
   for (size_t i = 0; i < data.nEvents; i++) {
-    printLoadingBar(i, data.nEvents);
+    // printLoadingBar(i, data.nEvents);
     ikc_inv_vec_f0.push_back(amplitude.ikc_inv_vec_f0(pow(data.masses[i], 2)));
     ikc_inv_vec_f2.push_back(amplitude.ikc_inv_vec_f2(pow(data.masses[i], 2)));
     ikc_inv_vec_a0.push_back(amplitude.ikc_inv_vec_a0(pow(data.masses[i], 2)));
@@ -33,7 +33,7 @@ void Likelihood::setup() {
   }
   cout << "Monte Carlo" << endl;
   for (size_t i = 0; i < acc.nEvents; i++) {
-    printLoadingBar(i, acc.nEvents);
+    // printLoadingBar(i, acc.nEvents);
     ikc_inv_vec_f0_mc.push_back(amplitude.ikc_inv_vec_f0(pow(acc.masses[i], 2)));
     ikc_inv_vec_f2_mc.push_back(amplitude.ikc_inv_vec_f2(pow(acc.masses[i], 2)));
     ikc_inv_vec_a0_mc.push_back(amplitude.ikc_inv_vec_a0(pow(acc.masses[i], 2)));
@@ -66,7 +66,7 @@ float Likelihood::getExtendedLogLikelihood(const vector<float>& params) {
   float log_likelihood = 0.0;
   cout << "Calculating data (" << data.nEvents << " events)" << endl;
   for (size_t i = 0; i < data.nEvents; i++) {
-    printLoadingBar(i, data.nEvents);
+    // printLoadingBar(i, data.nEvents);
     try {
       log_likelihood += data.weights[i]
         * log(
@@ -91,7 +91,7 @@ float Likelihood::getExtendedLogLikelihood(const vector<float>& params) {
   }
   cout << "Calculating MC (" << acc.nEvents << " events)" << endl;
   for (size_t i = 0; i < acc.nEvents; i++) {
-    printLoadingBar(i, acc.nEvents);
+    // printLoadingBar(i, acc.nEvents);
     try {
       log_likelihood -= acc.weights[i] * amplitude.intensity(
           betas,

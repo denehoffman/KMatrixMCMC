@@ -39,3 +39,6 @@ compile_commands.json
 sandbox/
 
 *.png
+
+callgrind.out.*
+*.svg
