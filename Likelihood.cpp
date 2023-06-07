@@ -39,25 +39,25 @@ void Likelihood::setup() {
   }
 }
 
-double Likelihood::getExtendedLogLikelihood(const vector<double>& params) {
+float Likelihood::getExtendedLogLikelihood(const vector<float>& params) {
   // Perform likelihood calculation and return the result
   assert(params.size() == 23);
-  cx_vec betas = {
-    polar<double>(0.0, 0.0),                // f0(500)
-    polar<double>(params[0], 0.0),          // f0(980)
-    polar<double>(params[1], params[2]),    // f0(1370)
-    polar<double>(params[3], params[4]),    // f0(1500)
-    polar<double>(params[5], params[6]),    // f0(1710)
-    polar<double>(params[7], params[8]),    // f2(1270)
-    polar<double>(params[9], params[10]),   // f2(1525)
-    polar<double>(params[11], params[12]),  // f2(1810)
-    polar<double>(params[13], params[14]),  // f2(1950)
-    polar<double>(params[15], params[16]),  // a0(980)
-    polar<double>(params[17], params[18]),  // a0(1450)
-    polar<double>(params[19], params[20]),  // a2(1320)
-    polar<double>(params[21], params[22]),  // a2(1700)
+  cx_fvec betas = {
+    polar<float>(0.0, 0.0),                // f0(500)
+    polar<float>(params[0], 0.0),          // f0(980)
+    polar<float>(params[1], params[2]),    // f0(1370)
+    polar<float>(params[3], params[4]),    // f0(1500)
+    polar<float>(params[5], params[6]),    // f0(1710)
+    polar<float>(params[7], params[8]),    // f2(1270)
+    polar<float>(params[9], params[10]),   // f2(1525)
+    polar<float>(params[11], params[12]),  // f2(1810)
+    polar<float>(params[13], params[14]),  // f2(1950)
+    polar<float>(params[15], params[16]),  // a0(980)
+    polar<float>(params[17], params[18]),  // a0(1450)
+    polar<float>(params[19], params[20]),  // a2(1320)
+    polar<float>(params[21], params[22]),  // a2(1700)
   };
-  double log_likelihood = 0.0;
+  float log_likelihood = 0.0;
   cout << "Calculating data (" << data.nEvents << " events)" << endl;
   for (size_t i = 0; i < data.nEvents; i++) {
     printLoadingBar(i, data.nEvents);

@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -O2 $(shell root-config --cflags) -DNDEBUG
+CXXFLAGS = -O3 $(shell root-config --cflags) -DNDEBUG
 
 TARGET = run_mcmc
 SOURCES = $(wildcard *.cpp)

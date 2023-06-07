@@ -15,10 +15,10 @@ using namespace arma;
 
 
 int main(int argc, char* argv[]) {
-  // std::vector<double> s_values;
+  // std::vector<float> s_values;
   // for (size_t i = 1; i < argc; i++) {
   //   istringstream iss(argv[i]);
-  //   double value;
+  //   float value;
   //   if (iss >> value) {
   //     s_values.push_back(value);
   //   } else {
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
   //   }
   // }
 
-  vector<double> params {
+  vector<float> params {
     1.0,
     1.0, 0.0,
     1.0, 0.0,

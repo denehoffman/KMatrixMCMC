@@ -23,7 +23,7 @@ public:
   void setup();
 
   // Calculate log likelihood
-  double getExtendedLogLikelihood(const vector<double>& params);
+  float getExtendedLogLikelihood(const vector<float>& params);
 
 private:
   Amplitude amplitude;
@@ -32,15 +32,15 @@ private:
   DataReader gen;
   int nGenerated;
   void printLoadingBar (const int& progress, const int& total, const int& barWidth = 50) const;
-  vector<arma::cx_vec> ikc_inv_vec_f0;
-  vector<arma::cx_vec> ikc_inv_vec_f2;
-  vector<arma::cx_vec> ikc_inv_vec_a0;
-  vector<arma::cx_vec> ikc_inv_vec_a2;
+  vector<arma::cx_fvec> ikc_inv_vec_f0;
+  vector<arma::cx_fvec> ikc_inv_vec_f2;
+  vector<arma::cx_fvec> ikc_inv_vec_a0;
+  vector<arma::cx_fvec> ikc_inv_vec_a2;
 
-  vector<arma::cx_vec> ikc_inv_vec_f0_mc;
-  vector<arma::cx_vec> ikc_inv_vec_f2_mc;
-  vector<arma::cx_vec> ikc_inv_vec_a0_mc;
-  vector<arma::cx_vec> ikc_inv_vec_a2_mc;
+  vector<arma::cx_fvec> ikc_inv_vec_f0_mc;
+  vector<arma::cx_fvec> ikc_inv_vec_f2_mc;
+  vector<arma::cx_fvec> ikc_inv_vec_a0_mc;
+  vector<arma::cx_fvec> ikc_inv_vec_a2_mc;
 };
 
 #endif  // LIKELIHOOD_H

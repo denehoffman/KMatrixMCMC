@@ -18,47 +18,47 @@ public:
     int numAlphas;
     int numChannels;
     int J;
-    arma::cx_mat mAlphas;
-    arma::cx_mat mChannels;
-    arma::cx_vec m1s;
-    arma::cx_vec m2s;
-    arma::cx_mat gAlphas;
-    arma::cx_mat cBkg;
-    arma::cx_mat bwAlphaMat;
-    arma::cx_cube bwAlphaCube;
+    arma::cx_fmat mAlphas;
+    arma::cx_fmat mChannels;
+    arma::cx_fvec m1s;
+    arma::cx_fvec m2s;
+    arma::cx_fmat gAlphas;
+    arma::cx_fmat cBkg;
+    arma::cx_fmat bwAlphaMat;
+    arma::cx_fcube bwAlphaCube;
 
     // Constructor
     KMatrix(int numChannels, int numAlphas, int J);
 
     // Initialize the matrices and vectors
     void initialize(
-        const arma::mat& m_alphas,
-        const arma::mat& m_channels,
-        const arma::mat& g_alphas,
-        const arma::mat& c_bkg);
+        const arma::fmat& m_alphas,
+        const arma::fmat& m_channels,
+        const arma::fmat& g_alphas,
+        const arma::fmat& c_bkg);
 
     // Print the matrices and vectors
     void print() const;
 
-    arma::cx_vec chi_p(const double& s) const;
-    arma::cx_vec chi_m(const double& s) const;
-    arma::cx_vec rho(const double& s) const;
-    arma::cx_vec q(const double& s) const;
-    arma::cx_vec blatt_weisskopf(const double& s) const;
-    arma::cx_mat B(const double& s) const;
-    arma::cx_cube B2(const double& s) const;
-    arma::cx_mat K(const double& s) const;
-    arma::cx_mat K(const double& s, const double& s_0, const double& s_norm) const;
-    arma::cx_mat C(const double& s) const;
-    arma::cx_mat IKC_inv(const double& s);
-    arma::cx_mat IKC_inv(const double& s, const double& s_0, const double& s_norm);
-    arma::cx_vec P(const double& s, const arma::cx_vec& betas) const;
-    complex<double> F(const double& s, const arma::cx_vec& betas, const arma::cx_vec& ikc_inv_vec);
+    arma::cx_fvec chi_p(const float& s) const;
+    arma::cx_fvec chi_m(const float& s) const;
+    arma::cx_fvec rho(const float& s) const;
+    arma::cx_fvec q(const float& s) const;
+    arma::cx_fvec blatt_weisskopf(const float& s) const;
+    arma::cx_fmat B(const float& s) const;
+    arma::cx_fcube B2(const float& s) const;
+    arma::cx_fmat K(const float& s) const;
+    arma::cx_fmat K(const float& s, const float& s_0, const float& s_norm) const;
+    arma::cx_fmat C(const float& s) const;
+    arma::cx_fmat IKC_inv(const float& s);
+    arma::cx_fmat IKC_inv(const float& s, const float& s_0, const float& s_norm);
+    arma::cx_fvec P(const float& s, const arma::cx_fvec& betas) const;
+    complex<float> F(const float& s, const arma::cx_fvec& betas, const arma::cx_fvec& ikc_inv_vec);
   
   private:
-    function<arma::cx_vec(const double&)> blattWeisskopfPtr;
-    arma::cx_vec blatt_weisskopf0(const double& s);
-    arma::cx_vec blatt_weisskopf2(const double& s);
+    function<arma::cx_fvec(const float&)> blattWeisskopfPtr;
+    arma::cx_fvec blatt_weisskopf0(const float& s);
+    arma::cx_fvec blatt_weisskopf2(const float& s);
 };
 
 #endif  // KMATRIX_H
