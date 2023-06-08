@@ -16,7 +16,17 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get update
-        apt-get install -y libopenblas-dev liblapack-dev libarmadillo-dev
+        apt-get install -y libopenblas-dev liblapack-dev
+
+    - name: Install Armadillo
+      run: |
+        mkdir -p external
+        cd external
+        wget https://sourceforge.net/projects/arma/files/armadillo-12.4.0.tar.xz
+        tar -xf armadillo-12.4.0.tar.xz
+        cd armadillo-12.4.0
+        cmake .
+        make install
 
     - name: Configure CMake
       run: |
