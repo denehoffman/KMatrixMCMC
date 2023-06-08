@@ -36,7 +36,10 @@ jobs:
     
     - name: Debug
       run: |
+        pwd
+        echo "contents of workspace"
         ls ${{github.workspace}}
+        echo "contents of build:"
         ls ${{github.workspace}}/build
 
     - name: Test
