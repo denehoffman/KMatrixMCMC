@@ -10,20 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: rootproject/root:latest
     steps:
     - uses: actions/checkout@v3
-    - uses: conda-incubator/setup-miniconda@v2
-      with:
-        python-version: "3.10"
-        miniforge-version: latest
-        use-mamba: true
-        mamba-version: "*"
-
-    - name: Install ROOT
-      run: |
-        mamba create -c conda-forge --name conda_root_env root
-        conda activate conda_root_env
-
     - name: Install dependencies
       run: |
         sudo apt-get update
