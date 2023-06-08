@@ -15,8 +15,9 @@ KMatrix::KMatrix(int numChannels, int numAlphas, int J) : numAlphas(numAlphas), 
     } else if (J == 2) {
       blattWeisskopfPtr = bind(&KMatrix::blatt_weisskopf2, this, placeholders::_1);
     } else {
-      cout << "Error: J = " << J << " is not supported!" << endl;
-      return;
+      stringstream error;
+      error << "Error: J = " << J << " is not supported!";
+      throw runtime_error(error.str());
     }
   }
 
@@ -33,31 +34,38 @@ void KMatrix::initialize(
     const arma::fmat& m_channels,
     const arma::fmat& g_alphas,
     const arma::fmat& c_bkg) {
+
   if (m_alphas.n_rows != 1 || m_alphas.n_cols != numAlphas) {
-    cout << "Error: Invalid dimensions for nAlphas matrix: " << arma::size(m_alphas) << endl;
-    return;
+    stringstream error;
+    error << "Error: Invalid dimensions for nAlphas matrix: " << m_alphas.n_rows << "x" << m_alphas.n_cols;
+    throw runtime_error(error.str());
   }
 
   if (m_channels.n_rows != numChannels || m_channels.n_cols != 2) {
-    cout << "Error: Invalid dimensions for nChannels matrix: " << arma::size(m_channels) << endl;
-    return;
+    stringstream error;
+    error << "Error: Invalid dimensions for nChannels matrix: " << m_channels.n_rows << "x" << m_channels.n_cols;
+    throw runtime_error(error.str());
   }
 
   if (g_alphas.n_rows != numChannels || g_alphas.n_cols != numAlphas) {
-    cout << "Error: Invalid dimensions for gAlphas matrix: " << arma::size(g_alphas) << endl;
-    return;
+    stringstream error;
+    error << "Error: Invalid dimensions for gAlphas matrix: " << g_alphas.n_rows << "x" << g_alphas.n_cols;
+    throw runtime_error(error.str());
   }
 
   if (c_bkg.n_rows != numChannels || c_bkg.n_cols != numChannels) {
-    cout << "Error: Invalid dimensions for cBkg matrix: " << arma::size(c_bkg) << endl;
-    return;
+    stringstream error;
+    error << "Error: Invalid dimensions for cBkg matrix: " << c_bkg.n_rows << "x" << c_bkg.n_cols;
+    throw runtime_error(error.str());
   }
+
   mAlphas = arma::conv_to<arma::cx_fmat>::from(m_alphas);
   mChannels = arma::conv_to<arma::cx_fmat>::from(m_channels);
   m1s = mChannels.col(0);
   m2s = mChannels.col(1);
   gAlphas = arma::conv_to<arma::cx_fmat>::from(g_alphas);
   cBkg = arma::conv_to<arma::cx_fmat>::from(c_bkg);
+
   if (J == 0) {
     bwAlphaMat = arma::cx_fmat(numChannels, numAlphas, arma::fill::ones);
     bwAlphaCube = arma::cx_fcube(numChannels, numChannels, numAlphas, arma::fill::ones);
@@ -75,6 +83,8 @@ void KMatrix::initialize(
       arma::cx_fmat qAlphasCol = qAlphas.col(k);
       bwAlphaCube.slice(k) = qAlphasCol * qAlphasCol.st();
     }
+  } else {
+
   }
 }
 
@@ -231,10 +241,10 @@ arma::cx_fcube KMatrix::B2(const float& s) const {
   arma::cx_fcube result(numChannels, numChannels, numAlphas, arma::fill::zeros);
   arma::cx_fvec numerator = KMatrix::blatt_weisskopf(s);
   result.each_slice() += numerator * numerator.st();
-  result /= bwAlphaCube;
-  // for (size_t k = 0; k < numAlphas; k++) {
-  //   result.slice(k) /= KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()) * KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()).t();
-  // }
+  // result /= bwAlphaCube; // this doesn't work right now
+  for (size_t k = 0; k < numAlphas; k++) {
+    result.slice(k) /= KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()) * KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()).t();
+  }
   return result;
 }
 
@@ -335,8 +345,8 @@ arma::cx_fmat KMatrix::IKC_inv(const float& s) {
   arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
   try {
     result = arma::inv(IKC, arma::inv_opts::allow_approx);
-  } catch (...) {
-    cout << "PROBLEM" << endl;
+  } catch (runtime_error) {
+    throw runtime_error("Matrix inverse failed!");
   }
   return result;
 }
@@ -360,8 +370,8 @@ arma::cx_fmat KMatrix::IKC_inv(const float& s, const float& s_0, const float& s_
   arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
   try {
     result = arma::inv(IKC, arma::inv_opts::allow_approx);
-  } catch (...) {
-    cout << "PROBLEM" << endl;
+  } catch (runtime_error) {
+    throw runtime_error("Matrix inverse failed!");
   }
   return result;
 }

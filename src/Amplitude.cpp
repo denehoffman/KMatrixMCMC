@@ -81,20 +81,32 @@ Amplitude::Amplitude() {
 }
 
 cx_fvec Amplitude::ikc_inv_vec_f0(const float& s) {
-  cx_fvec res = kmat_f0.IKC_inv(s, 0.0091125, 1.0).col(2);
-  return res;
+  try {
+    return kmat_f0.IKC_inv(s, 0.0091125, 1.0).col(2);
+  } catch (runtime_error) {
+    throw runtime_error("Matrix inverse failed!");
+  }
 }
 cx_fvec Amplitude::ikc_inv_vec_f2(const float& s) {
-  cx_fvec res = kmat_f2.IKC_inv(s).col(2);
-  return res;
+  try {
+    return kmat_f2.IKC_inv(s).col(2);
+  } catch (runtime_error) {
+    throw runtime_error("Matrix inverse failed!");
+  }
 }
 cx_fvec Amplitude::ikc_inv_vec_a0(const float& s) {
-  cx_fvec res = kmat_a0.IKC_inv(s).col(1);
-  return res;
+  try {
+    return kmat_a0.IKC_inv(s).col(1);
+  } catch (runtime_error) {
+    throw runtime_error("Matrix inverse failed!");
+  }
 }
 cx_fvec Amplitude::ikc_inv_vec_a2(const float& s) {
-  cx_fvec res = kmat_a2.IKC_inv(s).col(1);
-  return res;
+  try {
+    return kmat_a2.IKC_inv(s).col(1);
+  } catch (runtime_error) {
+    throw runtime_error("Matrix inverse failed!");
+  }
 }
 
 cx_fmat Amplitude::bw_f0(const float& s) {
