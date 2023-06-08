@@ -31,11 +31,9 @@
 *.out
 *.app
 
-run_mcmc
-compile_commands.json
-
 .cache/clangd/index/
 
 sandbox/
 
-*.png
+build/
+profile/
