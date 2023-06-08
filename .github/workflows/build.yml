@@ -13,20 +13,15 @@ jobs:
     container: rootproject/root:latest
     steps:
     - uses: actions/checkout@v3
-
-    - name: Cache dependencies
-      uses: actions/cache@v1.2.1
+    - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        path: /var/lib/apt/lists
-        key: ${{runner.os}}-apt-${{hashFiles('**/apt-get.txt')}}
-      id: cache_deps
+        packages: git doxygen libopenblas-dev liblapack-dev
+        version: 1.0
 
-    - name: Install dependencies
-      run: |
-        apt-get update
-        apt-get install -y git doxygen libopenblas-dev liblapack-dev
-      env:
-        APTGET: ${{steps.cache_deps.outputs.cache-hit}}
+#    - name: Install dependencies
+#      run: |
+#        apt-get update
+#        apt-get install -y git doxygen libopenblas-dev liblapack-dev
 
     - name: Cache Armadillo
       uses: actions/cache@v1.2.1
