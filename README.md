@@ -14,3 +14,4 @@ This will install the `kmatrix_mcmc` executable in the default installation loca
 cmake --install build --prefix <path/to/installation/directory>
 ```
 This will install the executable in `path/to/installation/directory/bin/kmatrix_mcmc`. Note that with either of these commands, you may need to use `sudo` to give `cmake` the proper copying permissions.
+
