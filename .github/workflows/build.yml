@@ -12,22 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+    - uses: conda-incubator/setup-miniconda@v2
       with:
-        python-version: '3.10'
-
-    - name: Add conda to system path
-      run: |
-        echo $CONDA/bin >> $GITHUB_PATH
+        python-version: "3.10"
+        miniforge-version: latest
+        use-mamba: true
+        mamba-version: "*"
 
     - name: Install ROOT
       run: |
-        conda config --add channels conda-forge
-        conda config --set channel_priority strict
-        conda create -c conda-forge --name conda_root_env root
-        conda activate conda_root_env
+        mamba create -c conda-forge --name conda_root_env root
+        mamba activate conda_root_env
 
     - name: Install dependencies
       run: |
