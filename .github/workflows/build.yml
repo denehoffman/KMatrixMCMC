@@ -33,6 +33,11 @@ jobs:
   
     - name: Build
       run: cmake --build ${{github.workspace}}/build
+    
+    - name: Debug
+      run: |
+        ls ${{github.workspace}}
+        ls ${{github.workspace}}/build
 
     - name: Test
       working-directory: ${{github.workspace}}/build
