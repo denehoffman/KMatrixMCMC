@@ -22,9 +22,9 @@ jobs:
       run: |
         echo $CONDA/bin >> $GITHUB_PATH
 
-    - name: Install dependencies
+    - name: Update conda
       run: |
-        conda env update --file environment.yml
+        conda env update
 
     - name: Install ROOT
       run: |
