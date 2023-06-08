@@ -1,6 +1,6 @@
-#include "Likelihood.h"
-#include "Amplitude.h"
-#include "DataReader.h"
+#include "Likelihood.hpp"
+#include "Amplitude.hpp"
+#include "DataReader.hpp"
 #include <cmath>
 
 Likelihood::Likelihood(const string& data_path,

@@ -1,5 +1,5 @@
-#include "Amplitude.h"
-#include "KMatrix.h"
+#include "Amplitude.hpp"
+#include "KMatrix.hpp"
 
 Amplitude::Amplitude() {
   f0_mchannels = {

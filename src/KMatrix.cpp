@@ -1,4 +1,4 @@
-#include "KMatrix.h"
+#include "KMatrix.hpp"
 
 //!
 //! @brief Constructor for KMatrix class

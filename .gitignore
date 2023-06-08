@@ -31,8 +31,6 @@
 *.out
 *.app
 
-compile_commands.json
-
 .cache/clangd/index/
 
 sandbox/

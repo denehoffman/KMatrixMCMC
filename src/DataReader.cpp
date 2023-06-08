@@ -1,6 +1,6 @@
 #include "TLorentzVector.h"
 #include "TLorentzRotation.h"
-#include "DataReader.h"
+#include "DataReader.hpp"
 
 DataReader::DataReader(const string& filePath, const string& treeName) {
   // Open the ROOT file in read-only mode

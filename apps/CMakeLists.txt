@@ -1,0 +1,5 @@
+add_executable(kmatrix_mcmc main.cpp)
+target_include_directories(kmatrix_mcmc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+target_link_libraries(kmatrix_mcmc PRIVATE kmatrixmcmc_library)
+target_link_libraries(kmatrix_mcmc PRIVATE ${ARMADILLO_LIBRARIES})
+target_link_libraries(kmatrix_mcmc PRIVATE ${ROOT_LIBRARIES})
