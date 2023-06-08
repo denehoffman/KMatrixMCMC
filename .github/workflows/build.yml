@@ -22,7 +22,7 @@ jobs:
     - name: Install ROOT
       run: |
         mamba create -c conda-forge --name conda_root_env root
-        mamba activate conda_root_env
+        conda activate conda_root_env
 
     - name: Install dependencies
       run: |
