@@ -228,7 +228,7 @@ kmatrix_mcmc data_short.root accmc_short.root accmc_short.root
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE.md).
 
 ## Tasks
 
