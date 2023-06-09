@@ -319,9 +319,9 @@ TEST_CASE("KMatrix blatt_weisskopf function (J=0)", "[KMatrix]") {
   
   float s = 1.3;
   
-  arma::cx_fvec expected_result = arma::cx_fvec(3, arma::fill::ones);
+  arma::fvec expected_result = arma::fvec(3, arma::fill::ones);
   
-  arma::cx_fvec result = kmat_a2.blatt_weisskopf(s);
+  arma::fvec result = kmat_a2.blatt_weisskopf(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -350,9 +350,9 @@ TEST_CASE("KMatrix blatt_weisskopf function below threshold (J=0)", "[KMatrix]")
   
   float s = 0.9;
   
-  arma::cx_fvec expected_result = arma::cx_fvec(3, arma::fill::ones);
+  arma::fvec expected_result = arma::fvec(3, arma::fill::ones);
   
-  arma::cx_fvec result = kmat_a2.blatt_weisskopf(s);
+  arma::fvec result = kmat_a2.blatt_weisskopf(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -381,13 +381,13 @@ TEST_CASE("KMatrix blatt_weisskopf function (J=2)", "[KMatrix]") {
   
   float s = 1.3;
   
-  arma::cx_fvec expected_result = {
+  arma::fvec expected_result = {
     2.511697,
     1.674049,
     0.3699875
   };
   
-  arma::cx_fvec result = kmat_a2.blatt_weisskopf(s);
+  arma::fvec result = kmat_a2.blatt_weisskopf(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -416,13 +416,13 @@ TEST_CASE("KMatrix blatt_weisskopf function below threshold (J=2)", "[KMatrix]")
   
   float s = 0.9;
   
-  arma::cx_fvec expected_result = {
+  arma::fvec expected_result = {
     1.781955,
     0.6902086,
     0.6036541
   };
   
-  arma::cx_fvec result = kmat_a2.blatt_weisskopf(s);
+  arma::fvec result = kmat_a2.blatt_weisskopf(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -451,9 +451,9 @@ TEST_CASE("KMatrix B function (J=0)", "[KMatrix]") {
   
   float s = 1.3;
   
-  arma::cx_fmat expected_result = arma::cx_fmat(3, 2, arma::fill::ones);
+  arma::fmat expected_result = arma::fmat(3, 2, arma::fill::ones);
   
-  arma::cx_fmat result = kmat_a2.B(s);
+  arma::fmat result = kmat_a2.B(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -482,9 +482,9 @@ TEST_CASE("KMatrix B function below threshold (J=0)", "[KMatrix]") {
   
   float s = 0.9;
   
-  arma::cx_fmat expected_result = arma::cx_fmat(3, 2, arma::fill::ones);
+  arma::fmat expected_result = arma::fmat(3, 2, arma::fill::ones);
   
-  arma::cx_fmat result = kmat_a2.B(s);
+  arma::fmat result = kmat_a2.B(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -513,13 +513,13 @@ TEST_CASE("KMatrix B function (J=2)", "[KMatrix]") {
   
   float s = 1.3;
   
-  arma::cx_fmat expected_result = arma::conv_to<arma::cx_fmat>::from(arma::fmat{
+  arma::fmat expected_result = {
     {0.8820837, 0.7711838},
     {0.6715552, 0.5238816},
     {0.2296635, 0.1222795}
-  });
+  };
   
-  arma::cx_fmat result = kmat_a2.B(s);
+  arma::fmat result = kmat_a2.B(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -548,13 +548,13 @@ TEST_CASE("KMatrix B function below threshold (J=2)", "[KMatrix]") {
   
   float s = 0.9;
   
-  arma::cx_fmat expected_result = arma::conv_to<arma::cx_fmat>::from(arma::fmat{
+  arma::fmat expected_result = {
     {0.6258054, 0.5471261},
     {0.2768815, 0.2159958},
     {0.3747081, 0.1995055}
-  });
+  };
   
-  arma::cx_fmat result = kmat_a2.B(s);
+  arma::fmat result = kmat_a2.B(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -583,9 +583,9 @@ TEST_CASE("KMatrix B2 function (J=0)", "[KMatrix]") {
   
   float s = 1.3;
   
-  arma::cx_fcube expected_result = arma::cx_fcube(3, 3, 2, arma::fill::ones);
+  arma::fcube expected_result = arma::fcube(3, 3, 2, arma::fill::ones);
   
-  arma::cx_fcube result = kmat_a2.B2(s);
+  arma::fcube result = kmat_a2.B2(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -614,9 +614,9 @@ TEST_CASE("KMatrix B2 function below threshold (J=0)", "[KMatrix]") {
   
   float s = 0.9;
   
-  arma::cx_fcube expected_result = arma::cx_fcube(3, 3, 2, arma::fill::ones);
+  arma::fcube expected_result = arma::fcube(3, 3, 2, arma::fill::ones);
   
-  arma::cx_fcube result = kmat_a2.B2(s);
+  arma::fcube result = kmat_a2.B2(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -645,22 +645,22 @@ TEST_CASE("KMatrix B2 function (J=2)", "[KMatrix]") {
   
   float s = 1.3;
   
-  arma::cx_fcube expected_result = arma::cx_fcube(3, 3, 2, arma::fill::zeros);
-  arma::cx_fmat expected_slice_0 = arma::conv_to<arma::cx_fmat>::from(arma::fmat{
+  arma::fcube expected_result = arma::fcube(3, 3, 2, arma::fill::zeros);
+  arma::fmat expected_slice_0 = {
       {0.7780716, 0.5923679, 0.2025824},
       {0.5923679, 0.4509864, 0.1542317},
       {0.2025824, 0.1542317, 0.05274532}
-  });
+  };
 
-  arma::cx_fmat expected_slice_1 = arma::conv_to<arma::cx_fmat>::from(arma::fmat{
+  arma::fmat expected_slice_1 = {
       {0.5947244, 0.404009, 0.0943},
       {0.404009, 0.2744519, 0.06406},
       {0.0943, 0.06406, 0.01495229}
-  });
+  };
   expected_result.slice(0) = expected_slice_0;
   expected_result.slice(1) = expected_slice_1;
   
-  arma::cx_fcube result = kmat_a2.B2(s);
+  arma::fcube result = kmat_a2.B2(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   
@@ -689,22 +689,22 @@ TEST_CASE("KMatrix B2 function below threshold (J=2)", "[KMatrix]") {
   
   float s = 0.9;
   
-  arma::cx_fcube expected_result = arma::cx_fcube(3, 3, 2, arma::fill::zeros);
-  arma::cx_fmat expected_slice_0 = arma::conv_to<arma::cx_fmat>::from(arma::fmat{
+  arma::fcube expected_result = arma::fcube(3, 3, 2, arma::fill::zeros);
+  arma::fmat expected_slice_0 = {
       {0.3916324, 0.1732739, 0.2344944},
       {0.1732739, 0.07666336, 0.1037497},
       {0.2344944, 0.1037497, 0.1404062}
-  });
+  };
 
-  arma::cx_fmat expected_slice_1 = arma::conv_to<arma::cx_fmat>::from(arma::fmat{
+  arma::fmat expected_slice_1 = {
       {0.2993469, 0.1181769, 0.1091547},
       {0.1181769, 0.04665419, 0.04309236},
       {0.1091547, 0.04309236, 0.03980245}
-  });
+  };
   expected_result.slice(0) = expected_slice_0;
   expected_result.slice(1) = expected_slice_1;
   
-  arma::cx_fcube result = kmat_a2.B2(s);
+  arma::fcube result = kmat_a2.B2(s);
   CAPTURE(expected_result);  // Print the expectation
   CAPTURE(result);  // Print the result
   

@@ -85,8 +85,8 @@ float Likelihood::getExtendedLogLikelihood(const vector<float>& params) {
     polar<float>(params[19], params[20]),  // a2(1320)
     polar<float>(params[21], params[22]),  // a2(1700)
   };
-  arma::cx_fmat bw_f0 = arma::cx_fmat(5, 5, arma::fill::ones);
-  arma::cx_fmat bw_a0 = arma::cx_fmat(2, 2, arma::fill::ones);
+  arma::fmat bw_f0 = arma::fmat(5, 5, arma::fill::ones);
+  arma::fmat bw_a0 = arma::fmat(2, 2, arma::fill::ones);
   float log_likelihood = 0.0;
   cout << "Calculating data (" << data.masses.size() << " events)" << endl;
   cout << "Skipped " << (data.nEvents - data.masses.size()) << " events due to failed inverses" << endl;

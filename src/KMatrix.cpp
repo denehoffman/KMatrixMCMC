@@ -67,8 +67,8 @@ void KMatrix::initialize(
   cBkg = arma::conv_to<arma::cx_fmat>::from(c_bkg);
 
   if (J == 0) {
-    bwAlphaMat = arma::cx_fmat(numChannels, numAlphas, arma::fill::ones);
-    bwAlphaCube = arma::cx_fcube(numChannels, numChannels, numAlphas, arma::fill::ones);
+    bwAlphaMat = arma::fmat(numChannels, numAlphas, arma::fill::ones);
+    bwAlphaCube = arma::fcube(numChannels, numChannels, numAlphas, arma::fill::ones);
   } else if (J == 2) {
     arma::cx_fmat qAlphas = arma::cx_fmat(numChannels, numAlphas, arma::fill::zeros);
     arma::cx_fmat sAlphas = arma::square(mAlphas);
@@ -76,12 +76,12 @@ void KMatrix::initialize(
     arma::cx_fmat m2sRep = arma::repmat(m2s, 1, numAlphas);
     arma::cx_fmat sAlphasRep = arma::repmat(sAlphas, numChannels, 1);
     qAlphas += arma::sqrt((arma::square(m1sRep + m2sRep) - sAlphasRep) % (arma::square(m1sRep - m2sRep) - sAlphasRep) / (4.0 * sAlphasRep));
-    arma::cx_fmat z = arma::square(qAlphas) / (0.1973 * 0.1973);
+    arma::fmat z = arma::real(arma::square(qAlphas) / (0.1973 * 0.1973));
     bwAlphaMat = arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z));
-    bwAlphaCube = arma::cx_fcube(numChannels, numChannels, numAlphas, arma::fill::zeros);
+    bwAlphaCube = arma::fcube(numChannels, numChannels, numAlphas, arma::fill::zeros);
     for (size_t k = 0; k < numAlphas; k++) {
-      arma::cx_fmat qAlphasCol = qAlphas.col(k);
-      bwAlphaCube.slice(k) = qAlphasCol * qAlphasCol.st();
+      arma::fvec bwVec = bwAlphaMat.col(k);
+      bwAlphaCube.slice(k) = bwVec * bwVec.t();
     }
   } else {
 
@@ -173,8 +173,8 @@ arma::cx_fvec KMatrix::q(const float& s) const {
 //! @param[in] s Input mass squared
 //! \return Vector containing result of this operation for each channel
 //!
-arma::cx_fvec KMatrix::blatt_weisskopf0(const float& s) {
-  return arma::cx_fvec(numChannels, arma::fill::ones);
+arma::fvec KMatrix::blatt_weisskopf0(const float& s) {
+  return arma::fvec(numChannels, arma::fill::ones);
 }
 
 //!
@@ -189,9 +189,9 @@ arma::cx_fvec KMatrix::blatt_weisskopf0(const float& s) {
 //! @param[in] s Input mass squared
 //! \return Vector containing result of this operation for each channel
 //!
-arma::cx_fvec KMatrix::blatt_weisskopf2(const float& s) {
-  arma::cx_fvec z = arma::square(KMatrix::q(s)) / (0.1973 * 0.1973);
-  arma::cx_fvec result = arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z));
+arma::fvec KMatrix::blatt_weisskopf2(const float& s) {
+  arma::fvec z = arma::real(arma::square(KMatrix::q(s)) / (0.1973 * 0.1973));
+  arma::fvec result = arma::sqrt(13.0 * arma::square(z) / (arma::square(z - 3.0) + 9.0 * z));
   return result;
 }
 
@@ -203,7 +203,7 @@ arma::cx_fvec KMatrix::blatt_weisskopf2(const float& s) {
 //! @param[in] s Input mass squared
 //! \return Vector containing result of this operation for each channel
 //!
-arma::cx_fvec KMatrix::blatt_weisskopf(const float& s) const {
+arma::fvec KMatrix::blatt_weisskopf(const float& s) const {
   return blattWeisskopfPtr(s);
 }
 
@@ -217,8 +217,8 @@ arma::cx_fvec KMatrix::blatt_weisskopf(const float& s) const {
 //! @param[in] s Input mass squared
 //! \return Matrix containing result of this operation with dimension (numChannels, numAlphas)
 //!
-arma::cx_fmat KMatrix::B(const float& s) const {
-  arma::cx_fmat result(numChannels, numAlphas, arma::fill::zeros);
+arma::fmat KMatrix::B(const float& s) const {
+  arma::fmat result(numChannels, numAlphas, arma::fill::zeros);
   result.each_col() += KMatrix::blatt_weisskopf(s);
   result /= bwAlphaMat;
   // for (size_t j = 0; j < numAlphas; j++) {
@@ -226,6 +226,7 @@ arma::cx_fmat KMatrix::B(const float& s) const {
   // }
   return result;
 }
+
 
 //!
 //! @brief Calculates ratio of Blatt-Weisskopf centrifugal barrier factors for each channel and resonance
@@ -237,14 +238,14 @@ arma::cx_fmat KMatrix::B(const float& s) const {
 //! @param[in] s Input mass squared
 //! \return Cube containing result of this operation with dimension (numChannels, numChannels, numAlphas)
 //!
-arma::cx_fcube KMatrix::B2(const float& s) const {
-  arma::cx_fcube result(numChannels, numChannels, numAlphas, arma::fill::zeros);
-  arma::cx_fvec numerator = KMatrix::blatt_weisskopf(s);
+arma::fcube KMatrix::B2(const float& s) const {
+  arma::fcube result(numChannels, numChannels, numAlphas, arma::fill::zeros);
+  arma::fvec numerator = KMatrix::blatt_weisskopf(s);
   result.each_slice() += numerator * numerator.st();
-  // result /= bwAlphaCube; // this doesn't work right now
-  for (size_t k = 0; k < numAlphas; k++) {
-    result.slice(k) /= KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()) * KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()).t();
-  }
+  result /= bwAlphaCube;
+  // for (size_t k = 0; k < numAlphas; k++) {
+  //   result.slice(k) /= KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()) * KMatrix::blatt_weisskopf((mAlphas(k) * mAlphas(k)).real()).t();
+  // }
   return result;
 }
 
@@ -266,7 +267,7 @@ arma::cx_fmat KMatrix::K(const float& s) const {
     gigj.slice(k) /= (s - (mAlphas(k) * mAlphas(k)));
     gigj.slice(k) = gigj.slice(k) + cBkg;
   }
-  gigj %= B2(s);
+  gigj %= arma::conv_to<arma::cx_fcube>::from(B2(s));
   result += arma::sum(gigj, 2);
   return result;
 }
@@ -291,7 +292,7 @@ arma::cx_fmat KMatrix::K(const float& s, const float& s_0, const float& s_norm) 
     gigj.slice(k) /= (s - mAlphas(k) * mAlphas(k));
     gigj.slice(k) = gigj.slice(k) + cBkg;
   }
-  gigj %= B2(s);
+  gigj %= arma::conv_to<arma::cx_fcube>::from(B2(s));
   result += arma::sum(gigj, 2);
   return result * (s - s_0) / s_norm;
 }
@@ -394,19 +395,19 @@ arma::cx_fvec KMatrix::P(const float& s, const arma::cx_fvec& betas) const {
   for (size_t j = 0; j < numAlphas; j++) {
     betag.col(j) /= (s - mAlphas(j) * mAlphas(j));
   }
-  betag %= KMatrix::B(s);
+  betag %= arma::conv_to<arma::cx_fmat>::from(KMatrix::B(s));
   result += arma::sum(betag, 1);
   return result;
 }
 
-arma::cx_fvec KMatrix::P(const float& s, const arma::cx_fvec& betas, const arma::cx_fmat& B) const {
+arma::cx_fvec KMatrix::P(const float& s, const arma::cx_fvec& betas, const arma::fmat& B) const {
   arma::cx_fvec result(numChannels, arma::fill::zeros);
   arma::cx_fmat betag(numChannels, numAlphas);
   betag = gAlphas.each_row() % betas.st();
   for (size_t j = 0; j < numAlphas; j++) {
     betag.col(j) /= (s - mAlphas(j) * mAlphas(j));
   }
-  betag %= B;
+  betag %= arma::conv_to<arma::cx_fmat>::from(B);
   result += arma::sum(betag, 1);
   return result;
 }
@@ -429,7 +430,7 @@ complex<float> KMatrix::F(const float& s, const arma::cx_fvec& betas, const arma
   return arma::dot(ikc_inv_vec, p_vec);
 }
 
-complex<float> KMatrix::F(const float& s, const arma::cx_fvec& betas, const arma::cx_fmat& B, const arma::cx_fvec& ikc_inv_vec) {
+complex<float> KMatrix::F(const float& s, const arma::cx_fvec& betas, const arma::fmat& B, const arma::cx_fvec& ikc_inv_vec) {
   arma::cx_fvec p_vec = KMatrix::P(s, betas, B);
   return arma::dot(ikc_inv_vec, p_vec);
 }

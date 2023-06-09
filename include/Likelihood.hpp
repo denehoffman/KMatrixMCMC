@@ -37,19 +37,19 @@ private:
   vector<arma::cx_fvec> ikc_inv_vec_f2;
   vector<arma::cx_fvec> ikc_inv_vec_a0;
   vector<arma::cx_fvec> ikc_inv_vec_a2;
-  vector<arma::cx_fmat> bw_f0;
-  vector<arma::cx_fmat> bw_f2;
-  vector<arma::cx_fmat> bw_a0;
-  vector<arma::cx_fmat> bw_a2;
+  vector<arma::fmat> bw_f0;
+  vector<arma::fmat> bw_f2;
+  vector<arma::fmat> bw_a0;
+  vector<arma::fmat> bw_a2;
 
   vector<arma::cx_fvec> ikc_inv_vec_f0_mc;
   vector<arma::cx_fvec> ikc_inv_vec_f2_mc;
   vector<arma::cx_fvec> ikc_inv_vec_a0_mc;
   vector<arma::cx_fvec> ikc_inv_vec_a2_mc;
-  vector<arma::cx_fmat> bw_f0_mc;
-  vector<arma::cx_fmat> bw_f2_mc;
-  vector<arma::cx_fmat> bw_a0_mc;
-  vector<arma::cx_fmat> bw_a2_mc;
+  vector<arma::fmat> bw_f0_mc;
+  vector<arma::fmat> bw_f2_mc;
+  vector<arma::fmat> bw_a0_mc;
+  vector<arma::fmat> bw_a2_mc;
 };
 
 #endif  // LIKELIHOOD_H

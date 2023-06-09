@@ -109,20 +109,12 @@ cx_fvec Amplitude::ikc_inv_vec_a2(const float& s) {
   }
 }
 
-cx_fmat Amplitude::bw_f0(const float& s) {
-  cx_fmat res = kmat_f0.B(s);
+fmat Amplitude::bw_f2(const float& s) {
+  fmat res = kmat_f2.B(s);
   return res;
 }
-cx_fmat Amplitude::bw_f2(const float& s) {
-  cx_fmat res = kmat_f2.B(s);
-  return res;
-}
-cx_fmat Amplitude::bw_a0(const float& s) {
-  cx_fmat res = kmat_a0.B(s);
-  return res;
-}
-cx_fmat Amplitude::bw_a2(const float& s) {
-  cx_fmat res = kmat_a2.B(s);
+fmat Amplitude::bw_a2(const float& s) {
+  fmat res = kmat_a2.B(s);
   return res;
 }
 
@@ -157,10 +149,10 @@ float Amplitude::intensity(
     const float& s,
     const float& theta,
     const float& phi,
-    const cx_fmat& bw_f0,
-    const cx_fmat& bw_f2,
-    const cx_fmat& bw_a0,
-    const cx_fmat& bw_a2,
+    const fmat& bw_f0,
+    const fmat& bw_f2,
+    const fmat& bw_a0,
+    const fmat& bw_a2,
     const cx_fvec& ikc_inv_vec_f0,
     const cx_fvec& ikc_inv_vec_f2,
     const cx_fvec& ikc_inv_vec_a0,

@@ -1,4 +1,4 @@
-# tested with 3.26
+# tested with 3.22 and 3.26
 cmake_minimum_required(VERSION 3.22)
 project(
   KMatrixMCMC
@@ -6,6 +6,19 @@ project(
   DESCRIPTION "MCMC on the KMatrix Amplitude"
   LANGUAGES CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Set default build type to Release if not specified
+# Set default build type to "Default" if not specified
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Default)
+endif()
+
+# Add the desired build types and flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+
+# Set additional flags for the "Debug" build type
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -O3")
 
 # Find required packages
 find_package(Armadillo REQUIRED)

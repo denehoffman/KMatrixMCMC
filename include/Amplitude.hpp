@@ -16,10 +16,10 @@ class Amplitude {
         const cx_fvec& ikc_inv_a0,
         const cx_fvec& ikc_inv_a2);
     float intensity(const cx_fvec& betas, const float& s, const float& theta, const float& phi,
-        const cx_fmat& bw_f0,
-        const cx_fmat& bw_f2,
-        const cx_fmat& bw_a0,
-        const cx_fmat& bw_a2,
+        const fmat& bw_f0,
+        const fmat& bw_f2,
+        const fmat& bw_a0,
+        const fmat& bw_a2,
         const cx_fvec& ikc_inv_f0,
         const cx_fvec& ikc_inv_f2,
         const cx_fvec& ikc_inv_a0,
@@ -30,10 +30,8 @@ class Amplitude {
     cx_fvec ikc_inv_vec_f2(const float& s);
     cx_fvec ikc_inv_vec_a0(const float& s);
     cx_fvec ikc_inv_vec_a2(const float& s);
-    cx_fmat bw_f0(const float& s);
-    cx_fmat bw_f2(const float& s);
-    cx_fmat bw_a0(const float& s);
-    cx_fmat bw_a2(const float& s);
+    fmat bw_f2(const float& s);
+    fmat bw_a2(const float& s);
 
   private:
     KMatrix kmat_f0 = KMatrix(5, 5, 0);
