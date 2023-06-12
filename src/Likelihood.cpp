@@ -23,16 +23,16 @@ void Likelihood::setup() {
   cout << "Precalculating inverse of (I - KC)" << endl;
   cout << "Data" << endl;
   vector<int> badDataIndices;
-  for (size_t i = 0; i < data.nEvents; i++) {
+  for (int i = 0; i < data.nEvents; i++) {
     // printLoadingBar(i, data.nEvents);
     try {
-      ikc_inv_vec_f0.push_back(amplitude.ikc_inv_vec_f0(pow(data.masses[i], 2)));
-      ikc_inv_vec_f2.push_back(amplitude.ikc_inv_vec_f2(pow(data.masses[i], 2)));
-      ikc_inv_vec_a0.push_back(amplitude.ikc_inv_vec_a0(pow(data.masses[i], 2)));
-      ikc_inv_vec_a2.push_back(amplitude.ikc_inv_vec_a2(pow(data.masses[i], 2)));
-      bw_f2.push_back(amplitude.bw_f2(pow(data.masses[i], 2)));
-      bw_a2.push_back(amplitude.bw_a2(pow(data.masses[i], 2)));
-    } catch (runtime_error) {
+      ikc_inv_vec_f0.emplace_back(amplitude.ikc_inv_vec_f0(pow(data.masses[i], 2)));
+      ikc_inv_vec_f2.emplace_back(amplitude.ikc_inv_vec_f2(pow(data.masses[i], 2)));
+      ikc_inv_vec_a0.emplace_back(amplitude.ikc_inv_vec_a0(pow(data.masses[i], 2)));
+      ikc_inv_vec_a2.emplace_back(amplitude.ikc_inv_vec_a2(pow(data.masses[i], 2)));
+      bw_f2.emplace_back(amplitude.bw_f2(pow(data.masses[i], 2)));
+      bw_a2.emplace_back(amplitude.bw_a2(pow(data.masses[i], 2)));
+    } catch (const runtime_error& e) {
       cout << "One or more matrix inverses failed for event " << i << endl;
       badDataIndices.push_back(i);
     }
@@ -45,16 +45,16 @@ void Likelihood::setup() {
   }
   cout << "Monte Carlo" << endl;
   vector<int> badMCIndices;
-  for (size_t i = 0; i < acc.nEvents; i++) {
+  for (int i = 0; i < acc.nEvents; i++) {
     // printLoadingBar(i, acc.nEvents);
     try {
-      ikc_inv_vec_f0_mc.push_back(amplitude.ikc_inv_vec_f0(pow(acc.masses[i], 2)));
-      ikc_inv_vec_f2_mc.push_back(amplitude.ikc_inv_vec_f2(pow(acc.masses[i], 2)));
-      ikc_inv_vec_a0_mc.push_back(amplitude.ikc_inv_vec_a0(pow(acc.masses[i], 2)));
-      ikc_inv_vec_a2_mc.push_back(amplitude.ikc_inv_vec_a2(pow(acc.masses[i], 2)));
-      bw_f2_mc.push_back(amplitude.bw_f2(pow(acc.masses[i], 2)));
-      bw_a2_mc.push_back(amplitude.bw_a2(pow(acc.masses[i], 2)));
-    } catch (runtime_error) {
+      ikc_inv_vec_f0_mc.emplace_back(amplitude.ikc_inv_vec_f0(pow(acc.masses[i], 2)));
+      ikc_inv_vec_f2_mc.emplace_back(amplitude.ikc_inv_vec_f2(pow(acc.masses[i], 2)));
+      ikc_inv_vec_a0_mc.emplace_back(amplitude.ikc_inv_vec_a0(pow(acc.masses[i], 2)));
+      ikc_inv_vec_a2_mc.emplace_back(amplitude.ikc_inv_vec_a2(pow(acc.masses[i], 2)));
+      bw_f2_mc.emplace_back(amplitude.bw_f2(pow(acc.masses[i], 2)));
+      bw_a2_mc.emplace_back(amplitude.bw_a2(pow(acc.masses[i], 2)));
+    } catch (const runtime_error& e) {
       cout << "One or more matrix inverses failed for event " << i << endl;
       badMCIndices.push_back(i);
     }

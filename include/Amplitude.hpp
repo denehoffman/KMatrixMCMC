@@ -24,7 +24,7 @@ class Amplitude {
         const cx_fvec& ikc_inv_f2,
         const cx_fvec& ikc_inv_a0,
         const cx_fvec& ikc_inv_a2);
-    complex<float> S0_wave(const float& theta, const float& phi);
+    complex<float> S0_wave();
     complex<float> D2_wave(const float& theta, const float& phi);
     cx_fvec ikc_inv_vec_f0(const float& s);
     cx_fvec ikc_inv_vec_f2(const float& s);

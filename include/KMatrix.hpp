@@ -15,16 +15,16 @@ using namespace std;
  * @brief The K-Matrix class
  */
 class KMatrix {
-public:
-    int numAlphas;
-    int numChannels;
-    int J;
+  public:
+    const arma::uword numAlphas;
+    const arma::uword numChannels;
     arma::cx_fmat mAlphas;
     arma::cx_fmat mChannels;
     arma::cx_fvec m1s;
     arma::cx_fvec m2s;
     arma::cx_fmat gAlphas;
     arma::cx_fmat cBkg;
+    int J;
     arma::fmat bwAlphaMat;
     arma::fcube bwAlphaCube;
 
@@ -57,7 +57,7 @@ public:
     arma::cx_fvec P(const float& s, const arma::cx_fvec& betas, const arma::fmat& B) const;
     complex<float> F(const float& s, const arma::cx_fvec& betas, const arma::cx_fvec& ikc_inv_vec);
     complex<float> F(const float& s, const arma::cx_fvec& betas, const arma::fmat& B, const arma::cx_fvec& ikc_inv_vec);
-  
+
   private:
     function<arma::fvec(const float&)> blattWeisskopfPtr;
     arma::fvec blatt_weisskopf0(const float& s);

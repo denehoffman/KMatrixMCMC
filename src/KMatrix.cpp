@@ -346,7 +346,7 @@ arma::cx_fmat KMatrix::IKC_inv(const float& s) {
   arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
   try {
     result = arma::inv(IKC, arma::inv_opts::allow_approx);
-  } catch (runtime_error) {
+  } catch (const runtime_error& e) {
     throw runtime_error("Matrix inverse failed!");
   }
   return result;
@@ -371,7 +371,7 @@ arma::cx_fmat KMatrix::IKC_inv(const float& s, const float& s_0, const float& s_
   arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
   try {
     result = arma::inv(IKC, arma::inv_opts::allow_approx);
-  } catch (runtime_error) {
+  } catch (const runtime_error& e) {
     throw runtime_error("Matrix inverse failed!");
   }
   return result;
