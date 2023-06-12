@@ -97,8 +97,8 @@ Since the values for each evaluation of the PDF will be $\in(0,1)$, it is unstab
 \ln\mathcal{L}(\vec{\beta}) &= -\mu + N\ln(\mu) - \ln(N!) + \sum_i^N \ln(\mathcal{P}(s_i,\Omega_i;\vec{\beta})) \\
                             &= \sum_i^N \left[\ln\left(\mathcal{I}(s_i,\Omega_i;\vec{\beta})\right) + \ln\left(\eta(s_i,\Omega_i)\right) - \ln(\mu) \right] -\mu + N\ln(\mu) - \ln(N!) \\
                             &= \sum_i^N \left[\ln\left(\mathcal{I}(s_i,\Omega_i;\vec{\beta})\right) + \ln\left(\eta(s_i,\Omega_i)\right)\right] - N\ln(\mu) -\mu + N\ln(\mu) - \ln(N!) \\
-                            &= \sum_i^N \ln\mathcal{I}(s_i,\Omega_i;\vec{\beta}) -\mu + N\ln\eta(s_i,\Omega_i) - \ln(N!) \\
-                            &= \sum_i^N \ln\mathcal{I}(s_i,\Omega_i;\vec{\beta}) -\int \mathcal{I}(s,\Omega;\vec{\beta})\eta(s,\Omega) \text{d}s\text{d}\Omega - \ln(N!) + N\ln\eta(s_i,\Omega_i) \\
+                            &= \sum_i^N \ln\mathcal{I}(s_i,\Omega_i;\vec{\beta}) -\mu - \ln(N!) + \sum_j^N \ln\eta(s_j,\Omega_j) \\
+                            &= \sum_i^N \ln\mathcal{I}(s_i,\Omega_i;\vec{\beta}) -\int \mathcal{I}(s,\Omega;\vec{\beta})\eta(s,\Omega) \text{d}s\text{d}\Omega - \ln(N!) + \sum_j^N \ln\eta(s_j,\Omega_j) \\
 \end{align}
 ```
 We must now compute this integral, but in general it does not have an analytic form, so we resort to Monte Carlo methods. Using the Mean Value Theorem, we know that integrating a function over a domain $D$ with area $A$ gives us the average value of that function times $A$:
@@ -111,7 +111,7 @@ We can therefore use a Monte Carlo sample, letting $\eta(s,\Omega)$ be equal to 
 ```
 All together, we end up with
 ```math
--\ln\mathcal{L}(\vec{\beta}) = -\left(\sum_i^N \ln\mathcal{I}(s_i,\Omega_i;\vec{\beta}) - \frac{4\pi(s_{\text{max}} - s_{\text{min}})}{N_{\text{gen}}}\sum_{i}^{N_{\text{acc}}}\mathcal{I}(s_i,\Omega_i;\vec{\beta})\right) - \ln(N!) + N\ln\eta(s_i,\Omega_i)
+-\ln\mathcal{L}(\vec{\beta}) = -\left(\sum_i^N \ln\mathcal{I}(s_i,\Omega_i;\vec{\beta}) - \frac{4\pi(s_{\text{max}} - s_{\text{min}})}{N_{\text{gen}}}\sum_{i}^{N_{\text{acc}}}\mathcal{I}(s_i,\Omega_i;\vec{\beta})\right) - \ln(N!) + \sum_j^N \ln\eta(s_j,\Omega_j)
 ```
 We can, of course, compute $\ln(N!)$, but the final term is still unknown. However, it doesn't depend on the free parameters $\vec{\beta}$, so it vanishes when we minimize with respect to $\vec{\beta}$ (as does $\ln(N!)$, but it's inexpensive to calculate and we can do so if we want to).
 
