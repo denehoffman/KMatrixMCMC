@@ -111,7 +111,7 @@ We can therefore use a Monte Carlo sample, letting $\eta(s,\Omega)$ be equal to 
 ```
 All together, we end up with
 ```math
--\ln\mathcal{L}(\vec{\beta}) = -\left(\sum_i^N \ln\mathcal{I}(s_i,\Omega_i;\vec{\beta}) - \frac{4\pi(s_{\text{max}} - s_{\text{min}})}{N_{\text{gen}}}\sum_{i}^{N_{\text{acc}}}\mathcal{I}(s_i,\Omega_i;\vec{\beta})\right) - \ln(N!) + \sum_j^N \ln\eta(s_j,\Omega_j)
+-\ln\mathcal{L}(\vec{\beta}) = -\left(\sum_i^N \ln\mathcal{I}(s_i,\Omega_i;\vec{\beta}) - \frac{4\pi(s_{\text{max}} - s_{\text{min}})}{N_{\text{gen}}}\sum_{i}^{N_{\text{acc}}}\mathcal{I}(s_i,\Omega_i;\vec{\beta})\right) + \ln(N!) - \sum_j^N \ln\eta(s_j,\Omega_j)
 ```
 We can, of course, compute $\ln(N!)$, but the final term is still unknown. However, it doesn't depend on the free parameters $\vec{\beta}$, so it vanishes when we minimize with respect to $\vec{\beta}$ (as does $\ln(N!)$, but it's inexpensive to calculate and we can do so if we want to).
 
