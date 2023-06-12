@@ -1,7 +1,7 @@
 #include "Amplitude.hpp"
 #include "KMatrix.hpp"
 
-Amplitude::Amplitude() {
+Amplitude::Amplitude(): kmat_f0(0), kmat_f2(2), kmat_a0(0), kmat_a2(2) {
   f0_mchannels = {
     {0.13498, 0.13498},
     {0.26995, 0.26995},

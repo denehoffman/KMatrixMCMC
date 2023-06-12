@@ -34,25 +34,25 @@ class Amplitude {
     fmat bw_a2(const float& s);
 
   private:
-    KMatrix kmat_f0 = KMatrix(5, 5, 0);
+    KMatrix<5, 5> kmat_f0;
     fmat f0_mchannels;
     fmat f0_malphas;
     fmat f0_galphas;
     fmat f0_cbkg;
 
-    KMatrix kmat_f2 = KMatrix(4, 4, 2);
+    KMatrix<4, 4> kmat_f2;
     fmat f2_mchannels;
     fmat f2_malphas;
     fmat f2_galphas;
     fmat f2_cbkg;
 
-    KMatrix kmat_a0 = KMatrix(2, 2, 0);
+    KMatrix<2, 2> kmat_a0;
     fmat a0_mchannels;
     fmat a0_malphas;
     fmat a0_galphas;
     fmat a0_cbkg;
 
-    KMatrix kmat_a2 = KMatrix(3, 2, 2);
+    KMatrix<3, 2> kmat_a2;
     fmat a2_mchannels;
     fmat a2_malphas;
     fmat a2_galphas;

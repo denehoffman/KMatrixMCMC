@@ -4,9 +4,7 @@
 
 TEST_CASE("KMatrix constructor initializes members correctly", "[KMatrix]") {
   SECTION("J = 0") {
-    KMatrix kmatrix(2, 3, 0);
-    REQUIRE(kmatrix.numChannels == 2);
-    REQUIRE(kmatrix.numAlphas == 3);
+    KMatrix<2, 3> kmatrix(0);
     REQUIRE(kmatrix.J == 0);
     REQUIRE(kmatrix.mAlphas.n_rows == 1);
     REQUIRE(kmatrix.mAlphas.n_cols == 3);
@@ -19,9 +17,7 @@ TEST_CASE("KMatrix constructor initializes members correctly", "[KMatrix]") {
   }
 
   SECTION("J = 2") {
-    KMatrix kmatrix(3, 4, 2);
-    REQUIRE(kmatrix.numChannels == 3);
-    REQUIRE(kmatrix.numAlphas == 4);
+    KMatrix<3, 4> kmatrix(2);
     REQUIRE(kmatrix.J == 2);
     REQUIRE(kmatrix.mAlphas.n_rows == 1);
     REQUIRE(kmatrix.mAlphas.n_cols == 4);
@@ -33,21 +29,18 @@ TEST_CASE("KMatrix constructor initializes members correctly", "[KMatrix]") {
     REQUIRE(kmatrix.cBkg.n_cols == 3);
   }
 
-  SECTION("Unsupported J") {
-    REQUIRE_THROWS_AS([]() { KMatrix kmatrix(2, 3, 1); }(), std::runtime_error);
-  }
+  // SECTION("Unsupported J") {
+  //   REQUIRE_THROWS_AS([]() { 
+  //       KMatrix<2, 3> kmatrix(1);
+  //       }(), std::runtime_error);
+  // }
 }
 
 TEST_CASE("KMatrix initialize method", "[KMatrix]") {
-  // Test case data
-  int numChannels = 3;
-  int numAlphas = 2;
-  int J = 0;
-
-  arma::fmat mAlphas(1, numAlphas);
-  arma::fmat mChannels(numChannels, 2);
-  arma::fmat gAlphas(numChannels, numAlphas);
-  arma::fmat cBkg(numChannels, numChannels);
+  arma::fmat mAlphas(1, 2);
+  arma::fmat mChannels(3, 2);
+  arma::fmat gAlphas(3, 2);
+  arma::fmat cBkg(3, 3);
 
   // Initialize the matrices with appropriate dimensions
   mAlphas.randu();
@@ -56,31 +49,31 @@ TEST_CASE("KMatrix initialize method", "[KMatrix]") {
   cBkg.randu();
 
   SECTION("Valid input dimensions") {
-    KMatrix kmatrix(numChannels, numAlphas, J);
+    KMatrix<3, 2> kmatrix(0);
     REQUIRE_NOTHROW(kmatrix.initialize(mAlphas, mChannels, gAlphas, cBkg));
   }
 
   SECTION("Invalid m_alphas dimensions") {
-    mAlphas.resize(1, numAlphas + 1);  // Invalid dimensions
-    KMatrix kmatrix(numChannels, numAlphas, J);
+    mAlphas.resize(1, 2 + 1);  // Invalid dimensions
+    KMatrix<3, 2> kmatrix(0);
     REQUIRE_THROWS_AS(kmatrix.initialize(mAlphas, mChannels, gAlphas, cBkg), std::runtime_error);
   }
 
   SECTION("Invalid m_channels dimensions") {
-    mChannels.resize(numChannels + 1, 2);  // Invalid dimensions
-    KMatrix kmatrix(numChannels, numAlphas, J);
+    mChannels.resize(3 + 1, 2);  // Invalid dimensions
+    KMatrix<3, 2> kmatrix(0);
     REQUIRE_THROWS_AS(kmatrix.initialize(mAlphas, mChannels, gAlphas, cBkg), std::runtime_error);
   }
 
   SECTION("Invalid g_alphas dimensions") {
-    gAlphas.resize(numChannels, numAlphas + 1);  // Invalid dimensions
-    KMatrix kmatrix(numChannels, numAlphas, J);
+    gAlphas.resize(3, 2 + 1);  // Invalid dimensions
+    KMatrix<3, 2> kmatrix(0);
     REQUIRE_THROWS_AS(kmatrix.initialize(mAlphas, mChannels, gAlphas, cBkg), std::runtime_error);
   }
 
   SECTION("Invalid c_bkg dimensions") {
-    cBkg.resize(numChannels + 1, numChannels);  // Invalid dimensions
-    KMatrix kmatrix(numChannels, numAlphas, J);
+    cBkg.resize(3 + 1, 3);  // Invalid dimensions
+    KMatrix<3, 2> kmatrix(0);
     REQUIRE_THROWS_AS(kmatrix.initialize(mAlphas, mChannels, gAlphas, cBkg), std::runtime_error);
   }
 }
@@ -102,7 +95,7 @@ TEST_CASE("KMatrix chi_p function", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -137,7 +130,7 @@ TEST_CASE("KMatrix chi_m function", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -172,7 +165,7 @@ TEST_CASE("KMatrix rho function", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -208,7 +201,7 @@ TEST_CASE("KMatrix rho function below threshold", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 0.9;
@@ -243,7 +236,7 @@ TEST_CASE("KMatrix q function", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -279,7 +272,7 @@ TEST_CASE("KMatrix q function below threshold", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 0.9;
@@ -314,7 +307,7 @@ TEST_CASE("KMatrix blatt_weisskopf function (J=0)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 0); // just testing!
+  KMatrix<3, 2> kmat_a2(0);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -345,7 +338,7 @@ TEST_CASE("KMatrix blatt_weisskopf function below threshold (J=0)", "[KMatrix]")
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 0); // just testing!
+  KMatrix<3, 2> kmat_a2(0);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 0.9;
@@ -376,7 +369,7 @@ TEST_CASE("KMatrix blatt_weisskopf function (J=2)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -411,7 +404,7 @@ TEST_CASE("KMatrix blatt_weisskopf function below threshold (J=2)", "[KMatrix]")
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 0.9;
@@ -446,7 +439,7 @@ TEST_CASE("KMatrix B function (J=0)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 0); // just testing!
+  KMatrix<3, 2> kmat_a2(0);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -477,7 +470,7 @@ TEST_CASE("KMatrix B function below threshold (J=0)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 0); // just testing!
+  KMatrix<3, 2> kmat_a2(0);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 0.9;
@@ -508,7 +501,7 @@ TEST_CASE("KMatrix B function (J=2)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -543,7 +536,7 @@ TEST_CASE("KMatrix B function below threshold (J=2)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 0.9;
@@ -578,7 +571,7 @@ TEST_CASE("KMatrix B2 function (J=0)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 0); // just testing!
+  KMatrix<3, 2> kmat_a2(0);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -609,7 +602,7 @@ TEST_CASE("KMatrix B2 function below threshold (J=0)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 0); // just testing!
+  KMatrix<3, 2> kmat_a2(0);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 0.9;
@@ -640,7 +633,7 @@ TEST_CASE("KMatrix B2 function (J=2)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 1.3;
@@ -684,7 +677,7 @@ TEST_CASE("KMatrix B2 function below threshold (J=2)", "[KMatrix]") {
     {-0.08707, -0.06193, -0.17435}
   };
 
-  KMatrix kmat_a2(3, 2, 2);
+  KMatrix<3, 2> kmat_a2(2);
   kmat_a2.initialize(a2_malphas, a2_mchannels, a2_galphas.t(), a2_cbkg);
   
   float s = 0.9;

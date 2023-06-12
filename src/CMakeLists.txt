@@ -1,7 +1,6 @@
 set(SOURCES
   Amplitude.cpp
   DataReader.cpp
-  KMatrix.cpp
   Likelihood.cpp)
 
 add_library(kmatrixmcmc_library ${SOURCES})
