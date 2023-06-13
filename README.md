@@ -60,10 +60,10 @@ Next, $C(s)$ is the Chew-Mandelstam matrix. This is a diagonal matrix whose diag
 ```math
 \begin{align}
 C_{ii}(s) &= C_{ii}(s_{\text{thr}}) - \frac{s - s_{\text{thr}}}{\pi}\int_{s_{\text{thr}}}^{\infty} \text{d}s' \frac{\rho_i(s')}{(s'-s)(s'-s_{\text{thr}})} \\
-          &= I(s_{\text{thr}}) + \frac{\rho_i(s)}{\pi}\ln\left[\frac{\chi^+_i(s)+\rho_i(s)}{\chi^+_i(s)-\rho_i(s)}\right] - \frac{\chi^+_i(s)}{\pi}\frac{m_{i,2}-m_{i,1}}{m_{i,1}+m_{i,2}}\ln\frac{m_{i,2}}{m_{i,1}}
+          &= C(s_{\text{thr}}) + \frac{\rho_i(s)}{\pi}\ln\left[\frac{\chi^+_i(s)+\rho_i(s)}{\chi^+_i(s)-\rho_i(s)}\right] - \frac{\chi^+_i(s)}{\pi}\frac{m_{i,2}-m_{i,1}}{m_{i,1}+m_{i,2}}\ln\frac{m_{i,2}}{m_{i,1}}
 \end{align}
 ```
-with $s_{\text{thr}} = (m_{i,1}+m_{i,2})^2$. Additionally, we chose $I(s_{\text{thr}}) = 0$.
+with $s_{\text{thr}} = (m_{i,1}+m_{i,2})^2$. Additionally, we chose $C(s_{\text{thr}}) = 0$.
 
 The final piece of the amplitude is the P-vector, which has a very similar form to the K-matrix:
 ```math
