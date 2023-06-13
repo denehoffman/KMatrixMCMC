@@ -22,21 +22,50 @@ void Likelihood::setup() {
   // Perform any necessary setup steps here
   cout << "Precalculating inverse of (I - KC)" << endl;
   cout << "Data" << endl;
+  // vector<int> badDataIndices;
+  // for (int i = 0; i < data.nEvents; i++) {
+  //   // printLoadingBar(i, data.nEvents);
+  //   try {
+  //     ikc_inv_vec_f0.emplace_back(amplitude.ikc_inv_vec_f0(pow(data.masses[i], 2)));
+  //     ikc_inv_vec_f2.emplace_back(amplitude.ikc_inv_vec_f2(pow(data.masses[i], 2)));
+  //     ikc_inv_vec_a0.emplace_back(amplitude.ikc_inv_vec_a0(pow(data.masses[i], 2)));
+  //     ikc_inv_vec_a2.emplace_back(amplitude.ikc_inv_vec_a2(pow(data.masses[i], 2)));
+  //     bw_f2.emplace_back(amplitude.bw_f2(pow(data.masses[i], 2)));
+  //     bw_a2.emplace_back(amplitude.bw_a2(pow(data.masses[i], 2)));
+  //   } catch (const runtime_error& e) {
+  //     cout << "One or more matrix inverses failed for event " << i << endl;
+  //     badDataIndices.push_back(i);
+  //   }
+  // }
+  // for (auto it = badDataIndices.rbegin(); it != badDataIndices.rend(); it++) {
+  //   data.masses.erase(data.masses.begin() + *it);
+  //   data.weights.erase(data.weights.begin() + *it);
+  //   data.thetas.erase(data.thetas.begin() + *it);
+  //   data.phis.erase(data.phis.begin() + *it);
+  // }
   vector<int> badDataIndices;
   for (int i = 0; i < data.nEvents; i++) {
-    // printLoadingBar(i, data.nEvents);
     try {
-      ikc_inv_vec_f0.emplace_back(amplitude.ikc_inv_vec_f0(pow(data.masses[i], 2)));
-      ikc_inv_vec_f2.emplace_back(amplitude.ikc_inv_vec_f2(pow(data.masses[i], 2)));
-      ikc_inv_vec_a0.emplace_back(amplitude.ikc_inv_vec_a0(pow(data.masses[i], 2)));
-      ikc_inv_vec_a2.emplace_back(amplitude.ikc_inv_vec_a2(pow(data.masses[i], 2)));
-      bw_f2.emplace_back(amplitude.bw_f2(pow(data.masses[i], 2)));
-      bw_a2.emplace_back(amplitude.bw_a2(pow(data.masses[i], 2)));
+      float s = pow(data.masses[i], 2);
+      arma::cx_fvec ikc_inv_f0 = amplitude.ikc_inv_vec_f0(s);
+      arma::cx_fvec ikc_inv_f2 = amplitude.ikc_inv_vec_f2(s);
+      arma::cx_fvec ikc_inv_a0 = amplitude.ikc_inv_vec_a0(s);
+      arma::cx_fvec ikc_inv_a2 = amplitude.ikc_inv_vec_a2(s);
+      arma::fmat bw_f2_matrix = amplitude.bw_f2(s);
+      arma::fmat bw_a2_matrix = amplitude.bw_a2(s);
+
+      ikc_inv_vec_f0.push_back(ikc_inv_f0);
+      ikc_inv_vec_f2.push_back(ikc_inv_f2);
+      ikc_inv_vec_a0.push_back(ikc_inv_a0);
+      ikc_inv_vec_a2.push_back(ikc_inv_a2);
+      bw_f2.push_back(bw_f2_matrix);
+      bw_a2.push_back(bw_a2_matrix);
     } catch (const runtime_error& e) {
       cout << "One or more matrix inverses failed for event " << i << endl;
       badDataIndices.push_back(i);
     }
   }
+
   for (auto it = badDataIndices.rbegin(); it != badDataIndices.rend(); it++) {
     data.masses.erase(data.masses.begin() + *it);
     data.weights.erase(data.weights.begin() + *it);
@@ -44,26 +73,55 @@ void Likelihood::setup() {
     data.phis.erase(data.phis.begin() + *it);
   }
   cout << "Monte Carlo" << endl;
+  // vector<int> badMCIndices;
+  // for (int i = 0; i < acc.nEvents; i++) {
+  //   // printLoadingBar(i, acc.nEvents);
+  //   try {
+  //     ikc_inv_vec_f0_mc.emplace_back(amplitude.ikc_inv_vec_f0(pow(acc.masses[i], 2)));
+  //     ikc_inv_vec_f2_mc.emplace_back(amplitude.ikc_inv_vec_f2(pow(acc.masses[i], 2)));
+  //     ikc_inv_vec_a0_mc.emplace_back(amplitude.ikc_inv_vec_a0(pow(acc.masses[i], 2)));
+  //     ikc_inv_vec_a2_mc.emplace_back(amplitude.ikc_inv_vec_a2(pow(acc.masses[i], 2)));
+  //     bw_f2_mc.emplace_back(amplitude.bw_f2(pow(acc.masses[i], 2)));
+  //     bw_a2_mc.emplace_back(amplitude.bw_a2(pow(acc.masses[i], 2)));
+  //   } catch (const runtime_error& e) {
+  //     cout << "One or more matrix inverses failed for event " << i << endl;
+  //     badMCIndices.push_back(i);
+  //   }
+  // }
+  // for (auto it = badMCIndices.rbegin(); it != badMCIndices.rend(); it++) {
+  //     acc.masses.erase(acc.masses.begin() + *it);
+  //     acc.weights.erase(acc.weights.begin() + *it);
+  //     acc.thetas.erase(acc.thetas.begin() + *it);
+  //     acc.phis.erase(acc.phis.begin() + *it);
+  // }
   vector<int> badMCIndices;
   for (int i = 0; i < acc.nEvents; i++) {
-    // printLoadingBar(i, acc.nEvents);
     try {
-      ikc_inv_vec_f0_mc.emplace_back(amplitude.ikc_inv_vec_f0(pow(acc.masses[i], 2)));
-      ikc_inv_vec_f2_mc.emplace_back(amplitude.ikc_inv_vec_f2(pow(acc.masses[i], 2)));
-      ikc_inv_vec_a0_mc.emplace_back(amplitude.ikc_inv_vec_a0(pow(acc.masses[i], 2)));
-      ikc_inv_vec_a2_mc.emplace_back(amplitude.ikc_inv_vec_a2(pow(acc.masses[i], 2)));
-      bw_f2_mc.emplace_back(amplitude.bw_f2(pow(acc.masses[i], 2)));
-      bw_a2_mc.emplace_back(amplitude.bw_a2(pow(acc.masses[i], 2)));
+      float s = pow(acc.masses[i], 2);
+      arma::cx_fvec ikc_inv_f0 = amplitude.ikc_inv_vec_f0(s);
+      arma::cx_fvec ikc_inv_f2 = amplitude.ikc_inv_vec_f2(s);
+      arma::cx_fvec ikc_inv_a0 = amplitude.ikc_inv_vec_a0(s);
+      arma::cx_fvec ikc_inv_a2 = amplitude.ikc_inv_vec_a2(s);
+      arma::fmat bw_f2_matrix = amplitude.bw_f2(s);
+      arma::fmat bw_a2_matrix = amplitude.bw_a2(s);
+
+      ikc_inv_vec_f0_mc.push_back(ikc_inv_f0);
+      ikc_inv_vec_f2_mc.push_back(ikc_inv_f2);
+      ikc_inv_vec_a0_mc.push_back(ikc_inv_a0);
+      ikc_inv_vec_a2_mc.push_back(ikc_inv_a2);
+      bw_f2_mc.push_back(bw_f2_matrix);
+      bw_a2_mc.push_back(bw_a2_matrix);
     } catch (const runtime_error& e) {
       cout << "One or more matrix inverses failed for event " << i << endl;
       badMCIndices.push_back(i);
     }
   }
+
   for (auto it = badMCIndices.rbegin(); it != badMCIndices.rend(); it++) {
-      acc.masses.erase(acc.masses.begin() + *it);
-      acc.weights.erase(acc.weights.begin() + *it);
-      acc.thetas.erase(acc.thetas.begin() + *it);
-      acc.phis.erase(acc.phis.begin() + *it);
+    acc.masses.erase(acc.masses.begin() + *it);
+    acc.weights.erase(acc.weights.begin() + *it);
+    acc.thetas.erase(acc.thetas.begin() + *it);
+    acc.phis.erase(acc.phis.begin() + *it);
   }
 }
 

@@ -1,7 +1,7 @@
 #ifndef KMATRIX_H
 #define KMATRIX_H
 #pragma once
-#define ARMA_NO_DEBUG
+// #define ARMA_NO_DEBUG
 
 #include <unordered_map>
 #include <vector>

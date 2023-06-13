@@ -82,40 +82,42 @@ Amplitude::Amplitude() {
 
 cx_fvec Amplitude::ikc_inv_vec_f0(const float& s) {
   try {
-    return kmat_f0.IKC_inv(s, 0.0091125, 1.0).col(2);
+    cx_fmat invMat = kmat_f0.IKC_inv(s, 0.0091125, 1.0);
+    return cx_fvec(invMat.col(2));
   } catch (const runtime_error& e) {
-    throw runtime_error("Matrix inverse failed!");
+    throw;
   }
 }
 cx_fvec Amplitude::ikc_inv_vec_f2(const float& s) {
   try {
-    return kmat_f2.IKC_inv(s).col(2);
+    cx_fmat invMat = kmat_f2.IKC_inv(s);
+    return cx_fvec(invMat.col(2));
   } catch (const runtime_error& e) {
-    throw runtime_error("Matrix inverse failed!");
+    throw;
   }
 }
 cx_fvec Amplitude::ikc_inv_vec_a0(const float& s) {
   try {
-    return kmat_a0.IKC_inv(s).col(1);
+    cx_fmat invMat = kmat_a0.IKC_inv(s);
+    return cx_fvec(invMat.col(1));
   } catch (const runtime_error& e) {
-    throw runtime_error("Matrix inverse failed!");
+    throw;
   }
 }
 cx_fvec Amplitude::ikc_inv_vec_a2(const float& s) {
   try {
-    return kmat_a2.IKC_inv(s).col(1);
+    cx_fmat invMat = kmat_a2.IKC_inv(s);
+    return cx_fvec(invMat.col(1));
   } catch (const runtime_error& e) {
-    throw runtime_error("Matrix inverse failed!");
+    throw;
   }
 }
 
 fmat Amplitude::bw_f2(const float& s) {
-  fmat res = kmat_f2.B(s);
-  return res;
+  return kmat_f2.B(s);
 }
 fmat Amplitude::bw_a2(const float& s) {
-  fmat res = kmat_a2.B(s);
-  return res;
+  return kmat_a2.B(s);
 }
 
 complex<float> Amplitude::S0_wave() {

@@ -7,7 +7,6 @@ project(
   LANGUAGES CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Set default build type to Release if not specified
 # Set default build type to "Default" if not specified
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Default)

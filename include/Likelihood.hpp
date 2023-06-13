@@ -1,12 +1,14 @@
 #ifndef LIKELIHOOD_H
 #define LIKELIHOOD_H
 #pragma once
-#define ARMA_NO_DEBUG
+// #define ARMA_NO_DEBUG
 
 #include "Amplitude.hpp"
 #include "DataReader.hpp"
 #include <string>
 #include <armadillo>
+#include <vector>
+#include <deque>
 
 using namespace std;
 
@@ -33,23 +35,23 @@ private:
   DataReader gen;
   int nGenerated;
   void printLoadingBar (const int& progress, const int& total, const int& barWidth = 50) const;
-  vector<arma::cx_fvec> ikc_inv_vec_f0;
-  vector<arma::cx_fvec> ikc_inv_vec_f2;
-  vector<arma::cx_fvec> ikc_inv_vec_a0;
-  vector<arma::cx_fvec> ikc_inv_vec_a2;
-  vector<arma::fmat> bw_f0;
-  vector<arma::fmat> bw_f2;
-  vector<arma::fmat> bw_a0;
-  vector<arma::fmat> bw_a2;
+  deque<arma::cx_fvec> ikc_inv_vec_f0;
+  deque<arma::cx_fvec> ikc_inv_vec_f2;
+  deque<arma::cx_fvec> ikc_inv_vec_a0;
+  deque<arma::cx_fvec> ikc_inv_vec_a2;
+  deque<arma::fmat> bw_f0;
+  deque<arma::fmat> bw_f2;
+  deque<arma::fmat> bw_a0;
+  deque<arma::fmat> bw_a2;
 
-  vector<arma::cx_fvec> ikc_inv_vec_f0_mc;
-  vector<arma::cx_fvec> ikc_inv_vec_f2_mc;
-  vector<arma::cx_fvec> ikc_inv_vec_a0_mc;
-  vector<arma::cx_fvec> ikc_inv_vec_a2_mc;
-  vector<arma::fmat> bw_f0_mc;
-  vector<arma::fmat> bw_f2_mc;
-  vector<arma::fmat> bw_a0_mc;
-  vector<arma::fmat> bw_a2_mc;
+  deque<arma::cx_fvec> ikc_inv_vec_f0_mc;
+  deque<arma::cx_fvec> ikc_inv_vec_f2_mc;
+  deque<arma::cx_fvec> ikc_inv_vec_a0_mc;
+  deque<arma::cx_fvec> ikc_inv_vec_a2_mc;
+  deque<arma::fmat> bw_f0_mc;
+  deque<arma::fmat> bw_f2_mc;
+  deque<arma::fmat> bw_a0_mc;
+  deque<arma::fmat> bw_a2_mc;
 };
 
 #endif  // LIKELIHOOD_H

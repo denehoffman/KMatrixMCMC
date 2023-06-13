@@ -173,7 +173,7 @@ arma::cx_fvec KMatrix::q(const float& s) const {
 //! @param[in] s Input mass squared
 //! \return Vector containing result of this operation for each channel
 //!
-arma::fvec KMatrix::blatt_weisskopf0(const float& s) {
+arma::fvec KMatrix::blatt_weisskopf0(const float& s [[gnu::unused]]) {
   return arma::fvec(numChannels, arma::fill::ones);
 }
 
@@ -294,7 +294,8 @@ arma::cx_fmat KMatrix::K(const float& s, const float& s_0, const float& s_norm) 
   }
   gigj %= arma::conv_to<arma::cx_fcube>::from(B2(s));
   result += arma::sum(gigj, 2);
-  return result * (s - s_0) / s_norm;
+  result *= (s - s_0) / s_norm;
+  return result;
 }
 
 //!
@@ -343,13 +344,13 @@ arma::cx_fmat KMatrix::IKC_inv(const float& s) {
   arma::cx_fmat kmat = KMatrix::K(s);
   arma::cx_fmat cmat = KMatrix::C(s);
   arma::cx_fmat IKC = arma::eye<arma::fmat>(numChannels, numChannels) + kmat * cmat;
-  arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
   try {
-    result = arma::inv(IKC, arma::inv_opts::allow_approx);
+    // arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
+    return arma::inv(IKC, arma::inv_opts::allow_approx);
+    //return result;
   } catch (const runtime_error& e) {
     throw runtime_error("Matrix inverse failed!");
   }
-  return result;
 }
 
 //!
@@ -368,13 +369,13 @@ arma::cx_fmat KMatrix::IKC_inv(const float& s, const float& s_0, const float& s_
   arma::cx_fmat kmat = KMatrix::K(s, s_0, s_norm);
   arma::cx_fmat cmat = KMatrix::C(s);
   arma::cx_fmat IKC = arma::eye<arma::fmat>(numChannels, numChannels) + kmat * cmat;
-  arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
   try {
-    result = arma::inv(IKC, arma::inv_opts::allow_approx);
+    //arma::cx_fmat result = arma::cx_fmat(numChannels, numChannels, arma::fill::zeros);
+    return arma::inv(IKC, arma::inv_opts::allow_approx);
+    // return result;
   } catch (const runtime_error& e) {
     throw runtime_error("Matrix inverse failed!");
   }
-  return result;
 }
 
 //!

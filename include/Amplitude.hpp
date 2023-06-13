@@ -1,7 +1,7 @@
 #ifndef AMPLITUDE_H
 #define AMPLITUDE_H
 #pragma once
-#define ARMA_NO_DEBUG
+// #define ARMA_NO_DEBUG
 #include <armadillo>
 #include "KMatrix.hpp"
 
