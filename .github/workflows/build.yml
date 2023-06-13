@@ -34,6 +34,18 @@ jobs:
         cmake .
         make install
 
+    - name: Install MCMCLib
+      run: |
+        mkdir -p external
+        cd external
+        git clone https://github.com/kthohr/mcmc
+        cd mcmc
+        git submodule update --init
+        export ARMA_INCLUDE_PATH=/usr/include
+        ./configure -i "/usr/local" -l arma -p -m "-lopenblas" -f float
+        make
+        make install
+
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release
 

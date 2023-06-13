@@ -3,3 +3,4 @@ target_include_directories(kmatrix_mcmc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../i
 target_link_libraries(kmatrix_mcmc PRIVATE kmatrixmcmc_library)
 target_link_libraries(kmatrix_mcmc PRIVATE ${ARMADILLO_LIBRARIES})
 target_link_libraries(kmatrix_mcmc PRIVATE ${ROOT_LIBRARIES})
+target_link_libraries(kmatrix_mcmc PRIVATE ${MCMC_LIBRARIES})

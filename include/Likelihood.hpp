@@ -26,7 +26,7 @@ public:
   void setup();
 
   // Calculate log likelihood
-  float getExtendedLogLikelihood(const vector<float>& params);
+  float getExtendedLogLikelihood(const arma::fvec& params);
 
 private:
   Amplitude amplitude;

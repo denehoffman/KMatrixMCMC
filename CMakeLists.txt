@@ -5,6 +5,8 @@ project(
   VERSION 1.0
   DESCRIPTION "MCMC on the KMatrix Amplitude"
   LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Set default build type to "Default" if not specified
@@ -13,19 +15,30 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Add the desired build types and flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -march=native -ffp-contract=fast")
 
 # Set additional flags for the "Debug" build type
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -O3")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -O3 -march=native -ffp-contract=fast")
 
 # Find required packages
 find_package(Armadillo REQUIRED)
 find_package(ROOT REQUIRED)
 
+find_library(MCMC_LIBRARIES NAMES mcmc)
+
+if(NOT MCMC_LIBRARIES)
+  message(FATAL_ERROR "mcmc library not found")
+else()
+  message(STATUS "mcmc library found at: ${MCMC_LIBRARIES}")
+endif()
+
+
 # Include directories
 include_directories(${ARMADILLO_INCLUDE_DIRS})
 include_directories(${ROOT_INCLUDE_DIRS})
+get_filename_component(MCMC_LIBRARIES_DIR ${MCMC_LIBRARIES} DIRECTORY)
+include_directories(${MCMC_LIBRARIES_DIR}/../include/mcmc)
 
 # Add subdirectories
 add_subdirectory(src)

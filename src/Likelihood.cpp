@@ -125,7 +125,7 @@ void Likelihood::setup() {
   }
 }
 
-float Likelihood::getExtendedLogLikelihood(const vector<float>& params) {
+float Likelihood::getExtendedLogLikelihood(const arma::fvec& params) {
   // Perform likelihood calculation and return the result
   assert(params.size() == 23);
   cx_fvec betas = {
