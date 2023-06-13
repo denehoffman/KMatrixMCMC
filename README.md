@@ -20,11 +20,11 @@ KMatrixMCMC is a C++ project designed to calculate the K-matrix amplitude for th
 
 ## Introduction
 
-The KMatrixMCMC project aims to provide a convenient and efficient way to calculate the K-matrix amplitude for the K_SK_S channel of the GlueX dataset and perform an MCMC analysis. The K-matrix amplitude is an essential component in the study of hadronic scattering processes and is widely used in particle physics research.
+The KMatrixMCMC project aims to provide a convenient and efficient way to calculate the K-matrix amplitude for the $K_SK_S$ channel of the GlueX dataset and perform an MCMC analysis. The K-matrix amplitude is an essential component in the study of hadronic scattering processes and is widely used in particle physics research.
 
 ### The K-Matrix Amplitude
 
-The K-matrix parameterization[^1] is similar to a sum of Breit-Wigners, but it preserves unitarity for nearby resonances. The complex amplitude for the $i$th final-state channel is written as:
+The K-matrix parameterization[^1] is similar to a sum of Breit-Wigners, but it preserves unitarity for nearby resonances. The complex amplitude for the $i$-th final-state channel is written as:
 ```math
 F_i(s;\vec{\beta}) = \sum_j \left( I + K(s) C(s)\right)_{ij}^{-1} \cdot P_j(s;\vec{\beta})
 ```
@@ -34,7 +34,7 @@ First, we define the K-matrix as:
 ```math
 K_{ij}(s) = \left(\frac{s - s_0}{s_\text{norm}}\right)\sum_{\alpha} B^{\ell}\left(q_i(s),q_i(m_\alpha^2)\right) \cdot \left(\frac{g_{\alpha,i}g_{\alpha,j}}{m_\alpha^2 - s} + c_{ij}\right) \cdot B^{\ell}\left(q_j(s),q_j(m_\alpha^2)\right)
 ```
-Here we sum over resonances (labeled $\alpha$) which have a real mass $m_\alpha$ and real coupling $g_{\alpha,i}$ to the $i$th channel. The term in front accounts for the Adler zero in chiral perturbation theory and must be included when handling the $f_0$ K-matrix, as one of the resonances is near the pion mass. Additionally, we can add real terms $c_{ij}$ and preserve unitarity. The outer functions are ratios of Blatt-Weisskopf barrier functions:
+Here we sum over resonances (labeled $\alpha$) which have a real mass $m_\alpha$ and real coupling $g_{\alpha,i}$ to the $i$-th channel. The term in front accounts for the Adler zero in chiral perturbation theory and must be included when handling the $f_0$ K-matrix, as one of the resonances is near the pion mass. Additionally, we can add real terms $c_{ij}$ and preserve unitarity. The outer functions are ratios of Blatt-Weisskopf barrier functions:
 ```math
 B^{\ell}\left(q_i(s),q_i(m_\alpha^2)\right) = \frac{b^{\ell}\left(q_i(s)\right)}{b^{\ell}\left(q_i(m_\alpha^2)\right)}
 ```
@@ -44,7 +44,7 @@ b^{\ell}(q) = \begin{cases} 1 & \ell = 0 \\ \sqrt{\frac{13z^2}{(z-3)^2 + 9z}},\ 
 ```
 where $q_0$ is the effective centrifugal barrier momentum, set to $q_0 = 0.1973\text{ GeV}$ in the code. Currently, the barrier factors for $\ell\neq 0, 2$ are not implemented as they are not used in this channel's analysis.
 
-The functions $q_i(s)$ correspond to the breakup momentum of a particle with invariant mass squared of $s$ in the $i$th channel:
+The functions $q_i(s)$ correspond to the breakup momentum of a particle with invariant mass squared of $s$ in the $i$-th channel:
 ```math
 q_i(s) = \rho_i(s)\frac{\sqrt{s}}{2}
 ```
@@ -54,7 +54,7 @@ q_i(s) = \rho_i(s)\frac{\sqrt{s}}{2}
 ```math
 \chi^{\pm}_i(s) = 1 - \frac{(m_{i,1} \pm m_{i,2})^2}{s}
 ```
-where $m_{i,1}$ and $m_{i,2}$ are the masses of the daughter particles in the $i$th channel.
+where $m_{i,1}$ and $m_{i,2}$ are the masses of the daughter particles in the $i$-th channel.
 
 Next, $C(s)$ is the Chew-Mandelstam matrix. This is a diagonal matrix whose diagonal elements are given by the Chew-Mandelstam function[^2]:
 ```math
