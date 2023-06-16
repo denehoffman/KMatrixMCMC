@@ -146,8 +146,8 @@ float Likelihood::getExtendedLogLikelihood(const arma::fvec& params) {
   arma::fmat bw_f0 = arma::fmat(5, 5, arma::fill::ones);
   arma::fmat bw_a0 = arma::fmat(2, 2, arma::fill::ones);
   float log_likelihood = 0.0;
-  cout << "Calculating data (" << data.masses.size() << " events)" << endl;
-  cout << "Skipped " << (data.nEvents - data.masses.size()) << " events due to failed inverses" << endl;
+  //cout << "Calculating data (" << data.masses.size() << " events)" << endl;
+  //cout << "Skipped " << (data.nEvents - data.masses.size()) << " events due to failed inverses" << endl;
   for (size_t i = 0; i < data.masses.size(); i++) {
     // printLoadingBar(i, data.nEvents);
     log_likelihood += data.weights[i]
@@ -168,8 +168,8 @@ float Likelihood::getExtendedLogLikelihood(const arma::fvec& params) {
             )
           );
   }
-  cout << "Calculating MC (" << acc.masses.size() << " events)" << endl;
-  cout << "Skipped " << (acc.nEvents - acc.masses.size()) << " events due to failed inverses" << endl;
+  //cout << "Calculating MC (" << acc.masses.size() << " events)" << endl;
+  //cout << "Skipped " << (acc.nEvents - acc.masses.size()) << " events due to failed inverses" << endl;
   for (size_t i = 0; i < acc.masses.size(); i++) {
     // printLoadingBar(i, acc.nEvents);
     log_likelihood -= acc.weights[i] * amplitude.intensity(
