@@ -19,30 +19,8 @@ Likelihood::Likelihood(const string& data_path,
   }
 
 void Likelihood::setup() {
-  // Perform any necessary setup steps here
   cout << "Precalculating inverse of (I - KC)" << endl;
   cout << "Data" << endl;
-  // vector<int> badDataIndices;
-  // for (int i = 0; i < data.nEvents; i++) {
-  //   // printLoadingBar(i, data.nEvents);
-  //   try {
-  //     ikc_inv_vec_f0.emplace_back(amplitude.ikc_inv_vec_f0(pow(data.masses[i], 2)));
-  //     ikc_inv_vec_f2.emplace_back(amplitude.ikc_inv_vec_f2(pow(data.masses[i], 2)));
-  //     ikc_inv_vec_a0.emplace_back(amplitude.ikc_inv_vec_a0(pow(data.masses[i], 2)));
-  //     ikc_inv_vec_a2.emplace_back(amplitude.ikc_inv_vec_a2(pow(data.masses[i], 2)));
-  //     bw_f2.emplace_back(amplitude.bw_f2(pow(data.masses[i], 2)));
-  //     bw_a2.emplace_back(amplitude.bw_a2(pow(data.masses[i], 2)));
-  //   } catch (const runtime_error& e) {
-  //     cout << "One or more matrix inverses failed for event " << i << endl;
-  //     badDataIndices.push_back(i);
-  //   }
-  // }
-  // for (auto it = badDataIndices.rbegin(); it != badDataIndices.rend(); it++) {
-  //   data.masses.erase(data.masses.begin() + *it);
-  //   data.weights.erase(data.weights.begin() + *it);
-  //   data.thetas.erase(data.thetas.begin() + *it);
-  //   data.phis.erase(data.phis.begin() + *it);
-  // }
   vector<int> badDataIndices;
   for (int i = 0; i < data.nEvents; i++) {
     try {
@@ -73,27 +51,6 @@ void Likelihood::setup() {
     data.phis.erase(data.phis.begin() + *it);
   }
   cout << "Monte Carlo" << endl;
-  // vector<int> badMCIndices;
-  // for (int i = 0; i < acc.nEvents; i++) {
-  //   // printLoadingBar(i, acc.nEvents);
-  //   try {
-  //     ikc_inv_vec_f0_mc.emplace_back(amplitude.ikc_inv_vec_f0(pow(acc.masses[i], 2)));
-  //     ikc_inv_vec_f2_mc.emplace_back(amplitude.ikc_inv_vec_f2(pow(acc.masses[i], 2)));
-  //     ikc_inv_vec_a0_mc.emplace_back(amplitude.ikc_inv_vec_a0(pow(acc.masses[i], 2)));
-  //     ikc_inv_vec_a2_mc.emplace_back(amplitude.ikc_inv_vec_a2(pow(acc.masses[i], 2)));
-  //     bw_f2_mc.emplace_back(amplitude.bw_f2(pow(acc.masses[i], 2)));
-  //     bw_a2_mc.emplace_back(amplitude.bw_a2(pow(acc.masses[i], 2)));
-  //   } catch (const runtime_error& e) {
-  //     cout << "One or more matrix inverses failed for event " << i << endl;
-  //     badMCIndices.push_back(i);
-  //   }
-  // }
-  // for (auto it = badMCIndices.rbegin(); it != badMCIndices.rend(); it++) {
-  //     acc.masses.erase(acc.masses.begin() + *it);
-  //     acc.weights.erase(acc.weights.begin() + *it);
-  //     acc.thetas.erase(acc.thetas.begin() + *it);
-  //     acc.phis.erase(acc.phis.begin() + *it);
-  // }
   vector<int> badMCIndices;
   for (int i = 0; i < acc.nEvents; i++) {
     try {
@@ -125,8 +82,7 @@ void Likelihood::setup() {
   }
 }
 
-float Likelihood::getExtendedLogLikelihood(const vector<float>& params) {
-  // Perform likelihood calculation and return the result
+float Likelihood::getExtendedLogLikelihood(const arma::Col<float>& params) {
   assert(params.size() == 23);
   cx_fvec betas = {
     polar<float>(0.0, 0.0),                // f0(500)
@@ -146,10 +102,7 @@ float Likelihood::getExtendedLogLikelihood(const vector<float>& params) {
   arma::fmat bw_f0 = arma::fmat(5, 5, arma::fill::ones);
   arma::fmat bw_a0 = arma::fmat(2, 2, arma::fill::ones);
   float log_likelihood = 0.0;
-  cout << "Calculating data (" << data.masses.size() << " events)" << endl;
-  cout << "Skipped " << (data.nEvents - data.masses.size()) << " events due to failed inverses" << endl;
   for (size_t i = 0; i < data.masses.size(); i++) {
-    // printLoadingBar(i, data.nEvents);
     log_likelihood += data.weights[i]
       * log(
           amplitude.intensity(
@@ -168,10 +121,7 @@ float Likelihood::getExtendedLogLikelihood(const vector<float>& params) {
             )
           );
   }
-  cout << "Calculating MC (" << acc.masses.size() << " events)" << endl;
-  cout << "Skipped " << (acc.nEvents - acc.masses.size()) << " events due to failed inverses" << endl;
   for (size_t i = 0; i < acc.masses.size(); i++) {
-    // printLoadingBar(i, acc.nEvents);
     log_likelihood -= acc.weights[i] * amplitude.intensity(
         betas,
         pow(acc.masses[i], 2),

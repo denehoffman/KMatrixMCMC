@@ -38,3 +38,4 @@ sandbox/
 build/
 profile/
 Testing/
+.DS_Store

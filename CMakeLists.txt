@@ -3,8 +3,10 @@ cmake_minimum_required(VERSION 3.22)
 project(
   KMatrixMCMC
   VERSION 1.0
-  DESCRIPTION "MCMC on the KMatrix Amplitude"
-  LANGUAGES CXX)
+  DESCRIPTION "MCMC on the KMatrix Amplitude")
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Set default build type to "Default" if not specified
@@ -20,12 +22,25 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -O3")
 
 # Find required packages
+find_package(OpenMP)
+find_package(HDF5 REQUIRED COMPONENTS CXX)
 find_package(Armadillo REQUIRED)
 find_package(ROOT REQUIRED)
 
+include(FetchContent)
+# Fetch Tyche library
+FetchContent_Declare(
+  Tyche
+  GIT_REPOSITORY https://github.com/denehoffman/Tyche.git
+  GIT_TAG main
+)
+FetchContent_MakeAvailable(Tyche)
+
 # Include directories
+include_directories(${HDF5_INCLUDE_DIRS})
 include_directories(${ARMADILLO_INCLUDE_DIRS})
 include_directories(${ROOT_INCLUDE_DIRS})
+include_directories(${TYCHE_INCLUDE_DIRS})
 
 # Add subdirectories
 add_subdirectory(src)
