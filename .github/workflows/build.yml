@@ -21,7 +21,7 @@ jobs:
     
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: git doxygen libopenblas-dev liblapack-dev libhdf5-serial-dev
+        packages: git doxygen libopenblas-dev liblapack-dev libhdf5-dev
         version: 1.0
 
     - name: Install Armadillo
