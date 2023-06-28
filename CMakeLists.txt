@@ -22,6 +22,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -O3")
 
+message("C++ Compiler: ${CMAKE_CXX_COMPILER}")
+
 # Find required packages
 find_package(OpenMP)
 find_package(HDF5 REQUIRED COMPONENTS CXX)

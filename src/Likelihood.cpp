@@ -40,12 +40,12 @@ void Likelihood::setup() {
       bw_f2_matrix = amplitude.bw_f2(s);
       bw_a2_matrix = amplitude.bw_a2(s);
 
-      ikc_inv_vec_f0.push_back(std::move(ikc_inv_f0));
-      ikc_inv_vec_f2.push_back(std::move(ikc_inv_f2));
-      ikc_inv_vec_a0.push_back(std::move(ikc_inv_a0));
-      ikc_inv_vec_a2.push_back(std::move(ikc_inv_a2));
-      bw_f2.push_back(std::move(bw_f2_matrix));
-      bw_a2.push_back(std::move(bw_a2_matrix));
+      ikc_inv_vec_f0.push_back(ikc_inv_f0);
+      ikc_inv_vec_f2.push_back(ikc_inv_f2);
+      ikc_inv_vec_a0.push_back(ikc_inv_a0);
+      ikc_inv_vec_a2.push_back(ikc_inv_a2);
+      bw_f2.push_back(bw_f2_matrix);
+      bw_a2.push_back(bw_a2_matrix);
     } catch (const runtime_error& e) {
       cout << "One or more matrix inverses failed for event " << i << endl;
       badDataIndices.push_back(i);
@@ -70,12 +70,12 @@ void Likelihood::setup() {
       bw_f2_matrix = amplitude.bw_f2(s);
       bw_a2_matrix = amplitude.bw_a2(s);
 
-      ikc_inv_vec_f0_mc.push_back(std::move(ikc_inv_f0));
-      ikc_inv_vec_f2_mc.push_back(std::move(ikc_inv_f2));
-      ikc_inv_vec_a0_mc.push_back(std::move(ikc_inv_a0));
-      ikc_inv_vec_a2_mc.push_back(std::move(ikc_inv_a2));
-      bw_f2_mc.push_back(std::move(bw_f2_matrix));
-      bw_a2_mc.push_back(std::move(bw_a2_matrix));
+      ikc_inv_vec_f0_mc.push_back(ikc_inv_f0);
+      ikc_inv_vec_f2_mc.push_back(ikc_inv_f2);
+      ikc_inv_vec_a0_mc.push_back(ikc_inv_a0);
+      ikc_inv_vec_a2_mc.push_back(ikc_inv_a2);
+      bw_f2_mc.push_back(bw_f2_matrix);
+      bw_a2_mc.push_back(bw_a2_matrix);
     } catch (const runtime_error& e) {
       cout << "One or more matrix inverses failed for event " << i << endl;
       badMCIndices.push_back(i);
