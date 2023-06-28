@@ -3,3 +3,7 @@ target_include_directories(kmatrix_mcmc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../i
 target_link_libraries(kmatrix_mcmc PRIVATE kmatrixmcmc_library)
 target_link_libraries(kmatrix_mcmc PRIVATE ${ARMADILLO_LIBRARIES})
 target_link_libraries(kmatrix_mcmc PRIVATE ${ROOT_LIBRARIES})
+target_link_libraries(kmatrix_mcmc PRIVATE ${HDF5_CXX_LIBRARIES} hdf5)
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(kmatrix_mcmc PRIVATE OpenMP::OpenMP_CXX)
+endif()

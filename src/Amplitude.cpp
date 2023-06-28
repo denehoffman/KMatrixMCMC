@@ -81,6 +81,7 @@ Amplitude::Amplitude() {
 }
 
 cx_fvec Amplitude::ikc_inv_vec_f0(const float& s) {
+  return cx_fvec(5, fill::zeros);
   try {
     cx_fmat invMat = kmat_f0.IKC_inv(s, 0.0091125, 1.0);
     return cx_fvec(invMat.col(2));
@@ -89,6 +90,7 @@ cx_fvec Amplitude::ikc_inv_vec_f0(const float& s) {
   }
 }
 cx_fvec Amplitude::ikc_inv_vec_f2(const float& s) {
+  return cx_fvec(4, fill::zeros);
   try {
     cx_fmat invMat = kmat_f2.IKC_inv(s);
     return cx_fvec(invMat.col(2));
@@ -97,6 +99,7 @@ cx_fvec Amplitude::ikc_inv_vec_f2(const float& s) {
   }
 }
 cx_fvec Amplitude::ikc_inv_vec_a0(const float& s) {
+  return cx_fvec(2, fill::zeros);
   try {
     cx_fmat invMat = kmat_a0.IKC_inv(s);
     return cx_fvec(invMat.col(1));
@@ -105,6 +108,7 @@ cx_fvec Amplitude::ikc_inv_vec_a0(const float& s) {
   }
 }
 cx_fvec Amplitude::ikc_inv_vec_a2(const float& s) {
+  return cx_fvec(3, fill::zeros);
   try {
     cx_fmat invMat = kmat_a2.IKC_inv(s);
     return cx_fvec(invMat.col(1));
