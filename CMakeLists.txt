@@ -1,5 +1,5 @@
 # tested with 3.22 and 3.26
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.20)
 project(
   KMatrixMCMC
   VERSION 1.0
